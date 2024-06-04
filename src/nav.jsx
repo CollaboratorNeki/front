@@ -85,7 +85,10 @@ const Drawer = styled(MuiDrawer, {
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
+    
     "& .MuiDrawer-paper": openedMixin(theme),
+    
+    
   }),
   ...(!open && {
     ...closedMixin(theme),
@@ -132,6 +135,7 @@ export default function Navegaçao() {
         </DrawerHeader>
         <Divider />
         <List>
+          
           <ListItem
             disablePadding
             sx={{ display: "block" }}
@@ -153,7 +157,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <HomeIcon />
+                <HomeIcon style={{ color: '#2D939C' }}/>
               </ListItemIcon>
               <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -179,7 +183,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <AddBoxIcon />
+                <AddBoxIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
                 primary="Novo Projeto"
@@ -208,7 +212,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <AddTaskIcon />
+                <AddTaskIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
                 primary="Nova Tarefa"
@@ -237,7 +241,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <AnalyticsIcon />
+                <AnalyticsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
                 primary="Relatórios"
@@ -254,6 +258,7 @@ export default function Navegaçao() {
           >
             <ListItemButton
               sx={{
+                
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
@@ -261,12 +266,13 @@ export default function Navegaçao() {
             >
               <ListItemIcon
                 sx={{
+                  
                   minWidth: 0,
                   mr: open ? 3 : "auto",
                   justifyContent: "center",
                 }}
               >
-                <CreateIcon />
+                <CreateIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText primary="Cadastro" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -292,7 +298,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <SettingsApplicationsIcon />
+                <SettingsApplicationsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -318,7 +324,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <GroupsIcon />
+                <GroupsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText primary="About" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>

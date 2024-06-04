@@ -2,6 +2,14 @@
 
 
 
+CORES:
+
+#2D939C
+
+
+
+
+
 dependencias:
 
 
