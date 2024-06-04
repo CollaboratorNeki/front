@@ -12,7 +12,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
+//***************inicio icones */
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
+import HomeIcon from '@mui/icons-material/Home';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import CreateIcon from '@mui/icons-material/Create';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import GroupsIcon from '@mui/icons-material/Groups';
+//****************fim icones */
 
 import { useNavigate } from "react-router-dom";
 
@@ -143,7 +153,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -169,7 +179,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <AddBoxIcon />
               </ListItemIcon>
               <ListItemText
                 primary="Novo Projeto"
@@ -198,7 +208,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <AddTaskIcon />
               </ListItemIcon>
               <ListItemText
                 primary="Nova Tarefa"
@@ -227,7 +237,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <AnalyticsIcon />
               </ListItemIcon>
               <ListItemText
                 primary="Relatórios"
@@ -256,7 +266,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <CreateIcon />
               </ListItemIcon>
               <ListItemText primary="Cadastro" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -282,7 +292,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <SettingsApplicationsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
@@ -308,7 +318,7 @@ export default function Navegaçao() {
                   justifyContent: "center",
                 }}
               >
-                <InboxIcon />
+                <GroupsIcon />
               </ListItemIcon>
               <ListItemText primary="About" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
