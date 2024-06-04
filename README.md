@@ -4,7 +4,20 @@
 
 dependencias:
 
-npm install -g npm@10.8.1
+
+
+INSTALAÇÃO TOTAL: 
+
+npm install -g npm@10.8.1 react-router-dom @mui/material @emotion/react @emotion/styled @mui/styled-engine-sc styled-components @mui/icons-material
+
+
+
+
+
+
+
+
+
 
 npm install react-router-dom
 

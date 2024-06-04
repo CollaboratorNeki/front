@@ -18,7 +18,7 @@ function App() {
           <Route path='/newProject' exact element={<NewProject />}></Route>
           <Route path='/newTask' exact element={<NewTask />}></Route>
           <Route path='/reports' exact element={<Reports />}></Route>
-          <Route path='/registration' exact element={<Registrations />}></Route>
+          <Route path='/registrations' exact element={<Registrations />}></Route>
           <Route path='/about' exact element={<About />}></Route>
           <Route path='/settings' exact element={<Settings />}></Route>
         </Routes>
