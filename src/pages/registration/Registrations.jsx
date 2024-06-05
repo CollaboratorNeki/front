@@ -6,8 +6,12 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import { useTranslation } from 'react-i18next'
 
 export default function Registrations() {
+   //Função para chamar a tradução
+    const {t} = useTranslation();
+
     return (
         <>
             <Box sx={{ display: 'flex' }}>
@@ -21,40 +25,40 @@ export default function Registrations() {
                                     {/* Container flex para logo e título */}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <img src="logo_url_aqui" alt="Logo" style={{ width: '50px', height: '50px' }} />
-                                        <h1>Cadastros</h1>
+                                        <h1>{t("Cadastros")}</h1>
                                     </div>
                                     <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Clientes
+                                            onClick={() => handleButtonClick('')}>{t("Clientes")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Tipos de Custos Extras
+                                            onClick={() => handleButtonClick('')}>{t("Tipos de Custos Extras")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Tecnologia
+                                            onClick={() => handleButtonClick('')}>{t("Tecnologia")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Funçoes
+                                            onClick={() => handleButtonClick('')}>{t("Funções")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Motivos de Eventos
+                                            onClick={() => handleButtonClick('')}>{t("Motivos de Eventos")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Mensagens
+                                            onClick={() => handleButtonClick('')}>{t("Mensagens")}
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>ALM    
+                                            onClick={() => handleButtonClick('')}>{t("ALM")}    
                                         </button>
                                         <button
                                             style={{ borderColor: 'black' }}
-                                            onClick={() => handleButtonClick('')}>Voltar        
+                                            onClick={() => handleButtonClick('')}>{t("Voltar")}        
                                         </button>
                                     </nav>
                                 </CardContent>

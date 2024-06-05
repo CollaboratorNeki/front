@@ -3,8 +3,21 @@
 {
 "translation" :{
 
-"Home":"Pagina Inicial"
-
+"Home":"Pagina Inicial",
+ "Novo Projeto":"Novo Projeto",
+ "Nova Tarefa":"Nova Tarefa",
+ "Relatórios":"Relatórios",
+ "Cadastro":"Cadastro",
+ "Cadastros":"Cadastros",
+ "Configurações":"Configurações",
+ "Sobre":"Sobre",
+ "Clientes":"Clientes",
+ "Tipos de Custos Extras":"Tipos de Custos Extras",
+ "Tecnologia":"Tecnologia",
+ "Funções":"Funções",
+ "Motivos de Eventos":"Motivos de Eventos",
+ "Mensagens":"Mensagens",
+ "Voltar":"Voltar"
 }
 
 }
