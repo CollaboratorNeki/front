@@ -1,0 +1,20 @@
+
+
+.decreaseFontSize, .increaseFontSize ,.changeThema{
+    border: none ;
+    border-radius: 100px;
+    padding: 8px;
+    height: 40px;
+    width: 40px;
+    font-size: 17px ;
+    background-color: var(--vermelho);
+    color: var(--branco-primario);
+    text-align: center;
+    align-items: center;
+}
+
+.decreaseFontSize, .increaseFontSize {
+border: solid black;
+border: solid ;
+border-radius: 100px;
+}
