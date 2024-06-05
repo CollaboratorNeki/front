@@ -7,11 +7,13 @@ import NewProject from './pages/newProject/NewProject'
 import NewTask from './pages/newTask/NewTask'
 import Reports from './pages/reports/Reports'
 import Registrations from './pages/registration/Registrations'
+import ButtonAppBar from './components/header/header'
 
 function App() {
 
   return (
     <>
+    <ButtonAppBar/>
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<Home />}></Route>
