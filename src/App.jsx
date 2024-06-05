@@ -9,13 +9,31 @@ import Reports from './pages/reports/Reports'
 import Registrations from './pages/registration/Registrations'
 import Accessibility from './components/accessibility/accessibility'
 import ButtonAppBar from './components/header/header'
+import { CustomThemeProvider, useTheme } from './themes/Dark';
+import { CssBaseline } from '@mui/material'
+
+
+const ToggleButton = () => {
+  const { toggleTheme } = useTheme();
+  return (
+    <div style={{ position: 'absolute', button: 10, right: 10 }}>
+      <button variant="contained" onClick={toggleTheme}>
+        Toggle Theme
+      </button>
+    </div>
+  );
+};
 
 function App() {
 
   return (
     <>
+      <CustomThemeProvider>
+
     <ButtonAppBar/>
       <BrowserRouter>
+      <ToggleButton />
+      <CssBaseline/>
         <Routes>
           <Route path='/' exact element={<Home/>}></Route>
           <Route path='/newProject' exact element={<NewProject />}></Route>
@@ -26,6 +44,7 @@ function App() {
           <Route path='/settings' exact element={<Settings />}></Route>
         </Routes>
       </BrowserRouter>
+      </CustomThemeProvider>
     </>
   )
 }
