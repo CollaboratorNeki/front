@@ -1,20 +1,50 @@
 
-
-.decreaseFontSize, .increaseFontSize ,.changeThema{
-    border: none ;
+.decreaseFontSize,
+.increaseFontSize,
+.changeThema {
+    border: none;
     border-radius: 100px;
     padding: 8px;
     height: 40px;
     width: 40px;
-    font-size: 17px ;
-    background-color: var(--vermelho);
-    color: var(--branco-primario);
+    font-size: 17px;
     text-align: center;
     align-items: center;
+    background-color:transparent;
+    
 }
 
-.decreaseFontSize, .increaseFontSize {
-border: solid black;
-border: solid ;
-border-radius: 100px;
+.themaIcon {
+    background-size: cover;
+}
+
+.decreaseFontSize{
+    border:none;
+  
+    background-image: url('../../assets/aMenus.jpeg');
+    background-size: cover;
+    
+}
+
+
+.increaseFontSize {
+    border:none;
+    border-radius: 100px;
+    background-image: url('../../assets/aPlus.jpeg');
+    background-size: cover;
+    
+}
+
+.decreaseFontSize:hover,
+.increaseFontSize:hover {
+    border-color: rgb(87, 164, 136);
+}
+
+
+.decreaseFontSize:focus,
+.increaseFontSize:focus,
+.changeThema:focus {
+    border-color: transparent;
+    outline: solid rgb(87, 164, 136);
+
 }

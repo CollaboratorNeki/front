@@ -12,7 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
+import { useTranslation } from 'react-i18next'
 //***************inicio icones */
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from '@mui/icons-material/Home';
@@ -60,23 +60,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(['width', 'margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -99,6 +82,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Navegaçao() {
+ //função para chamar a tradução
+  const {t} = useTranslation();
+  //
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
@@ -106,25 +92,6 @@ export default function Navegaçao() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {/* <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={() => setOpen(!open)}>
@@ -161,7 +128,7 @@ export default function Navegaçao() {
               >
                 <HomeIcon style={{ color: '#2D939C' }}/>
               </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Home")} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -188,7 +155,7 @@ export default function Navegaçao() {
                 <AddBoxIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
-                primary="Novo Projeto"
+                primary={t("Novo Projeto")}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -217,7 +184,7 @@ export default function Navegaçao() {
                 <AddTaskIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
-                primary="Nova Tarefa"
+                primary={t("Nova Tarefa")}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -246,7 +213,7 @@ export default function Navegaçao() {
                 <AnalyticsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
               <ListItemText
-                primary="Relatórios"
+                primary={t("Relatórios")}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
@@ -276,7 +243,7 @@ export default function Navegaçao() {
               >
                 <CreateIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary="Cadastro" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Cadastro")} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -302,7 +269,7 @@ export default function Navegaçao() {
               >
                 <SettingsApplicationsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Configurações")} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
@@ -328,7 +295,7 @@ export default function Navegaçao() {
               >
                 <GroupsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary="About" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Sobre")} sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>

@@ -2,8 +2,21 @@
 {
     "translation" :{
     
-    "Home":"Home haha"
-    
+    "Home":"Home",
+    "Novo Projeto":"New Project",
+    "Nova Tarefa":"New Task",
+    "Relatórios":"Reports",
+    "Cadastro":"Registration",
+    "Cadastros":"Registrations",
+    "Configurações":"Settings",
+    "Sobre":"About",
+    "Clientes":"Clients",
+    "Tipos de Custos Extras":"Types of extra costs",
+    "Tecnologia":"Technology",
+    "Funções":"Functions",
+    "Motivos de Eventos":"Event reasons",
+    "Mensagens":"Messages",
+    "Voltar":"Return"
     }
     
     }
