@@ -8,11 +8,13 @@ import NewTask from './pages/newTask/NewTask'
 import Reports from './pages/reports/Reports'
 import Registrations from './pages/registration/Registrations'
 import Accessibility from './components/accessibility/accessibility'
+import ButtonAppBar from './components/header/header'
 
 function App() {
 
   return (
     <>
+    <ButtonAppBar/>
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<Home/>}></Route>
