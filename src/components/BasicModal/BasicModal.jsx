@@ -23,14 +23,14 @@ const style = {
   
  };
 
-export default function BasicModal({ isOpen, close }) {
+export default function BasicModal({ modalOpen, setModalOpen }) {
    // Função para fechar o modal
-  const handleClose = () => close(false);
+  const handleClose = () => setModalOpen(false);
 
   return (
     <div>
       <Modal
-        open={isOpen} // Estado que controla se o modal está aberto ou fechado
+        open={modalOpen} // Estado que controla se o modal está aberto ou fechado
         onClose={handleClose} // Função para fechar o modal quando o usuário clicar fora dele
         aria-labelledby="modal-modal-title" // ID do elemento que descreve o título do modal
         aria-describedby="modal-modal-description" // ID do elemento que descreve o conteúdo do modal

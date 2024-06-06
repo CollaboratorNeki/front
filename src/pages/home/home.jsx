@@ -21,7 +21,10 @@ export default function Home() {
   return (
     <>
       <Box sx={{ display: "flex", width: "98vw", height: "90vh" }}>
-        <Navegaçao drawerOpen={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
+        <Navegaçao
+          drawerOpen={drawerOpen}
+          handleDrawerToggle={handleDrawerToggle}
+        />
 
         <Box
           component="main"
@@ -33,41 +36,65 @@ export default function Home() {
             transition: "margin-left 0.3s ease",
           }}
         >
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ marginBottom: 2 }}
           >
-            {/* <MenuIcon /> */}
-          </IconButton>
+        
+          </IconButton> */}
 
           <Grid container spacing={0} sx={{ width: "100%", height: "100%" }}>
             {/* GRID TOP */}
-            <Grid xs={12} sx={{ backgroundColor: "#2D939C", height: "150px" }} display="flex" justifyContent="center" alignItems="center"> 
-              </Grid>
+            <Grid
+              xs={12}
+              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            ></Grid>
 
             <Grid container sx={{ flexGrow: 1 }}>
               {/* GRID LEFT */}
-              <Grid xs={1} sx={{ backgroundColor: "#2D519C" }} display="flex" justifyContent="center" alignItems="center">
-                </Grid>
+              <Grid
+                xs={1}
+                sx={{ backgroundColor: "#2D519C" }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              ></Grid>
 
-                {/*GRID CENTRAL  - CONTEUDO PRINCIPAL */}
-              <Grid xs={10} sx={{ backgroundColor: "#2D617D" }} display="flex" justifyContent="center" alignItems="center">
+              {/*GRID CENTRAL  - CONTEUDO PRINCIPAL */}
+              <Grid
+                xs={10}
+                sx={{ backgroundColor: "#2D617D" }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <h1>{t("Home")}</h1>
               </Grid>
 
               {/* GRID DIREITA */}
-              <Grid xs={1} sx={{ backgroundColor: "#2D720C" }} display="flex" justifyContent="center" alignItems="center">
-                  </Grid>
-
+              <Grid
+                xs={1}
+                sx={{ backgroundColor: "#2D720C" }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              ></Grid>
             </Grid>
 
             {/* GRID BOTTON */}
-            <Grid xs={12} sx={{ backgroundColor: "#2D939C", height: "150px" }} display="flex" justifyContent="center" alignItems="center">
-              
-            </Grid>
+            <Grid
+              xs={12}
+              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            ></Grid>
           </Grid>
         </Box>
       </Box>
