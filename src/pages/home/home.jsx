@@ -50,23 +50,23 @@ export default function Home() {
 
             <Grid container sx={{ flexGrow: 1 }}>
               {/* GRID LEFT */}
-              <Grid xs={2} sx={{ backgroundColor: "#2D519C" }} display="flex" justifyContent="center" alignItems="center">
+              <Grid xs={1} sx={{ backgroundColor: "#2D519C" }} display="flex" justifyContent="center" alignItems="center">
                 </Grid>
 
-                {/*GRID CENTRAL  */}
-              <Grid xs={8} sx={{ backgroundColor: "#2D617D" }} display="flex" justifyContent="center" alignItems="center">
+                {/*GRID CENTRAL  - CONTEUDO PRINCIPAL */}
+              <Grid xs={10} sx={{ backgroundColor: "#2D617D" }} display="flex" justifyContent="center" alignItems="center">
                 <h1>{t("Home")}</h1>
               </Grid>
 
               {/* GRID DIREITA */}
-              <Grid xs={2} sx={{ backgroundColor: "#2D720C" }} display="flex" justifyContent="center" alignItems="center">
+              <Grid xs={1} sx={{ backgroundColor: "#2D720C" }} display="flex" justifyContent="center" alignItems="center">
                   </Grid>
 
             </Grid>
 
             {/* GRID BOTTON */}
             <Grid xs={12} sx={{ backgroundColor: "#2D939C", height: "150px" }} display="flex" justifyContent="center" alignItems="center">
-              bottom
+              
             </Grid>
           </Grid>
         </Box>

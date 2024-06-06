@@ -12,6 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Tooltip from "@mui/material/Tooltip";
 import { useTranslation } from 'react-i18next'
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -73,7 +74,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -92,62 +93,45 @@ export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <HomeIcon style={{ color: '#2D939C' }}/>
-              </ListItemIcon>
-              <ListItemText primary={t("Home")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/NewProject")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <AddBoxIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Novo Projeto")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/NewTask")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <AddTaskIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Nova Tarefa")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/Reports")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <AnalyticsIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Relatórios")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/Registrations")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <CreateIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Cadastro")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/settings")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <SettingsApplicationsIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Configurações")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/about")}>
-            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
-                <GroupsIcon style={{ color: '#2D939C' }} />
-              </ListItemIcon>
-              <ListItemText primary={t("Sobre")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+          {[
+            { text: t("Home"), icon: <HomeIcon style={{ color: '#2D939C' }} />, path: "/" },
+            { text: t("Novo Projeto"), icon: <AddBoxIcon style={{ color: '#2D939C' }} />, path: "/NewProject" },
+            { text: t("Nova Tarefa"), icon: <AddTaskIcon style={{ color: '#2D939C' }} />, path: "/NewTask" },
+            { text: t("Relatórios"), icon: <AnalyticsIcon style={{ color: '#2D939C' }} />, path: "/Reports" },
+            { text: t("Cadastro"), icon: <CreateIcon style={{ color: '#2D939C' }} />, path: "/Registrations" },
+            { text: t("Configurações"), icon: <SettingsApplicationsIcon style={{ color: '#2D939C' }} />, path: "/settings" },
+            { text: t("Sobre"), icon: <GroupsIcon style={{ color: '#2D939C' }} />, path: "/about" },
+          ].map((item, index) => (
+            <ListItem
+              key={index}
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                navigate(item.path);
+              }}
+            >
+              <Tooltip title={drawerOpen ? "" : item.text} placement="right">
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: drawerOpen ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: drawerOpen ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} sx={{ opacity: drawerOpen ? 1 : 0 }} />
+                </ListItemButton>
+              </Tooltip>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
     </Box>
