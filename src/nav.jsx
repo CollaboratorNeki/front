@@ -13,7 +13,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -32,6 +32,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  zIndex: 3,
 });
 
 const closedMixin = (theme) => ({
@@ -44,6 +45,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  zIndex: 3,
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -51,9 +53,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  backgroundImage : "linear-gradient(to bottom , #2d939c, #68C7CF)",
-  boxShadow:"0px 1px 10px #777",
   ...theme.mixins.toolbar,
+  zIndex: 3,
 }));
 
 const Drawer = styled(MuiDrawer, {
@@ -71,6 +72,7 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
+  zIndex: 3,
 }));
 
 export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
@@ -83,7 +85,9 @@ export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
       <CssBaseline />
       <Drawer variant="permanent" open={drawerOpen}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerToggle}>
+          <IconButton
+            onClick={handleDrawerToggle}
+          >
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
