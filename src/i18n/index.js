@@ -18,7 +18,7 @@ i18n
         en: {...enus},
         pt: {...ptbr}
     },
-    lng: 'en',
+    lng: 'pt',
     interpolation: {
         escapeValue:false,
     }
