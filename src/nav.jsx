@@ -49,6 +49,7 @@ const closedMixin = (theme) => ({
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
+ 
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
@@ -60,6 +61,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
+  
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -84,7 +86,8 @@ export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Drawer variant="permanent" open={drawerOpen}>
-        <DrawerHeader>
+        <Divider />
+        <DrawerHeader style={{paddingTop:"80px"}}>
           <IconButton
             onClick={handleDrawerToggle}
           >
@@ -95,7 +98,6 @@ export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
             )}
           </IconButton>
         </DrawerHeader>
-        <Divider />
         <List>
           {[
             { text: t("Home"), icon: <HomeIcon style={{ color: '#2D939C' }} />, path: "/" },
