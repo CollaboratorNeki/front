@@ -13,9 +13,11 @@ function handleFontSize(updateValue) {
       let currentFontSize = window.getComputedStyle(element).fontSize;
       let newFontSize = parseInt(currentFontSize) + updateValue;
       element.style.fontSize = `${newFontSize}px`;
+      
 
     })
   }
+
 
 
 function Accessibility() {
@@ -37,8 +39,12 @@ function Accessibility() {
         </button>
       
     );
+// const HandleMenus = () => {
+ 
+
+// }
+
   };
-  
 
 
   return(
