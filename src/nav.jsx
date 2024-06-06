@@ -13,8 +13,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useTranslation } from 'react-i18next'
-//***************inicio icones */
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -22,8 +20,6 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import CreateIcon from '@mui/icons-material/Create';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import GroupsIcon from '@mui/icons-material/Groups';
-//****************fim icones */
-
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -56,10 +52,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   backgroundImage : "linear-gradient(to bottom , #2d939c, #68C7CF)",
   boxShadow:"0px 1px 10px #777",
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -70,10 +64,7 @@ const Drawer = styled(MuiDrawer, {
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
-    
     "& .MuiDrawer-paper": openedMixin(theme),
-    
-    
   }),
   ...(!open && {
     ...closedMixin(theme),
@@ -81,20 +72,17 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function Navegaçao() {
- //função para chamar a tradução
+export default function Navegaçao({ drawerOpen, handleDrawerToggle }) {
   const {t} = useTranslation();
-  //
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={drawerOpen}>
         <DrawerHeader>
-          <IconButton onClick={() => setOpen(!open)}>
+          <IconButton onClick={handleDrawerToggle}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -104,198 +92,60 @@ export default function Navegaçao() {
         </DrawerHeader>
         <Divider />
         <List>
-          
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <HomeIcon style={{ color: '#2D939C' }}/>
               </ListItemIcon>
-              <ListItemText primary={t("Home")} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Home")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/NewProject");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/NewProject")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <AddBoxIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText
-                primary={t("Novo Projeto")}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary={t("Novo Projeto")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/NewTask");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/NewTask")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <AddTaskIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText
-                primary={t("Nova Tarefa")}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary={t("Nova Tarefa")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/Reports");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/Reports")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <AnalyticsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText
-                primary={t("Relatórios")}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
+              <ListItemText primary={t("Relatórios")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/Registrations");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/Registrations")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <CreateIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary={t("Cadastro")} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Cadastro")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/settings");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/settings")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <SettingsApplicationsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary={t("Configurações")} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Configurações")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/about");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
+          <ListItem disablePadding sx={{ display: "block" }} onClick={() => navigate("/about")}>
+            <ListItemButton sx={{ minHeight: 48, justifyContent: drawerOpen ? "initial" : "center", px: 2.5 }}>
+              <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 3 : "auto", justifyContent: "center" }}>
                 <GroupsIcon style={{ color: '#2D939C' }} />
               </ListItemIcon>
-              <ListItemText primary={t("Sobre")} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary={t("Sobre")} sx={{ opacity: drawerOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         </List>
