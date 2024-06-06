@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import '../footer/footer.css'
+import '../footer/footer.css';
+import logoSerratec from "../../assets/Logo-Serratec.png";
 
 const FooterContainer = styled.footer`
   background-color: #2d939c;
@@ -20,10 +21,12 @@ const FooterContainer = styled.footer`
 const FooterContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 160px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -53,6 +56,7 @@ const Footer = () => {
   return (
     <FooterContainer  >
       <FooterContent>
+      
         
         <div><p>Copyright NEKI 2024. Todos os direitos reservados. Desenvolvido por curso desenvolvedor FullStack Serratec/Senac.</p></div>
       
