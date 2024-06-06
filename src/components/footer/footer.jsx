@@ -4,7 +4,7 @@ import '../footer/footer.css';
 import logoSerratec from "../../assets/Logo-Serratec.png";
 
 const FooterContainer = styled.footer`
-  background-color: #2d939c;
+  background: linear-gradient(to top,#2d939c, #68C7CF) ;
   color: #fff;
   padding: 10px 0;
   text-align: center;

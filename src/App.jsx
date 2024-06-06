@@ -12,6 +12,7 @@ import ButtonAppBar from './components/header/header'
 import { CustomThemeProvider, useTheme } from './themes/Dark';
 import { CssBaseline } from '@mui/material'
 import Footer from './components/footer/footer'
+import VLibras from 'vlibras-react'
 
 
 function App() {
@@ -19,8 +20,8 @@ function App() {
   return (
     <>
       <CustomThemeProvider>
-
     <ButtonAppBar/>
+    <VLibras servidor="http://vlibras.gov.br/app"/>
       <BrowserRouter>
       <CssBaseline/>
         <Routes>
