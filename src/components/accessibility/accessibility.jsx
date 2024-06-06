@@ -33,7 +33,7 @@ function Accessibility() {
     return (
       
         <button onClick={toggleTheme}>
-        <Brightness4Icon className='themaIcon' />
+        <Brightness4Icon className='themaIcon' style={{fontSize:"30px", paddingBottom:"5px"}} />
         </button>
       
     );
@@ -44,7 +44,7 @@ function Accessibility() {
   return(
      <div className='divAccessibility'>
         {/* os botoes de acessibilidade e incrementa a função de aumento e diminuição de fonte */}
-   <button className='translateIcon' onClick={toggleLanguage}><TranslateIcon  className='translateIcon'/></button>
+   <button className='translateIcon' onClick={toggleLanguage}><TranslateIcon  className='translateIcon' style={{fontSize:"30px", paddingBottom:"4px"}}/></button>
    <ToggleButton />
     <button  id= "decrease" className='decreaseFontSize' aria-label='Diminuir o tamanho da fonte,-A' onClick={() => handleFontSize(-1)}></button>
     <button  id= "increase" className='increaseFontSize' aria-label='Aumentar o tamnho da fonte' onClick={() => handleFontSize(1)}></button>

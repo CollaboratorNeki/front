@@ -5,7 +5,7 @@ import '../footer/footer.css'
 const FooterContainer = styled.footer`
   background-color: #2d939c;
   color: #fff;
-  padding: 20px 0;
+  padding: 10px 0;
   text-align: center;
   position: absolute;
   bottom: 0;

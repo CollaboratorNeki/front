@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Box sx={{ display: "flex", width: "100vw", height: "100vh" }}>
+      <Box sx={{ display: "flex", width: "98vw", height: "90vh" }}>
         <Navegaçao drawerOpen={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
 
         <Box
@@ -40,7 +40,7 @@ export default function Home() {
             onClick={handleDrawerToggle}
             sx={{ marginBottom: 2 }}
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
           </IconButton>
 
           <Grid container spacing={0} sx={{ width: "100%", height: "100%" }}>
