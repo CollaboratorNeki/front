@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Navegaçao from "../../nav";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Accessibility from "../../components/accessibility/accessibility";
-import { useTranslation } from "react-i18next";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import { useTranslation } from "react-i18next";
+
+
+import myImage from "../../assets/img/neki.png"
 
 export default function Home() {
   const { t } = useTranslation();
@@ -36,21 +35,11 @@ export default function Home() {
             transition: "margin-left 0.3s ease",
           }}
         >
-          {/* <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ marginBottom: 2 }}
-          >
-        
-          </IconButton> */}
-
-          <Grid container spacing={0} sx={{ width: "100%", height: "100%" }}>
+          <Grid container spacing={0} sx={{ width: "100%", height: "100%", alignContent:"center" }}>
             {/* GRID TOP */}
             <Grid
               xs={12}
-              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+              sx={{ backgroundColor: "", height: "150px" }}
               display="flex"
               justifyContent="center"
               alignItems="center"
@@ -60,7 +49,7 @@ export default function Home() {
               {/* GRID LEFT */}
               <Grid
                 xs={1}
-                sx={{ backgroundColor: "#2D519C" }}
+                // sx={{ backgroundColor: "#2D519C" }}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -69,18 +58,18 @@ export default function Home() {
               {/*GRID CENTRAL  - CONTEUDO PRINCIPAL */}
               <Grid
                 xs={10}
-                sx={{ backgroundColor: "#2D617D" }}
+                // sx={{ backgroundColor: "#2D617D" }}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
               >
-                <h1>{t("Home")}</h1>
+                <img src={myImage} alt="Home" style={{ maxWidth: "100%", height: "auto" }} />
               </Grid>
 
               {/* GRID DIREITA */}
               <Grid
                 xs={1}
-                sx={{ backgroundColor: "#2D720C" }}
+                // sx={{ backgroundColor: "#2D720C" }}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -90,7 +79,7 @@ export default function Home() {
             {/* GRID BOTTON */}
             <Grid
               xs={12}
-              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+              sx={{ backgroundColor: "", height: "150px" }}
               display="flex"
               justifyContent="center"
               alignItems="center"
