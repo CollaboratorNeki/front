@@ -5,18 +5,24 @@ import {  useTheme } from '../../themes/Dark';
 import TranslateIcon from '@mui/icons-material/Translate';
 import i18n from '../../i18n';
 
+
+
+//variaveis que definem o valor max e min da fonte 
+const MinFontSize = 10
+const MaxFontSize = 28
+
 //Função para aumentar e diminuir a fonte, no selectors passar os elementos que quer aumentar e diminuir da pagina
 function handleFontSize(updateValue) {
-    const selectors = "h1, span";
-    let elements = document.querySelectorAll(selectors);
-    elements.forEach((element) => {
-      let currentFontSize = window.getComputedStyle(element).fontSize;
-      let newFontSize = parseInt(currentFontSize) + updateValue;
-      element.style.fontSize = `${newFontSize}px`;
-      
-
-    })
-  }
+  const selectors = "h1, span";
+  let elements = document.querySelectorAll(selectors);
+  elements.forEach((element) => {
+      let currentFontSize = parseInt(window.getComputedStyle(element).fontSize);
+      let newFontSize = currentFontSize + updateValue;
+      if (newFontSize >= MinFontSize && newFontSize <= MaxFontSize) {
+          element.style.fontSize = `${newFontSize}px`;
+      }
+  });
+}
 
 
 
@@ -29,7 +35,7 @@ function Accessibility() {
   };
 
 
-
+//função pro botão alternar o tema
   const ToggleButton = () => {
     const { toggleTheme } = useTheme();
     return (
@@ -39,14 +45,10 @@ function Accessibility() {
         </button>
       
     );
-// const HandleMenus = () => {
- 
-
-// }
 
   };
-
-
+  
+  
   return(
      <div className='divAccessibility'>
         {/* os botoes de acessibilidade e incrementa a função de aumento e diminuição de fonte */}

@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack"; // Importar Stack para layout dos botões
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-
+import Logo from '../../assets/logo-neki-int-branco-PNG.png'
 
 // Estilo do modal
 const style = {
@@ -35,7 +35,9 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
         aria-labelledby="modal-modal-title" // ID do elemento que descreve o título do modal
         aria-describedby="modal-modal-description" // ID do elemento que descreve o conteúdo do modal
       >
+       
         <Box sx={style}>
+        <img src={Logo} style={{width: "50px", height: "50px",margin:"-10px"}} ></img>
           <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontSize: "24px", mt: 3, mb: 5 }}>
             Cadastros
           </Typography>
@@ -44,7 +46,7 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
           </Typography>
           {/* Início da seção modificada */}
           <Stack spacing={3}>
-            
+     
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               Clientes
             </Button>
