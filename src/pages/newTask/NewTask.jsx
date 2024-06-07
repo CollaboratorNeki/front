@@ -10,7 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export default function NewTask() {
   const { t } = useTranslation();
-  const [drawerOpen, setDrawerOpen] = useState(false); // funcao para ajustar tela se a drawer estiver aberta ou fechada
+  const [drawerOpen, setDrawerOpen] = useState(true); // funcao para ajustar tela se a drawer estiver aberta ou fechada
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -22,7 +22,7 @@ export default function NewTask() {
     <>
       <Box sx={{ display: "flex", width: "98vw", height: "90vh" }}>
 
-        <Navegaçao
+      <Navegaçao
           drawerOpen={drawerOpen}
           handleDrawerToggle={handleDrawerToggle}
         />
