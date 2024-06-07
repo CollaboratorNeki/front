@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack"; // Importar Stack para layout dos botões
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import Logo from '../../assets/logo-neki-int-branco-PNG.png'
+import { useTranslation } from "react-i18next";
 
 // Estilo do modal
 const style = {
@@ -26,6 +27,8 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
   const navigate = useNavigate(); // Criar função de navegação
   // Função para fechar o modal
   const handleClose = () => setModalOpen(false);
+  //função para possibilitar a tradução
+  const {t} = useTranslation();
 
   return (
     <div>
@@ -39,7 +42,7 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
         <Box sx={style}>
         <img src={Logo} style={{width: "50px", height: "50px",margin:"-10px"}} ></img>
           <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontSize: "24px", mt: 3, mb: 5 }}>
-            Cadastros
+            {t("Cadastros")}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2 }}>
             {/* Aqui ficam os cadastros. */}
@@ -48,28 +51,28 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
           <Stack spacing={3}>
      
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Clientes
+              {t("Clientes")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Tipos de Custos Extras
+              {t("Tipos de Custos Extras")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Tecnologia
+              {t("Tecnologia")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Funções
+              {t("Funções")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Motivos de Eventos
+              {t("Motivos de Eventos")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Mensagens
+              {t("Mensagens")}
             </Button>
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              ALM
+              {t("ALM")}
             </Button>
             <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
-              Pagina Inicial
+              {t("Pagina Inicial")}
             </Button>
           </Stack>
           {/* Fim da seção modificada */}

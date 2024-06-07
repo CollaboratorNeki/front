@@ -10,7 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export default function NewTask() {
   const { t } = useTranslation();
-  const [drawerOpen, setDrawerOpen] = useState(true); // funcao para ajustar tela se a drawer estiver aberta ou fechada
+  const [drawerOpen, setDrawerOpen] = useState(false); // funcao para ajustar tela se a drawer estiver aberta ou fechada
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -21,6 +21,7 @@ export default function NewTask() {
   return (
     <>
       <Box sx={{ display: "flex", width: "98vw", height: "90vh" }}>
+
         <Navegaçao
           drawerOpen={drawerOpen}
           handleDrawerToggle={handleDrawerToggle}
@@ -36,6 +37,7 @@ export default function NewTask() {
             transition: "margin-left 0.3s ease",
           }}
         >
+        
           {/* <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -50,7 +52,7 @@ export default function NewTask() {
             {/* GRID TOP */}
             <Grid
               xs={12}
-              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+
               display="flex"
               justifyContent="center"
               alignItems="center"
@@ -60,27 +62,27 @@ export default function NewTask() {
               {/* GRID LEFT */}
               <Grid
                 xs={1}
-                sx={{ backgroundColor: "#2D519C" }}
+
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
               ></Grid>
-
+             
               {/*GRID CENTRAL  - CONTEUDO PRINCIPAL */}
               <Grid
                 xs={10}
-                sx={{ backgroundColor: "#2D617D" }}
+
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
               >
-                <h1>{t("Home")}</h1>
-              </Grid>
 
+              </Grid>
+              <h1>Nova Tarefa</h1>
               {/* GRID DIREITA */}
               <Grid
                 xs={1}
-                sx={{ backgroundColor: "#2D720C" }}
+
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
@@ -90,7 +92,7 @@ export default function NewTask() {
             {/* GRID BOTTON */}
             <Grid
               xs={12}
-              sx={{ backgroundColor: "#2D939C", height: "150px" }}
+
               display="flex"
               justifyContent="center"
               alignItems="center"
