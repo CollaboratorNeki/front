@@ -459,7 +459,7 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
         <TablePagination
-          sx={{ background: "linear-gradient(to bottom, #2d939c, #68C7CF)" }}
+          sx={{ background: "linear-gradient(to top, #2d939c, #68C7CF)" }}
           rowsPerPageOptions={[7, 10, 25]}
           component="div"
           count={filteredRows.length}

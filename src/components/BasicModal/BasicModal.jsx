@@ -41,6 +41,8 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
        
         <Box sx={style}>
         <img src={Logo} style={{width: "50px", height: "50px",margin:"-10px"}} ></img>
+            <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ '&:hover': {backgroundImage:"linear-gradient(to bottom , #2d939c, #68C7CF)", color: '#2c6b85' }, borderRadius: "100px", backgroundImage:"linear-gradient(to bottom , #2d939c, #68C7CF)", color: "#fff", height: "30px", fontSize: "20px", textTransform: "none", marginLeft:"250px" }} > {t("X")} 
+            </Button>     
           <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontSize: "24px", mt: 3, mb: 5 }}>
             {t("Cadastros")}
           </Typography>
@@ -49,29 +51,29 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
           </Typography>
           {/* Início da seção modificada */}
           <Stack spacing={3}>
-     
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+          
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Clientes")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Tipos de Custos Extras")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Tecnologia")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Funções")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Motivos de Eventos")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Mensagens")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("ALM")}
             </Button>
-            <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#3c52b2' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ '&:hover': {backgroundImage:"linear-gradient(to top , #2d939c, #68C7CF)", color: '#2c6b85' }, borderRadius: "2px", backgroundImage:"linear-gradient(to bottom , #2d939c, #68C7CF)", color: "#fff", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Pagina Inicial")}
             </Button>
           </Stack>
