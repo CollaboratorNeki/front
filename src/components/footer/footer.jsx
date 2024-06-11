@@ -7,58 +7,57 @@ const FooterContainer = styled.footer`
   background: linear-gradient(to top,#2d939c, #68C7CF) ;
   color: #fff;
   padding: 10px 0;
-  text-align: center;
   position: absolute;
   bottom: 0;
   width: 100%;
   z-index: 4;
-
+  text-align: center;
+  
   @media (max-width: 768px) {
     padding: 10px 0;
   }
-`;
-
-const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 160px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  `;
   
+  const FooterContent = styled.div`
+  max-width: 1200px,
+  margin: 0 auto,
+  text-align: center,
+  display: flex,
+  align-items: center,
+ 
 
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    text-align: center;
-  }
-`;
-
-const FooterLinks = styled.div`
+  `;
+  
+  const FooterLinks = styled.div`
   display: flex;
   gap: 15px;
-
+  
   @media (max-width: 768px) {
     margin-top: 10px;
   }
-`;
-
-const FooterLink = styled.a`
+  `;
+  
+  const FooterLink = styled.a`
   color: #fff;
   text-decoration: none;
-
+  
   &:hover {
     text-decoration: underline;
   }
-`;
-
-const Footer = () => {
-  return (
-    <FooterContainer  >
+  @media (max-width: 768px) {
+  flex-direction: column;
+  text-align: center;
+  }
+  `;
+  
+  const Footer = () => {
+    return (
+      <FooterContainer  >
       <FooterContent>
       
         
-        <div><p>Copyright NEKI 2024. Todos os direitos reservados. Desenvolvido por curso desenvolvedor FullStack Serratec/Senac.</p></div>
+        <div><p>Copyright NEKI 2024. Todos os direitos reservados.</p></div>
       
       </FooterContent>
     </FooterContainer>

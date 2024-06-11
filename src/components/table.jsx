@@ -26,31 +26,29 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(id, name, calories, fat, carbs, protein) {
+function createData(id, name, description, status) {
   return {
     id,
     name,
-    calories,
-    fat,
-    carbs,
-    protein,
+    description,
+    status,
   };
 }
 
 const initialRows = [
-  createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-  createData(2, 'Donut', 452, 25.0, 51, 4.9),
-  createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-  createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-  createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-  createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-  createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-  createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-  createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-  createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-  createData(13, 'Oreo', 437, 18.0, 63, 4.0),
+  createData(1, 'Cupcake', 'A small cake', 'Available'),
+  createData(2, 'Donut', 'A ring-shaped fried cake', 'Out of Stock'),
+  createData(3, 'Eclair', 'A pastry filled with cream', 'Available'),
+  createData(4, 'Frozen yoghurt', 'A frozen dessert made with yogurt', 'Available'),
+  createData(5, 'Gingerbread', 'A cake flavored with ginger', 'Out of Stock'),
+  createData(6, 'Honeycomb', 'A dessert made from honey and sugar', 'Available'),
+  createData(7, 'Ice cream sandwich', 'Ice cream between two cookies', 'Out of Stock'),
+  createData(8, 'Jelly Bean', 'A small bean-shaped candy', 'Available'),
+  createData(9, 'KitKat', 'A chocolate-covered wafer bar', 'Available'),
+  createData(10, 'Lollipop', 'A hard candy on a stick', 'Out of Stock'),
+  createData(11, 'Marshmallow', 'A soft, chewy candy', 'Available'),
+  createData(12, 'Nougat', 'A sweet made from sugar and nuts', 'Out of Stock'),
+  createData(13, 'Oreo', 'A chocolate cookie with cream filling', 'Available'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -86,37 +84,25 @@ const headCells = [
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Nome',
   },
   {
-    id: 'calories',
-    numeric: true,
+    id: 'description',
+    numeric: false,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Descrição',
   },
   {
-    id: 'fat',
-    numeric: true,
+    id: 'status',
+    numeric: false,
     disablePadding: false,
-    label: 'Fat (g)',
-  },
-  {
-    id: 'carbs',
-    numeric: true,
-    disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
+    label: 'Status',
   },
   {
     id: 'actions',
     numeric: false,
     disablePadding: false,
-    label: 'Actions',
+    label: 'Ação',
   },
 ];
 
@@ -244,29 +230,25 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('name');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState(initialRows);
   const [open, setOpen] = React.useState(false);
   const [editOpen, setEditOpen] = React.useState(false);
   const [newItem, setNewItem] = React.useState({
     id: initialRows.length + 1,
     name: '',
-    calories: '',
-    fat: '',
-    carbs: '',
-    protein: '',
+    description: '',
+    status: '',
   });
   const [editItem, setEditItem] = React.useState({
     id: '',
     name: '',
-    calories: '',
-    fat: '',
-    carbs: '',
-    protein: '',
+    description: '',
+    status: '',
   });
   const [filterText, setFilterText] = React.useState('');
 
@@ -318,73 +300,80 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const handleAddItem = () => {
+    setNewItem({
+      id: rows.length + 1,
+      name: '',
+      description: '',
+      status: '',
+    });
+    setOpen(true);
+  };
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const handleEditOpen = (row) => {
+  const handleEditItem = (row) => {
     setEditItem(row);
     setEditOpen(true);
   };
-  const handleEditClose = () => setEditOpen(false);
 
-  const handleAddItem = () => {
-    setRows((prevRows) => [...prevRows, { ...newItem, id: prevRows.length + 1 }]);
-    setNewItem({
-      id: rows.length + 2,
-      name: '',
-      calories: '',
-      fat: '',
-      carbs: '',
-      protein: '',
-    });
-    handleClose();
+  const handleSaveItem = () => {
+    setRows([...rows, newItem]);
+    setOpen(false);
   };
 
-  const handleEditItem = () => {
-    setRows((prevRows) =>
-      prevRows.map((row) => (row.id === editItem.id ? editItem : row))
+  const handleSaveEditItem = () => {
+    const updatedRows = rows.map((row) =>
+      row.id === editItem.id ? editItem : row
     );
-    handleEditClose();
+    setRows(updatedRows);
+    setEditOpen(false);
   };
 
-  const handleNewItemChange = (e) => {
-    const { name, value } = e.target;
-    setNewItem((prevNewItem) => ({
-      ...prevNewItem,
-      [name]: value,
-    }));
+  const handleCancelEdit = () => {
+    setEditOpen(false);
   };
 
-  const handleEditItemChange = (e) => {
-    const { name, value } = e.target;
-    setEditItem((prevEditItem) => ({
-      ...prevEditItem,
-      [name]: value,
-    }));
+  const handleDeleteItems = () => {
+    const updatedRows = rows.filter((row) => !selected.includes(row.name));
+    setRows(updatedRows);
+    setSelected([]);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleFilterTextChange = (event) => {
     setFilterText(event.target.value);
   };
 
-  const filteredRows = rows.filter((row) => {
-    return row.name.toLowerCase().includes(filterText.toLowerCase());
-  });
+  const filteredRows = rows.filter((row) =>
+    row.name.toLowerCase().includes(filterText.toLowerCase())
+  );
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  const visibleRows = stableSort(filteredRows, getComparator(order, orderBy))
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} onAddItem={handleOpen} filterText={filterText} onFilterTextChange={handleFilterTextChange} />
-        <TableContainer sx={{ height: 500 }}>
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          onAddItem={handleAddItem}
+          filterText={filterText}
+          onFilterTextChange={handleFilterTextChange}
+        
+        />
+        <TableContainer sx={{ maxHeight: "60vh"}}>
           <Table
-            sx={{ minWidth: 750 }}
+            stickyHeader
+            sx={{ minWidth: { xs: '100%', sm: 400, md: 750 } }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={dense ? 'medium' : 'small'}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -392,75 +381,72 @@ export default function EnhancedTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={filteredRows.length}
             />
             <TableBody>
-              {stableSort(filteredRows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+              {visibleRows.map((row, index) => {
+                const isItemSelected = isSelected(row.name);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
-                      sx={{ 
-                        backgroundColor: index % 2 === 0 ? '#F5F5F5' : '#FFFFFF', 
-                        '&.Mui-selected': {
-                          backgroundColor: '#B2DFDB !important',
-                        },
-                      }}
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.name)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isItemSelected}
+                        inputProps={{
+                          'aria-labelledby': labelId,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
-                      <TableCell align="right">
-                        <IconButton onClick={() => handleEditOpen(row)}>
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                    <TableCell>
+                      <Tooltip title="Edit">
+                        <IconButton onClick={() => handleEditItem(row)}>
                           <EditIcon />
                         </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton onClick={handleDeleteItems}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
                     height: (dense ? 33 : 53) * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={10} />
                 </TableRow>
               )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          sx={{ background: "linear-gradient(to top, #2d939c, #68C7CF)" }}
-          rowsPerPageOptions={[7, 10, 25]}
+         style={{background: "linear-gradient(to bottom, #2d939c, #68C7CF)"}}
+          rowsPerPageOptions={[10, 15, 25]}
           component="div"
           count={filteredRows.length}
           rowsPerPage={rowsPerPage}
@@ -473,13 +459,10 @@ export default function EnhancedTable() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+
+      <Modal open={open} onClose={handleClose}>
         <Box
+          component="form"
           sx={{
             position: 'absolute',
             top: '50%',
@@ -492,65 +475,52 @@ export default function EnhancedTable() {
             p: 4,
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography variant="h6" component="h2">
             Add New Item
           </Typography>
           <TextField
-            name="name"
+            margin="normal"
+            required
+            fullWidth
             label="Name"
             value={newItem.name}
-            onChange={handleNewItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
+            onChange={(e) =>
+              setNewItem({ ...newItem, name: e.target.value })
+            }
           />
           <TextField
-            name="calories"
-            label="Calories"
-            value={newItem.calories}
-            onChange={handleNewItemChange}
+            margin="normal"
+            required
             fullWidth
-            sx={{ mt: 2 }}
+            label="Description"
+            value={newItem.description}
+            onChange={(e) =>
+              setNewItem({ ...newItem, description: e.target.value })
+            }
           />
           <TextField
-            name="fat"
-            label="Fat"
-            value={newItem.fat}
-            onChange={handleNewItemChange}
+            margin="normal"
+            required
             fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            name="carbs"
-            label="Carbs"
-            value={newItem.carbs}
-            onChange={handleNewItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            name="protein"
-            label="Protein"
-            value={newItem.protein}
-            onChange={handleNewItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
+            label="Status"
+            value={newItem.status}
+            onChange={(e) =>
+              setNewItem({ ...newItem, status: e.target.value })
+            }
           />
           <Button
             variant="contained"
-            onClick={handleAddItem}
-            sx={{ mt: 2, backgroundColor:"#2D939C", border: "2px solid black" }}
+            onClick={handleSaveItem}
+            sx={{ mt: 3, mb: 2 }}
           >
-            Add Item
+            Save
           </Button>
         </Box>
       </Modal>
-      <Modal
-        open={editOpen}
-        onClose={handleEditClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+
+      <Modal open={editOpen} onClose={handleCancelEdit}>
         <Box
+          component="form"
           sx={{
             position: 'absolute',
             top: '50%',
@@ -563,55 +533,45 @@ export default function EnhancedTable() {
             p: 4,
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography variant="h6" component="h2">
             Edit Item
           </Typography>
           <TextField
-            name="name"
+            margin="normal"
+            required
+            fullWidth
             label="Name"
             value={editItem.name}
-            onChange={handleEditItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
+            onChange={(e) =>
+              setEditItem({ ...editItem, name: e.target.value })
+            }
           />
           <TextField
-            name="calories"
-            label="Calories"
-            value={editItem.calories}
-            onChange={handleEditItemChange}
+            margin="normal"
+            required
             fullWidth
-            sx={{ mt: 2 }}
+            label="Description"
+            value={editItem.description}
+            onChange={(e) =>
+              setEditItem({ ...editItem, description: e.target.value })
+            }
           />
           <TextField
-            name="fat"
-            label="Fat"
-            value={editItem.fat}
-            onChange={handleEditItemChange}
+            margin="normal"
+            required
             fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            name="carbs"
-            label="Carbs"
-            value={editItem.carbs}
-            onChange={handleEditItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            name="protein"
-            label="Protein"
-            value={editItem.protein}
-            onChange={handleEditItemChange}
-            fullWidth
-            sx={{ mt: 2 }}
+            label="Status"
+            value={editItem.status}
+            onChange={(e) =>
+              setEditItem({ ...editItem, status: e.target.value })
+            }
           />
           <Button
             variant="contained"
-            onClick={handleEditItem}
-            sx={{ mt: 2, backgroundColor:"#2D939C", border: "2px solid black" }}
+            onClick={handleSaveEditItem}
+            sx={{ mt: 3, mb: 2 }}
           >
-            Save Changes
+            Save
           </Button>
         </Box>
       </Modal>
