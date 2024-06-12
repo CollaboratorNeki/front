@@ -61,16 +61,16 @@ export default function BasicModal({ modalOpen, setModalOpen }) {
             <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Tecnologia")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={() => navigate ('/pageFunction')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Funções")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={() => navigate ('/reasonEvent')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Motivos de Eventos")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={() => navigate ('/mensages')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("Mensagens")}
             </Button>
-            <Button variant="contained" color="primary" onClick={handleClose} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
+            <Button variant="contained" color="primary" onClick={() => navigate ('/alm')} sx={{ '&:hover': { backgroundColor: '#fff', color: '#267d87' }, borderRadius: "2px", backgroundColor: "#FAFAF9", color: "#57534E", height: "30px", fontSize: "20px", textTransform: "none" }}>
               {t("ALM")}
             </Button>
             <Button variant="contained" color="primary" onClick={() => navigate('/')} sx={{ '&:hover': {backgroundImage:"linear-gradient(to top , #2d939c, #68C7CF)", color: '#2c6b85' }, borderRadius: "2px", backgroundImage:"linear-gradient(to bottom , #2d939c, #68C7CF)", color: "#fff", height: "30px", fontSize: "20px", textTransform: "none" }}>
