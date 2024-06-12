@@ -26,6 +26,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { visuallyHidden } from '@mui/utils';
 
+//Função para criar linha de dados
 function createData(id, name, description, status) {
   return {
     id,
@@ -51,6 +52,7 @@ const initialRows = [
   createData(13, 'Oreo', 'A chocolate cookie with cream filling', 'Available'),
 ];
 
+// Função para comparar dois elementos e ordená-los em ordem descendente
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -61,12 +63,14 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
+// Função para obter o comparador correto com base na ordem e na coluna
 function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+// Função para ordenar um array de forma estável
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -79,6 +83,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+// Definição das colunas da tabela
 const headCells = [
   {
     id: 'mensages',
@@ -101,6 +106,7 @@ const headCells = [
   },
 ];
 
+// Componente para a cabeçalho da tabela
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
@@ -157,6 +163,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
+// Componente para a barra de ferramentas da tabela
 function EnhancedTableToolbar(props) {
   const { numSelected, onAddItem, filterText, onFilterTextChange } = props;
 
@@ -223,36 +230,39 @@ EnhancedTableToolbar.propTypes = {
   onFilterTextChange: PropTypes.func.isRequired,
 };
 
+// Componente principal da tabela
 export default function MensagesTable() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('name');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [rows, setRows] = React.useState(initialRows);
-  const [open, setOpen] = React.useState(false);
-  const [editOpen, setEditOpen] = React.useState(false);
-  const [newItem, setNewItem] = React.useState({
+  const [order, setOrder] = React.useState('asc'); // Estado para armazenar a ordem de classificação
+  const [orderBy, setOrderBy] = React.useState('name'); // Estado para armazenar a coluna a ser classificada
+  const [selected, setSelected] = React.useState([]); // Estado para armazenar as linhas selecionadas
+  const [page, setPage] = React.useState(0); // Estado para armazenar a página atual
+  const [dense, setDense] = React.useState(false); // Estado para controle da densidade da tabela
+  const [rowsPerPage, setRowsPerPage] = React.useState(10); // Estado para armazenar o número de linhas por página
+  const [rows, setRows] = React.useState(initialRows); // Estado para armazenar os dados da tabela
+  const [open, setOpen] = React.useState(false); // Estado para controlar a abertura do modal de adição de item
+  const [editOpen, setEditOpen] = React.useState(false); // Estado para controlar a abertura do modal de edição de item
+  const [newItem, setNewItem] = React.useState({ // Estado para armazenar os dados do novo item a ser adicionado
     id: initialRows.length + 1,
     mensage: '',
     
     type: '',
   });
-  const [editItem, setEditItem] = React.useState({
+  const [editItem, setEditItem] = React.useState({// Estado para armazenar os dados do item em edição
     id: '',
     mensage: '',
   
     type: '',
   });
-  const [filterText, setFilterText] = React.useState('');
+  const [filterText, setFilterText] = React.useState('');// Estado para armazenar o texto de filtro
 
+  // Função para lidar com a solicitação de classificação de coluna
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
+  // Função para lidar com o clique na seleção de todas as linhas
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
@@ -262,6 +272,7 @@ export default function MensagesTable() {
     setSelected([]);
   };
 
+  // Função para lidar com o clique em uma linha
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -282,19 +293,23 @@ export default function MensagesTable() {
     setSelected(newSelected);
   };
 
+  // Função para lidar com a mudança de página
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  // Função para lidar com a mudança do número de linhas por página
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  // Função para lidar com a mudança da densidade da tabela
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
 
+  // Função para abrir o modal de adição de item
   const handleAddItem = () => {
     setNewItem({
       id: rows.length + 1,
@@ -305,16 +320,19 @@ export default function MensagesTable() {
     setOpen(true);
   };
 
+  // Função para abrir o modal de edição de item
   const handleEditItem = (row) => {
     setEditItem(row);
     setEditOpen(true);
   };
 
+  // Função para salvar um novo item adicionado
   const handleSaveItem = () => {
     setRows([...rows, newItem]);
     setOpen(false);
   };
 
+  // Função para salvar um item editado
   const handleSaveEditItem = () => {
     const updatedRows = rows.map((row) =>
       row.id === editItem.id ? editItem : row
@@ -323,33 +341,41 @@ export default function MensagesTable() {
     setEditOpen(false);
   };
 
+  // Função para cancelar a edição de um item
   const handleCancelEdit = () => {
     setEditOpen(false);
   };
 
+  // Função para lidar com a exclusão de itens selecionados
   const handleDeleteItems = () => {
     const updatedRows = rows.filter((row) => !selected.includes(row.name));
     setRows(updatedRows);
     setSelected([]);
   };
 
+  // Função para fechar o modal de adição de item
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Função para lidar com a mudança no texto de filtro
   const handleFilterTextChange = (event) => {
     setFilterText(event.target.value);
   };
 
+   // Filtragem das linhas com base no texto de filtro
   const filteredRows = rows.filter((row) =>
     row.name.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  // Cálculo do número de linhas vazias a serem exibidas
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredRows.length) : 0;
 
+     // Função para verificar se uma linha está selecionada
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  // Ordenação e paginação das linhas visiveis
   const visibleRows = stableSort(filteredRows, getComparator(order, orderBy))
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
