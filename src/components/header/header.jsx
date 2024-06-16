@@ -11,7 +11,7 @@ export default function ButtonAppBar() {
     <Box sx={{ flexGrow: 1 }}>
      
       
-      <AppBar position="absolute" style={{"backgroundImage": "linear-gradient(to bottom , #2d939c, #68C7CF"        
+      <AppBar position="absolute" style={{"backgroundImage": "linear-gradient(to bottom , #2d939c, #68C7CF)"        
       }}>
 
         <Toolbar style={{"display":"flex","flexDirection":"row-reverse"}}>

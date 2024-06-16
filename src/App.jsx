@@ -12,6 +12,10 @@ import ButtonAppBar from './components/header/header'
 import { CustomThemeProvider, useTheme } from './themes/Dark';
 import { CssBaseline } from '@mui/material'
 import Footer from './components/footer/footer'
+import Alm from './pages/alm/alm'
+import Mensages from './pages/mensages/mensages'
+import ReasonEvents from './pages/reasonEvent/reasonEvent'
+import Function from './pages/pageFunction/pageFunction'
 
 
 
@@ -32,6 +36,10 @@ function App() {
           <Route path='/registrations' exact element={<Registrations />}></Route>
           <Route path='/about' exact element={<About />}></Route>
           <Route path='/settings' exact element={<Settings />}></Route>
+          <Route path='/alm' exact element={<Alm/>}></Route>
+          <Route path='/mensages' exact element={<Mensages/>}></Route>
+          <Route path='/reasonEvent' exact element={<ReasonEvents/>}></Route>
+          <Route path='/pageFunction' exact element={<Function/>}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
