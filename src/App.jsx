@@ -34,7 +34,7 @@ function App() {
           <Route path='/newTask' exact element={<NewTask />}></Route>
           <Route path='/reports' exact element={<Reports />}></Route>
           <Route path='/registrations' exact element={<Registrations />}></Route>
-          <Route path='/about' exact element={<About />}></Route>
+          <Route path='/about'  element={<About />}></Route>
           <Route path='/settings' exact element={<Settings />}></Route>
           <Route path='/alm' exact element={<Alm/>}></Route>
           <Route path='/mensages' exact element={<Mensages/>}></Route>

@@ -30,11 +30,27 @@ export const updateEventReason = async (eventReasonId, updatedData) => {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Função assíncrona para obter todos os motivos de eventos
 export const getAllEventReason = async () => {
+    console.log("eeee");
     try {
         const eventReasons = []; // Inicializa uma array vazia para armazenar os motivos de eventos
-        const res = await api.get("/"); // Faz uma requisição GET para a API para obter todos os motivos de eventos
+        const res = await api.get("/event_reason/listar"); // Faz uma requisição GET para a API para obter todos os motivos de eventos
+        console.log(res);
         for(let eventReasonId in res.data){ // Itera sobre os dados retornados pela API
             eventReasons.push({ // Adiciona um novo objeto à array 'eventReasons' com o ID e os dados do motivo de evento
                 id: eventReasonId,
