@@ -15,6 +15,7 @@ import "./App.css";
 import Accessibility from "./components/accessibility/accessibility";
 import ThemeToggleButton from './components/ThemeToggleButton';
 import Clients from './pages/Clients/Clients';
+import Tech from './pages/Tech/Tech';
 
 
 const { Content, Header, Sider, Footer } = Layout;
@@ -94,6 +95,7 @@ const App = () => {
               <Route path="/Function" element={<Function />} />
               <Route path="/Messages" element={<Messages />} />
               <Route path="/Clients"element={<Clients/>}/> 
+              <Route path="/Tech"element={<Tech/>}/> 
               <Route path="*" element={<PageNotFound />} />
               <Route path="/Registrations" element={<Registrations />} />
             </Routes>

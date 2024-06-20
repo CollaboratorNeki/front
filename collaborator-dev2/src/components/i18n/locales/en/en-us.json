@@ -25,7 +25,8 @@
      "Tipo":"Type",
      "Senha":"Password",
      "Telefone":"Phone",
-     "Código Externo":"External Code"
+     "Código Externo":"External Code",
+     "Versão":"Version"
     
     }
     

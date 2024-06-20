@@ -64,7 +64,7 @@ const BasicModal = ({ modalOpen, setModalOpen }) => {
         <Button
           type="text"
           aria-label='botão para acessar página de tecnologia'
-          onClick={handleClose}
+          onClick={() => handleNavigate('/Tech')}
           style={{ marginBottom: '16px', width: '100%' }}
         >
           {t("Tecnologia")}
