@@ -23,7 +23,9 @@
      "Descrição":"Description",
      "Ação":"Action",
      "Tipo":"Type",
-     "Senha":"Password"
+     "Senha":"Password",
+     "Telefone":"Phone",
+     "Código Externo":"External Code"
     
     }
     

@@ -23,7 +23,9 @@
      "Descrição":"Descrição",
      "Ação":"Ação",
      "Senha":"Senha",
-     "Tipo":"Tipo"
+     "Tipo":"Tipo",
+     "Telefone":"Telefone",
+     "Código Externo":"Código"
      
 
     }

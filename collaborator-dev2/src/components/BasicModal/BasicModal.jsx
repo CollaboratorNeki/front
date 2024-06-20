@@ -46,7 +46,7 @@ const BasicModal = ({ modalOpen, setModalOpen }) => {
         <Button
           type="text"
           aria-label='botão para acessar página clientes'
-          onClick={handleClose}
+          onClick={() => handleNavigate('/Clients')}
           style={{ marginBottom: '16px', width: '100%' }}
         >
           {t("Clientes")}

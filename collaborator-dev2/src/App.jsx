@@ -14,6 +14,7 @@ import { Layout, Button } from 'antd';
 import "./App.css";
 import Accessibility from "./components/accessibility/accessibility";
 import ThemeToggleButton from './components/ThemeToggleButton';
+import Clients from './pages/Clients/Clients';
 
 
 const { Content, Header, Sider, Footer } = Layout;
@@ -92,7 +93,7 @@ const App = () => {
               <Route path="/EventReason" element={<EventReason />} />
               <Route path="/Function" element={<Function />} />
               <Route path="/Messages" element={<Messages />} />
-
+              <Route path="/Clients"element={<Clients/>}/> 
               <Route path="*" element={<PageNotFound />} />
               <Route path="/Registrations" element={<Registrations />} />
             </Routes>
