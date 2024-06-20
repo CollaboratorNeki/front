@@ -10,7 +10,6 @@ import Home from './pages/Home/Home';
 import Function from './pages/Function/Function';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Registrations from './pages/Registrations/Registrations';
-import ToggleThemeButton from './components/ToggleThemeButton';
 import { Layout, Button } from 'antd';
 import "./App.css";
 import Accessibility from "./components/accessibility/accessibility";
