@@ -112,18 +112,25 @@ const TableEventReason = () => {
   };
 
   // Função para salvar as edições
-  const handleEdit = async () => {
+  const handleEdit = async (values) => {
+    console.log(values)
     try {
       const values = await form.validateFields();
       form.resetFields();
       setIsEditModalVisible(false);
-  
+
+      
       // Verifica se 'statusEvent' está presente e não é vazio
-      if (!values.statusEvent) {
-        throw new Error("statusEvent' is required");
-      }
+      // if (cadastro.status) {
+      //   throw new Error("status' is required");
+      // }
   
       // Atualiza localmente os dados na tabela
+      const updateItem = {
+        ...values,
+        // statusEvent: status,
+      }
+      console.log("values console",updateItem)
       const updatedData = data.map(item =>
         item.key === editingItem.key ? { ...item, ...values } : item
       );
@@ -131,7 +138,7 @@ const TableEventReason = () => {
       setFilteredData(updatedData);
       setEditingItem(null);
 
-      await api.put(`/atualizar/${idEventReason}`);
+      await api.put(`/atualizar/${editingItem.key}`,updateItem );
       console.log('Dados atualizados no backend com sucesso!');
         
     } catch (error) {
@@ -152,10 +159,10 @@ const TableEventReason = () => {
   
 
   // Função para deletar um item
-  const handleDelete = async (record) => {
+  const handleDelete = async (id) => {
     //  console.log(record.id);
     try {
-      const response = await deleteEvent(record.id);
+      const response = await deleteEvent(id);
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +171,9 @@ const TableEventReason = () => {
   };
 
 // lógica do switch de status
+
 const onChangeSwitch = (checked) => {
+  console.log(checked)
   setCadastro({ ...cadastro, status: checked });
   checked ? setStatus(false) : setStatus(true);
 };
@@ -203,7 +212,9 @@ const onChangeSwitch = (checked) => {
       render: (_, record) => (
         <Space size="middle">
         <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
-        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
+        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => {
+          console.log("record",record)
+          handleDelete(record.key)}}>
           <Button><MdDeleteForever/></Button>
         </Popconfirm>
       </Space>
@@ -278,7 +289,7 @@ const onChangeSwitch = (checked) => {
             onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}/>
           </Form.Item>
           <Form.Item name="statusEvent" label="Status"> 
-            <Switch onChange={() => onChangeSwitch(status)}/>
+            <Switch onChange={(checked) => onChangeSwitch(checked)}/>
             { status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
          
@@ -311,8 +322,8 @@ const onChangeSwitch = (checked) => {
           </Form.Item>
          
           <Form.Item name="statusEvent" label="Status"> 
-          <Switch onChange={() => onChangeSwitch(status)}/>
-          { status ? <p>Inativo</p> : <p>Ativo</p>}
+          <Switch onChange={(status)=> setStatus(status)}/>
+          { !status ? <p>Inativo</p> : <p>Ativo</p>}
         </Form.Item>
           
         </Form>
