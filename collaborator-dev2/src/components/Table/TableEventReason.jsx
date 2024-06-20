@@ -4,6 +4,7 @@ import "./Table.css"; // Importa estilos CSS
 import api from '../../services/api'; // Importa a configuração do Axios
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 const { useBreakpoint } = Grid; // Hook para detectar breakpoints
 const { Search } = Input; // Componente de entrada com funcionalidade de pesquisa
@@ -14,6 +15,7 @@ const defaultFooter = () => 'Here is footer'; // Função para rodapé padrão d
 const TableEventReason = () => {
   const screens = useBreakpoint(); // Detecta o tamanho da tela
   const isSmallScreen = screens.xs; // Define se a tela é pequena
+  const { t } = useTranslation();
 
   // Estados para gerenciar dados e UI
   const [searchText, setSearchText] = useState('');
@@ -180,12 +182,12 @@ const onChangeSwitch = (checked) => {
   // Define as colunas da tabela
   const columns = [
     {
-      title: 'Nome',
+      title: t("Nome"),
       dataIndex: 'name',
       width: 150,
     },
     {
-      title: 'Descrição',
+      title: t("Descrição"),
       dataIndex: 'description',
       width: 80,
     },
@@ -206,7 +208,7 @@ const onChangeSwitch = (checked) => {
       onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
-      title: 'Ação',
+      title: t("Ação"),
       key: 'action',
       width: 150,
       render: (_, record) => (
@@ -244,7 +246,7 @@ const onChangeSwitch = (checked) => {
           backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
         <Button type="primary" onClick={showAddModal}>
-          Cadastrar
+        {t("Cadastrar")}
         </Button>
       </Space>
       <Table

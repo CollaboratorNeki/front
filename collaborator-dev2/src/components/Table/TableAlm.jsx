@@ -299,7 +299,7 @@ const TableAlm = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          Cadastrar
+          {t("Cadastrar")}
         </Button>
       </Space>
 
