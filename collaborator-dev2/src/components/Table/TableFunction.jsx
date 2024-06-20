@@ -6,6 +6,7 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
+import { useTranslation } from 'react-i18next';
 
 const initialData = [];
 // for (let i = 1; i <= 10; i++) {
@@ -22,10 +23,12 @@ const defaultTitle = () => 'Funçao';
 const defaultFooter = () => 'Aqui é o footer';
 
 
+
 // Componente de tabela
 const TableFunction = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
+  const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(initialData);
@@ -142,13 +145,13 @@ const TableFunction = () => {
   // esse array é para definir as colunas da tabela
   const columns = [
     {
-      title: 'Nome',
+      title: t("Nome"),
       dataIndex: 'nome',
       sorter: (a, b) => a.nome - b.nome,
       width: 200,
     },
     {
-      title: 'Descrição',
+      title: t("Descrição"),
       dataIndex: 'descricao',
     
       width: 200,
@@ -170,7 +173,7 @@ const TableFunction = () => {
       onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
-      title: 'Ação',
+      title: t("Ação"),
       key: 'acao',
       width: 150,
       render: (_, record) => (
@@ -211,7 +214,7 @@ const TableFunction = () => {
           onSearch={handleSearch}
         />
         <Button type="primary" onClick={showAddModal}>
-          Cadastrar
+        {t("Cadastrar")}
         </Button>
       </Space>
 

@@ -16,6 +16,7 @@ import './Table.css';
 import { deleteAlm } from '../../services/almService';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
@@ -31,6 +32,7 @@ const TableAlm = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const [searchText, setSearchText] = useState('');
+  const { t } = useTranslation();
   //usando esse use state para guardar os dados da listagem da tabela
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -181,7 +183,7 @@ const TableAlm = () => {
       width: 50,
     },
     {
-      title: 'Nome',
+      title: t("Nome"),
       dataIndex: 'nome',
       key: 'nomeAlm',
       width: 150,
@@ -199,13 +201,13 @@ const TableAlm = () => {
       width: 150,
     },
     {
-      title: 'Senha',
+      title: t("Senha"),
       dataIndex: 'senha',
       key: 'senhaAlm',
       width: 150,
     },
     {
-      title: 'Tipo',
+      title: t("Tipo"),
       dataIndex: 'tipo',
       key: 'tipoAlm',
       width: 150,
@@ -249,7 +251,7 @@ const TableAlm = () => {
 
     // pop up para deletar o item pelo botão editar
     {
-      title: 'Ação',
+      title: t("Ação"),
       key: 'acao',
       width: 150,
       // o parametro record é a linha da tabela e os dados correspondentes
