@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { storeRole, getRole } from '../../services/roleService';
 import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm, Switch, } from 'antd';
 import './Table.css';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
@@ -17,7 +19,7 @@ const initialData = [];
 // }
 
 const defaultTitle = () => 'Funçao';
-const defaultFooter = () => '';
+const defaultFooter = () => 'Aqui é o footer';
 
 
 // Componente de tabela
@@ -173,11 +175,11 @@ const TableFunction = () => {
       width: 150,
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}>Editar</Button>
-          <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
-            <a>Deletar</a>
-          </Popconfirm>
-        </Space>
+        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
+        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
+          <Button><MdDeleteForever/></Button>
+        </Popconfirm>
+      </Space>
       ),
     },
   ];

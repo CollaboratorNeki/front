@@ -1,41 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm } from 'antd';
-import "./Table.css"
-import api from '../../services/api';
+import React, { useState, useEffect } from 'react'; // Importa React e hooks necessários
+import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm, Switch } from 'antd'; // Importa componentes do Ant Design
+import "./Table.css"; // Importa estilos CSS
+import api from '../../services/api'; // Importa a configuração do Axios
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
 
-const { useBreakpoint } = Grid;
-const { Search } = Input;
+const { useBreakpoint } = Grid; // Hook para detectar breakpoints
+const { Search } = Input; // Componente de entrada com funcionalidade de pesquisa
 
-// const initialData = [];
-// for (let i = 1; i <= 10; i++) {
-//   initialData.push({
-//     key: i,
-//     name: 'John Brown',
-//     age: Number(`${i}2`),
-//     address: `New York No. ${i} Lake Park`,
-//     description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-//   });
-// }
-
-const defaultTitle = () => 'Motivos de Eventos';
-const defaultFooter = () => 'Here is footer';
+const defaultTitle = () => 'Motivos de Eventos'; // Função para título padrão da tabela
+const defaultFooter = () => 'Here is footer'; // Função para rodapé padrão da tabela
 
 const TableEventReason = () => {
-  const screens = useBreakpoint();
-  const isSmallScreen = screens.xs; // Consider xs as small screen
+  const screens = useBreakpoint(); // Detecta o tamanho da tela
+  const isSmallScreen = screens.xs; // Define se a tela é pequena
 
+  // Estados para gerenciar dados e UI
   const [searchText, setSearchText] = useState('');
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const [form] = Form.useForm();
-
+  const [form] = Form.useForm(); // Hook do Ant Design para gerenciar formulários
+  const [cadastro, setCadastro] = useState({
+    nome: '',
+    descricao: '',
+    status: '',
+  });
+  const [status, setStatus] = useState(false);
+  // useEffect para buscar dados ao carregar o componente
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get('/event_reason/listar');
+        const response = await api.get('/event_reason/listar'); // Faz a requisição para a API
         const data = response.data.map((item, index) => ({
           key: index + 1,
           name: item.nome,
@@ -52,86 +50,133 @@ const TableEventReason = () => {
     fetchData();
   }, []);
 
+   const storeEvent = async (itemEvent) => {
+    console.log('chamando a api para cadastrar Event');
+    try {
+      const response = await api.post('/event_reason/salvar', itemEvent);
+      console.log(response);
+      alert('Event cadastrado com sucesso');
+    } catch (error) {
+      console.log('Erro post Event: ', error);
+    }
+  };
+  
+   // Função para adicionar um novo item
+   const handleAdd = () => {
+   
+    if(
+      cadastro.nome !== '' &&
+      cadastro.descricao !== '' 
+    ){
+    return storeEvent(cadastro);
+    }
+    
+  
+    return alert('Preencha todos os campos!');
+  
+
+};
+ 
+  // Função para filtrar dados com base na pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
     const filtered = data.filter((item) =>
-      item.nome.toLowerCase().includes(value.toLowerCase()) ||
-      item.descricao.toString().includes(value) ||
+      item.name.toLowerCase().includes(value.toLowerCase()) ||
+      item.description.toString().includes(value) ||
       item.status.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
 
+  // Função para mostrar o modal de adicionar
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
 
+  // Função para cancelar o modal de adicionar
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
   };
 
-  const handleAdd = () => {
-    form
-      .validateFields()
-      .then(values => {
-        form.resetFields();
-        setIsAddModalVisible(false);
-        const newItem = {
-          key: filteredData.length + 1,
-          ...values,
-        };
-        const newData = [...data, newItem];
-        setData(newData);
-        setFilteredData(newData);
-      })
-      .catch(info => {
-        console.log('Validate Failed:', info);
-      });
-  };
-
+  // Função para mostrar o modal de edição
   const showEditModal = (item) => {
     setEditingItem(item);
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
 
+  // Função para cancelar o modal de edição
   const handleEditCancel = () => {
     setIsEditModalVisible(false);
     setEditingItem(null);
   };
 
-  const handleEdit = () => {
-    form
-      .validateFields()
-      .then(values => {
-        form.resetFields();
-        setIsEditModalVisible(false);
-        const updatedData = data.map((item) => 
-          item.key === editingItem.key ? { ...item, ...values } : item
-        );
-        setData(updatedData);
-        setFilteredData(updatedData);
-        setEditingItem(null);
-      })
-      .catch(info => {
-        console.log('Validate Failed:', info);
-      });
+  // Função para salvar as edições
+  const handleEdit = async () => {
+    try {
+      const values = await form.validateFields();
+      form.resetFields();
+      setIsEditModalVisible(false);
+  
+      // Verifica se 'statusEvent' está presente e não é vazio
+      if (!values.statusEvent) {
+        throw new Error("statusEvent' is required");
+      }
+  
+      // Atualiza localmente os dados na tabela
+      const updatedData = data.map(item =>
+        item.key === editingItem.key ? { ...item, ...values } : item
+      );
+      setData(updatedData);
+      setFilteredData(updatedData);
+      setEditingItem(null);
+
+      await api.put(`/atualizar/${idEventReason}`);
+      console.log('Dados atualizados no backend com sucesso!');
+        
+    } catch (error) {
+      console.error('Erro ao atualizar dados no backend:', error);
+    }
+  };
+  
+  
+  
+  const deleteEvent = async (idEventReason) => {
+    try {
+      const response = await api.delete(`/event_reason/deletar/${idEventReason}`);
+      console.log('Id deletado com sucesso ');
+    } catch (error) {
+      console.log('Erro em deletar Event: ', error);
+    }
+  };
+  
+
+  // Função para deletar um item
+  const handleDelete = async (record) => {
+    //  console.log(record.id);
+    try {
+      const response = await deleteEvent(record.id);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // setFilteredData(newData);
   };
 
-  const handleDelete = (key) => {
-    const newData = data.filter((item) => item.key !== key);
-    setData(newData);
-    setFilteredData(newData);
-  };
-
+// lógica do switch de status
+const onChangeSwitch = (checked) => {
+  setCadastro({ ...cadastro, status: checked });
+  checked ? setStatus(false) : setStatus(true);
+};
+  // Define as colunas da tabela
   const columns = [
     {
-      title: 'Name',
+      title: 'Nome',
       dataIndex: 'name',
       width: 150,
     },
     {
-      title: 'Description',
+      title: 'Descrição',
       dataIndex: 'description',
       width: 80,
     },
@@ -152,20 +197,21 @@ const TableEventReason = () => {
       onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
-      title: 'Action',
+      title: 'Ação',
       key: 'action',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}>Edit</Button>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a>Delete</a>
-          </Popconfirm>
-        </Space>
+        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
+        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
+          <Button><MdDeleteForever/></Button>
+        </Popconfirm>
+      </Space>
       ),
     },
   ];  
 
+  // Propriedades da tabela
   const tableProps = {
     bordered: true,
     size: 'small',
@@ -184,6 +230,7 @@ const TableEventReason = () => {
           placeholder="Search..."
           enterButton
           onSearch={handleSearch}
+          backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
         <Button type="primary" onClick={showAddModal}>
           Cadastrar
@@ -210,25 +257,31 @@ const TableEventReason = () => {
         >
           <Form.Item
             name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input the name!' }]}
+            label="Nome"
+            rules={[{ required: true, message: 'Por favor, insira o nome!' }]}
+            
           >
-            <Input />
+            <Input
+               type="text"
+               required
+               onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+            />
           </Form.Item>
           <Form.Item
-            name="age"
-            label="Age"
-            rules={[{ required: true, message: 'Please input the age!' }]}
-          >
-            <InputNumber min={0} />
+            name="description"
+            label="Descrição"
+            rules={[{  message: 'Por favor, insira a descrição!' }]}>
+            <Input 
+            
+            type="text"
+            required
+            onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}/>
           </Form.Item>
-          <Form.Item
-            name="address"
-            label="Address"
-            rules={[{ required: true, message: 'Please input the address!' }]}
-          >
-            <Input />
+          <Form.Item name="statusEvent" label="Status"> 
+            <Switch onChange={() => onChangeSwitch(status)}/>
+            { status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
+         
         </Form>
       </Modal>
       <Modal
@@ -244,32 +297,29 @@ const TableEventReason = () => {
         >
           <Form.Item
             name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input the name!' }]}
+            label="Nome"
+            rules={[{ required: true, message: 'Por favor, insira o nome!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="age"
-            label="Age"
-            rules={[{ required: true, message: 'Please input the age!' }]}
+            name="description"
+            label="Descrição"
+            rules={[{ message: 'Por favor, insira a descrição!' }]}
           >
-            <InputNumber min={0} />
+         <Input />
           </Form.Item>
-          <Form.Item
-            name="address"
-            label="Address"
-            rules={[{ required: true, message: 'Please input the address!' }]}
-          >
-            <Input />
-          </Form.Item>
+         
+          <Form.Item name="statusEvent" label="Status"> 
+          <Switch onChange={() => onChangeSwitch(status)}/>
+          { status ? <p>Inativo</p> : <p>Ativo</p>}
+        </Form.Item>
+          
         </Form>
       </Modal>
     </>
+     
   );
 };
-
-
-
 
 export default TableEventReason;

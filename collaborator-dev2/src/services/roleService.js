@@ -14,7 +14,7 @@ export const storeRole = async (itemRole) => {
 export const getRole = async () => {
   try {
     const arrayGetRole = [];
-    const response = await api.get('role/listar');
+    const response = await api.get('role/listar_role');
     // console.log(response.data);
 
     for (let key in response.data) {
@@ -29,4 +29,27 @@ export const getRole = async () => {
   } catch (error) {
     console.log('Erro em pegar dados Funcao: ', error);
   }
-};
+}
+
+  export const deleteRole = async (idRole) => {
+  console.log('chamando a api para deletar função');
+  try {
+    const response = await api.delete(`/role/deletar/${idRole}`);
+    console.log(response);
+    alert('Função deletada com sucesso');
+  } catch (error) {
+    console.log('Erro ao deletar função: ', error);
+  }
+}
+
+export const updateRole = async (idRole, updatedRole) => {
+    console.log('chamando a api para atualizar função');
+    try {
+      const response = await api.put(`/role/atualizar/${idRole}`, updatedRole);
+      console.log(response);
+      alert('Função atualizada com sucesso');
+    } catch (error) {
+      console.log('Erro ao atualizar função: ', error);
+    }
+  };
+

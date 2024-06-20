@@ -14,6 +14,7 @@ import ToggleThemeButton from './components/ToggleThemeButton';
 import { Layout, Button } from 'antd';
 import "./App.css";
 import Accessibility from "./components/accessibility/accessibility";
+import ThemeToggleButton from './components/ThemeToggleButton';
 
 
 const { Content, Header, Sider, Footer } = Layout;
@@ -22,7 +23,7 @@ const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
 
-  const toggleTheme = () => {
+  const themeToggle = () => {
     setDarkTheme(!darkTheme);
   };
 
@@ -38,7 +39,7 @@ const App = () => {
         >
           <Logo />
           <MenuList darkTheme={darkTheme} />
-          <ToggleThemeButton darkTheme={darkTheme} toggleTheme={toggleTheme} />
+          <ThemeToggleButton darkTheme={darkTheme} themeToggle={themeToggle} />
         </Sider>
         <Layout className="site-layout">
           <Header
@@ -50,6 +51,10 @@ const App = () => {
                 : 'linear-gradient(to bottom, #2d939c, #68C7CF)',
             }}
           >
+            <Layout style={{backgroundColor:"transparent",
+                display:"flex", flexDirection:'row',
+                justifyContent:"space-between", height:"4em"
+              }}>
             <Button
               type="text"
               className="toggle"
@@ -57,6 +62,7 @@ const App = () => {
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             />
             <Accessibility/>
+            </Layout>
           </Header>
           <Content
             style={{

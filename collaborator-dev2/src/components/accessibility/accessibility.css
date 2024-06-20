@@ -13,10 +13,12 @@
 
 }
 .divAccessibility{
-    background-color: red;
+    background-color: transparent;
     display: flex;
     align-items: center;
-    justify-content: end;
+    margin-top: 10px;
+    
+    
     /* flex-direction: row-reverse; */
 }
 /* .themaIcon {
@@ -51,6 +53,10 @@
     margin-right: 20px;
 }
 
+.translateIcon {
+background: transparent;
+padding-right: 6%;
+}
 
 
 .decreaseFontSize:focus,

@@ -3,7 +3,7 @@ import './accessibility.css'
 // import {  useTheme } from '../../themes/Dark';
 import i18n from '../i18n';
 import { MoonOutlined  } from '@ant-design/icons';
-import { MdOutlineTranslate } from "react-icons/md";
+import { SiGoogletranslate } from "react-icons/si";
 
 
 
@@ -52,10 +52,10 @@ function Accessibility() {
   return(
      <div className='divAccessibility'>
         {/* os botoes de acessibilidade e incrementa a função de aumento e diminuição de fonte */}
-   <button className='translateIcon' aria-label='Mudar de idioma' onClick={toggleLanguage}><MdOutlineTranslate  className='translateIcon' style={{fontSize:"30px"}}/> </button>
+   <button className='translateIcon' aria-label='Mudar de idioma' accessKey='1' tabIndex={0} onClick={toggleLanguage}><SiGoogletranslate  className='translateIcon' style={{fontSize:"27px",}}/> </button>
    {/* <ToggleButton /> */}
-    <button  id= "decrease" className='decreaseFontSize' aria-label='Diminuir o tamanho da fonte,-A' onClick={() => handleFontSize(-1)}></button>
-    <button  id= "increase" className='increaseFontSize' aria-label='Aumentar o tamnho da fonte' onClick={() => handleFontSize(1)}></button>
+    <button  id= "decrease" className='decreaseFontSize' aria-label='Diminuir o tamanho da fonte,-A' accessKey='1' tabIndex={0} onClick={() => handleFontSize(-1)}></button>
+    <button  id= "increase" className='increaseFontSize' aria-label='Aumentar o tamnho da fonte' accessKey='1' tabIndex={0} onClick={() => handleFontSize(1)}></button>
     </div>
     )
 }

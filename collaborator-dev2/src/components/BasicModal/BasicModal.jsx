@@ -3,6 +3,7 @@ import { Modal, Button, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/img/logo.png';
 import { useTranslation } from "react-i18next";
+import Accessibility from "../accessibility/accessibility";
 
 
 
@@ -41,6 +42,7 @@ const BasicModal = ({ modalOpen, setModalOpen }) => {
       }}
     >
       <div>
+        <Button style={{ marginBottom: '16px', width: '100%', border:'none' }}><Accessibility/></Button>
         <Button
           type="text"
           aria-label='botão para acessar página clientes'

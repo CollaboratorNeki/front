@@ -13,6 +13,9 @@ import {
   Switch,
 } from 'antd';
 import './Table.css';
+import { deleteAlm } from '../../services/almService';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
@@ -28,6 +31,7 @@ const TableAlm = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const [searchText, setSearchText] = useState('');
+  //usando esse use state para guardar os dados da listagem da tabela
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -58,6 +62,7 @@ const TableAlm = () => {
         tipo: item.tipo,
         vpn: item.vpn,
         status: item.status,
+        acao: item.idAlmTool,
       }));
       // console.log(setDadosAlm);
       // setDataAlm(setDadosAlm);
@@ -135,7 +140,7 @@ const TableAlm = () => {
     setEditingItem(null);
   };
 
-  //  essa função para editar utilizando a coluna ação
+  //  essa função é para editar utilizando a coluna ação
 
   const handleEdit = () => {
     form
@@ -155,8 +160,14 @@ const TableAlm = () => {
   };
 
   // essa função é para deletar um item da tabela usando o botão de deletar da coluna ação
-  const handleDelete = (key) => {
-    const newData = filteredData.filter((item) => item.key !== key);
+  const handleDelete = async (record) => {
+    //  console.log(record.id);
+    try {
+      const response = await deleteAlm(record.id);
+    } catch (error) {
+      console.log(error);
+    }
+
     // setFilteredData(newData);
   };
 
@@ -165,14 +176,14 @@ const TableAlm = () => {
     {
       title: 'Id',
       dataIndex: 'id',
+      key: 'idAlmTool',
       sorter: (a, b) => a.id - b.id, //método para ordenar a coluna id
       width: 50,
     },
     {
       title: 'Nome',
       dataIndex: 'nome',
-      //how can I sort this column?
-
+      key: 'nomeAlm',
       width: 150,
     },
     // {
@@ -184,31 +195,32 @@ const TableAlm = () => {
     {
       title: 'Login',
       dataIndex: 'login',
-
+      key: 'loginAlm',
       width: 150,
     },
     {
       title: 'Senha',
       dataIndex: 'senha',
-
+      key: 'senhaAlm',
       width: 150,
     },
     {
       title: 'Tipo',
       dataIndex: 'tipo',
-
+      key: 'tipoAlm',
       width: 150,
     },
     {
       title: 'Vpn',
       dataIndex: 'vpn',
-
+      key: 'vpnAlm',
       width: 150,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       width: 150,
+      key: 'statusAlm',
       filters: [
         {
           text: 'London',
@@ -221,57 +233,42 @@ const TableAlm = () => {
       ],
       onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
+
+    // const [filteredData, setFilteredData] = useState([]);
+    /*
+              id: item.idAlmTool,
+              nome: item.nome,
+              url: item.url,
+              login: item.login,
+              senha: item.senha,
+              tipo: item.tipo,
+              vpn: item.vpn,
+              status: item.status,'
+
+    */
+
+    // pop up para deletar o item pelo botão editar
     {
       title: 'Ação',
-      key: 'action',
+      key: 'acao',
       width: 150,
-      // the parameter record is the item of the table
+      // o parametro record é a linha da tabela e os dados correspondentes
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}>Editar</Button>
-          <Popconfirm title="Deseja deletar?" onConfirm={() => handleDelete(record.key)}>
-            <a>Deletar</a>
-          </Popconfirm>
-        </Space>
+        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
+        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
+          <Button><MdDeleteForever/></Button>
+        </Popconfirm>
+      </Space>
       ),
     },
   ];
 
-  // linhas da Tabela, aqui renderiza as informações da tabela
-  // for (let key in dataAlm) {
-  //   initialData.push(dataAlm[key]);
-  //   initialData.push({
-  //     key: i,
-  //     name: "teste nome",
-  //     vpn: 'Testando Vpn',
-  //     status: 'Testando Status',
-  //     login: 'qualquer ',
-  //     senha: 123454,
-  //     tipo: 'testando tipo',
-  //     url: 'Testando URL',
-  //   });
-  // }
-
-  // const tratamentoDados = () => {
-  //   const [var1, var2] = dataAlm;
-  //   return var1;
-  // };
-
-  // console.log(tratamentoDados());
-
-  // loop que veio junto com a framework Ant
-  // for (let i = 1; i <= 1; i++) {
-  //   initialData.push({
-  //     // key: i,
-  //     name: 'n',
-  //     vpn: 'Testando Vpn',
-  //     status: 'Testando Status',
-  //     login: 'qualquer',
-  //     senha: 123454,
-  //     tipo: 'testando tipo',
-  //     url: 'Testando URL',
-  //   });
-  // }
+  // lógica do switch de status
+  const onChangeSwitch = (checked) => {
+    setCadastro({ ...cadastro, status: checked });
+    checked ? setStatus(false) : setStatus(true);
+  };
 
   // Variável que define estilo da tabela principal
   const tableProps = {
@@ -283,12 +280,6 @@ const TableAlm = () => {
     rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
-  };
-
-  // lógica do switch de status
-  const onChangeSwitch = (checked) => {
-    setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus(false) : setStatus(true);
   };
 
   return (

@@ -33,3 +33,12 @@ export const getAlm = async () => {
     console.log('Erro em pegar dados ALM: ', error);
   }
 };
+
+export const deleteAlm = async (idAlm) => {
+  try {
+    const response = await api.delete(`almtools/deletar_alm/${idAlm}`);
+    console.log('Id deletado com sucesso ');
+  } catch (error) {
+    console.log('Erro em deletar alm: ', error);
+  }
+};

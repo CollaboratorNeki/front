@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm } from 'antd';
 import "./Table.css"
+import { MdDeleteForever } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
@@ -132,9 +134,9 @@ const TableMessages = () => {
       width: 150,
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}>Edit</Button>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a>Delete</a>
+          <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
+          <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
+            <Button><MdDeleteForever/></Button>
           </Popconfirm>
         </Space>
       ),

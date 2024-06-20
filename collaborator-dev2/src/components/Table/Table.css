@@ -1,19 +1,20 @@
+.ant-table-title {
+  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+}
+:where(.css-dev-only-do-not-override-zg0ahe).ant-table-wrapper .ant-table-footer {
+  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+}
 
-  .ant-table-title{
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
+:where(.css-dev-only-do-not-override-zg0ahe).ant-btn-primary {
+  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+}
+:where(.css-dev-only-do-not-override-fxui8b).ant-table-wrapper .ant-table-footer {
+  background: linear-gradient(to top, #2d939c, #68c7cf);
+}
+:where(.css-dev-only-do-not-override-1n03bv).ant-table-wrapper .ant-table-footer {
+  background: linear-gradient(to top, #2d939c, #68c7cf);
+}
 
-  }
-  :where(.css-dev-only-do-not-override-zg0ahe).ant-table-wrapper .ant-table-footer{
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
-  }
-
-  /* :where(.css-dev-only-do-not-override-zg0ahe).ant-btn-primary {
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
-
-  } */
-
-
-
-  /* .ant-btn-primary {
+/* .ant-btn-primary {
     background: linear-gradient(to bottom, #2d939c, #68C7CF);
   } */
