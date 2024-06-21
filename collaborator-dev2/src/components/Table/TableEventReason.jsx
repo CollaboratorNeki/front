@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'; // Importa React e hooks necessários
 import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm, Switch } from 'antd'; // Importa componentes do Ant Design
 import "./Table.css"; // Importa estilos CSS
-import api from '../../services/api'; // Importa a configuração do Axios
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import { deleteEvent, storeEvent, getEvent } from '../../services/eventReasonService';
 
 const { useBreakpoint } = Grid; // Hook para detectar breakpoints
 const { Search } = Input; // Componente de entrada com funcionalidade de pesquisa
@@ -17,7 +17,6 @@ const TableEventReason = () => {
 
   // Estados para gerenciar dados e UI
   const [searchText, setSearchText] = useState('');
-  const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -31,63 +30,35 @@ const TableEventReason = () => {
   const [status, setStatus] = useState(false);
   // useEffect para buscar dados ao carregar o componente
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/event_reason/listar'); // Faz a requisição para a API
-        const data = response.data.map((item, index) => ({
-          key: index + 1,
-          name: item.nome,
-          description: item.descricao,  
-          status: item.status,
-          ...item,
-        }));
-        setData(data);
-        setFilteredData(data);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      }
+  const response = async () => {
+      const dadosEvent = await getEvent();
+      const setDadosEvent= dadosEvent?.map((item) => ({
+        id: item.idEventReason,
+        nome: item.nome,
+        url: item.descricao,
+        login: item.status,
+      }));
+      // console.log(setDadosAlm);
+      // setDataAlm(setDadosAlm);
+      setFilteredData(setDadosEvent);
     };
-    fetchData();
+
+    response();
   }, []);
 
-   const storeEvent = async (itemEvent) => {
-    console.log('chamando a api para cadastrar Event');
-    try {
-      const response = await api.post('/event_reason/salvar', itemEvent);
-      console.log(response);
-      alert('Event cadastrado com sucesso');
-    } catch (error) {
-      console.log('Erro post Event: ', error);
-    }
-  };
-  
-   // Função para adicionar um novo item
-   const handleAdd = () => {
-   
-    if(
-      cadastro.nome !== '' &&
-      cadastro.descricao !== '' 
-    ){
-    return storeEvent(cadastro);
-    }
-    
-  
-    return alert('Preencha todos os campos!');
-  
-
-};
- 
   // Função para filtrar dados com base na pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase()) ||
-      item.description.toString().includes(value) ||
-      item.status.toLowerCase().includes(value.toLowerCase())
-    );
+    const filtered = data.filter((item) => {
+      const nameMatch = item.name.toString().toLowerCase().includes(value.toLowerCase());
+      const descriptionMatch = item.description.toString().toLowerCase().includes(value.toLowerCase());
+      const statusMatch = item.status.toLowerCase().includes(value.toLowerCase());
+      
+      // Retorna true se qualquer uma das condições for satisfeita
+      return nameMatch || descriptionMatch || statusMatch;
+    });
     setFilteredData(filtered);
   };
-
   // Função para mostrar o modal de adicionar
   const showAddModal = () => {
     setIsAddModalVisible(true);
@@ -96,6 +67,18 @@ const TableEventReason = () => {
   // Função para cancelar o modal de adicionar
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
+  };
+
+  const handleAdd = () => {
+
+    if (
+      cadastro.nome !== '' &&
+      cadastro.descricao !== '' &&
+      cadastro.status !== ''
+    ) {
+      return storeEvent(cadastro);
+    }
+    return alert('Preencha todos os campos!');
   };
 
   // Função para mostrar o modal de edição
@@ -112,51 +95,23 @@ const TableEventReason = () => {
   };
 
   // Função para salvar as edições
-  const handleEdit = async (values) => {
-    console.log(values)
-    try {
-      const values = await form.validateFields();
-      form.resetFields();
-      setIsEditModalVisible(false);
-
-      
-      // Verifica se 'statusEvent' está presente e não é vazio
-      // if (cadastro.status) {
-      //   throw new Error("status' is required");
-      // }
-  
-      // Atualiza localmente os dados na tabela
-      const updateItem = {
-        ...values,
-        // statusEvent: status,
-      }
-      console.log("values console",updateItem)
-      const updatedData = data.map(item =>
-        item.key === editingItem.key ? { ...item, ...values } : item
-      );
-      setData(updatedData);
-      setFilteredData(updatedData);
-      setEditingItem(null);
-
-      await api.put(`/atualizar/${editingItem.key}`,updateItem );
-      console.log('Dados atualizados no backend com sucesso!');
-        
-    } catch (error) {
-      console.error('Erro ao atualizar dados no backend:', error);
-    }
+  const handleEdit = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields();
+        setIsEditModalVisible(false);
+        const updatedData = filteredData.map((item) =>
+          item.key === editingItem.key ? { ...item, ...values } : item,
+        );
+        setFilteredData(updatedData);
+        setEditingItem(null);
+      })
+      .catch((info) => {
+        // console.log('Validate Failed:', info);
+      });
   };
-  
-  
-  
-  const deleteEvent = async (idEventReason) => {
-    try {
-      const response = await api.delete(`/event_reason/deletar/${idEventReason}`);
-      console.log('Id deletado com sucesso ');
-    } catch (error) {
-      console.log('Erro em deletar Event: ', error);
-    }
-  };
-  
+
 
   // Função para deletar um item
   const handleDelete = async (id) => {
@@ -170,37 +125,50 @@ const TableEventReason = () => {
     // setFilteredData(newData);
   };
 
-// lógica do switch de status
+  // lógica do switch de status
 
-const onChangeSwitch = (checked) => {
-  console.log(checked)
-  setCadastro({ ...cadastro, status: checked });
-  checked ? setStatus(false) : setStatus(true);
-};
+  const onChangeSwitch = (checked) => {
+    console.log(checked)
+    setCadastro({ ...cadastro, status: checked });
+    checked ? setStatus(false) : setStatus(true);
+  };
   // Define as colunas da tabela
   const columns = [
     {
+    
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'idEventReason',
+        sorter: (a, b) => a.id - b.id, //método para ordenar a coluna id
+        width: 50,
+      
+    },
+    
+    {
       title: 'Nome',
-      dataIndex: 'name',
+      dataIndex: 'nome',
       width: 150,
+      key: 'nomeEvent'
     },
     {
       title: 'Descrição',
-      dataIndex: 'description',
+      dataIndex: 'descricao',
       width: 80,
+      key: 'decricaoEvent',
     },
     {
       title: 'Status',
       dataIndex: 'status',
       width: 200,
+      key:'statusEvent',
       filters: [
         {
-          text: '',
-          value: '',
+          text: 'London',
+          value: 'London',
         },
         {
-          text: '',
-          value: '',
+          text: 'New York',
+          value: 'New York',
         },
       ],
       onFilter: (value, record) => record.address.indexOf(value) === 0,
@@ -209,18 +177,20 @@ const onChangeSwitch = (checked) => {
       title: 'Ação',
       key: 'action',
       width: 150,
+
       render: (_, record) => (
         <Space size="middle">
-        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
-        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => {
-          console.log("record",record)
-          handleDelete(record.key)}}>
-          <Button><MdDeleteForever/></Button>
-        </Popconfirm>
-      </Space>
+          <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
+          <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => {
+            console.log("record", record)
+            handleDelete(record.key)
+          }}>
+            <Button><MdDeleteForever /></Button>
+          </Popconfirm>
+        </Space>
       ),
     },
-  ];  
+  ];
 
   // Propriedades da tabela
   const tableProps = {
@@ -270,29 +240,29 @@ const onChangeSwitch = (checked) => {
             name="name"
             label="Nome"
             rules={[{ required: true, message: 'Por favor, insira o nome!' }]}
-            
+
           >
             <Input
-               type="text"
-               required
-               onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
             />
           </Form.Item>
           <Form.Item
             name="description"
             label="Descrição"
-            rules={[{  message: 'Por favor, insira a descrição!' }]}>
-            <Input 
-            
-            type="text"
-            required
-            onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}/>
+            rules={[{ message: 'Por favor, insira a descrição!' }]}>
+            <Input
+
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })} />
           </Form.Item>
-          <Form.Item name="statusEvent" label="Status"> 
-            <Switch onChange={(checked) => onChangeSwitch(checked)}/>
-            { status ? <p>Ativo</p> : <p>Inativo</p>}
+          <Form.Item name="statusEvent" label="Status">
+            <Switch onChange={(checked) => onChangeSwitch(checked)} />
+            {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
-         
+
         </Form>
       </Modal>
       <Modal
@@ -318,18 +288,18 @@ const onChangeSwitch = (checked) => {
             label="Descrição"
             rules={[{ message: 'Por favor, insira a descrição!' }]}
           >
-         <Input />
+            <Input />
           </Form.Item>
-         
-          <Form.Item name="statusEvent" label="Status"> 
-          <Switch onChange={(status)=> setStatus(status)}/>
-          { !status ? <p>Inativo</p> : <p>Ativo</p>}
-        </Form.Item>
-          
+
+          <Form.Item name="statusEvent" label="Status">
+            <Switch onChange={(status) => setStatus(status)} />
+            {!status ? <p>Inativo</p> : <p>Ativo</p>}
+          </Form.Item>
+
         </Form>
       </Modal>
     </>
-     
+
   );
 };
 
