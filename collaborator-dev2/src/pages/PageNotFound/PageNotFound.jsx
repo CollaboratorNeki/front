@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Result } from 'antd';
 import { Link } from 'react-router-dom'; // Importa o Link do React Router
-import { ContainerPageNotFound } from '../../styles/PageNotFound.styles';
+// import { ContainerPageNotFound } from '../../styles/PageNotFound.styles';
 
 const PageNotFound = () => (
-  <ContainerPageNotFound>
+  // <ContainerPageNotFound>
     <Result
       status="404"
       title="404"
@@ -15,7 +15,7 @@ const PageNotFound = () => (
         </Link>
       }
     />
-  </ContainerPageNotFound>
+  // </ContainerPageNotFound>
 );
 
 export default PageNotFound;
