@@ -16,18 +16,18 @@ import './Table.css';
 import { deleteAlm } from '../../services/almService';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
-
-// const initialData = [];
-
 const defaultTitle = () => 'Alm';
 const defaultFooter = () => 'footer';
 
-// Componente de tabela
+
+
 
 const TableAlm = () => {
+  const {t} = useTranslation();
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const [searchText, setSearchText] = useState('');
@@ -48,12 +48,14 @@ const TableAlm = () => {
     status: '',
   });
   const [status, setStatus] = useState(false);
+  const [status2, setStatus2] = useState();
   // const [dataAlm, setDataAlm] = useState([]);
 
   // Chamando os dados do banco e guardando em um useState para poder usar na lista, é preciso usar useEffect para não criar o erro do loop infinito na renderização
   useEffect(() => {
     const response = async () => {
       const dadosAlm = await getAlm();
+      console.log(dadosAlm);
       const setDadosAlm = dadosAlm?.map((item) => ({
         idAlmTool: item.idAlmTool,
         nome: item.nome,
@@ -97,14 +99,18 @@ const TableAlm = () => {
 
   // essa função é para clicar no botão de OK dentro do modal de cadastrar
   const handleAdd = () => {
+    console.log(filteredData)
     if (
       cadastro.nome !== '' &&
       cadastro.url !== '' &&
       cadastro.login !== '' &&
       cadastro.senha !== '' &&
       cadastro.tipo !== '' &&
-      cadastro.vpn !== '' &&
-      cadastro.status !== ''
+      cadastro.vpn !== ''
+
+      // &&
+      // cadastro.status !== null
+      
     ) {
       return storeAlm(cadastro);
     }
@@ -144,7 +150,7 @@ const TableAlm = () => {
     setEditingItem(null);
   };
 
-  //  essa função é para editar utilizando a coluna ação
+  //  essa função é para editar utilizando a coluna ação e clicando no botão ok
 
   const handleEdit = () => {
     form
@@ -173,7 +179,6 @@ const TableAlm = () => {
         setEditingItem(null);
         console.log(filteredData, 'Dados do filteredData');
         // console.log(filteredData)
-        // const atualizarAlm = await updateAlm(editingItem.id,filteredData); //esse método é responsável por atualizar o item no banco de dados
         // console.log(atualizarAlm);
       })
       .catch((info) => {
@@ -203,7 +208,7 @@ const TableAlm = () => {
       width: 50,
     },
     {
-      title: 'Nome',
+      title: t('Nome'),
       dataIndex: 'nome',
       key: 'nomeAlm',
       width: 150,
@@ -221,13 +226,13 @@ const TableAlm = () => {
       width: 150,
     },
     {
-      title: 'Senha',
+      title: t('Senha'),
       dataIndex: 'senha',
       key: 'senhaAlm',
       width: 150,
     },
     {
-      title: 'Tipo',
+      title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoAlm',
       width: 150,
@@ -285,18 +290,44 @@ const TableAlm = () => {
             }}
           >
              <Button><MdDeleteForever/></Button>
-            {/* <a>Deletar</a> */}
           </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  // lógica do switch de status
+
+
+
+
+
+
+
+  //duas lógicas para alterar o valor do switch de cadastro e editar
+
+
+  // lógica do switch de status de cadastro
   const onChangeSwitch = (checked) => {
+    console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus(false) : setStatus(true);
+    checked ?  setStatus(true) : setStatus(false);
   };
+
+ // lógica do switch de status de editar
+ const onChangeSwitch2 = (checked) => {
+  console.log(checked, "switch editar status2  ");
+  setCadastro({ ...cadastro, status: checked });
+  checked ?  setStatus2(true) : setStatus2(false);
+};
+
+
+
+
+
+
+
+
+
 
   // Variável que define estilo da tabela principal
   const tableProps = {
@@ -341,6 +372,11 @@ const TableAlm = () => {
         dataSource={filteredData}
       />
       {/* FIM ############# Tabela principal */}
+
+
+
+
+
 
       {/* Esse modal é para cadastrar um novo item na tabela, apertando o botão de cadastro */}
       <Modal
@@ -423,15 +459,36 @@ const TableAlm = () => {
             />
           </Form.Item>
 
-          {/* Aqui entra o Switch */}
 
-          <Form.Item name="statusAlm" label="Status" rules={[{ required: true }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
+
+
+
+
+
+
+
+          {/* Aqui entra o Switch de cadastrar */}
+
+          <Form.Item name="statusAlm" label="Status" rules={[{ required: false }]}>
+            <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
       {/* FIM ############# Modal Cadastrar Alm */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Esse modal é para editar um item na tabela pelo botão de editar */}
 
@@ -513,11 +570,20 @@ const TableAlm = () => {
             />
           </Form.Item>
 
-          {/* Aqui entra o Switch */}
+
+
+
+
+
+
+
+
+
+          {/* Aqui entra o Switch de editar*/}
 
           <Form.Item name="status" label="Status" rules={[{ required: true }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
-            {status ? <p>Ativo</p> : <p>Inativo</p>}
+            <Switch onChange={(checked) => onChangeSwitch2(checked) } />
+            { status2 ? <p>Ativo</p> : <p>Inativo</p>  }
           </Form.Item>
         </Form>
       </Modal>
