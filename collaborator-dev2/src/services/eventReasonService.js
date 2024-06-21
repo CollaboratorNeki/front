@@ -1,56 +1,39 @@
 import api from './api';
 
-export const storeEvent = async (itemEvent) => {
-  console.log('chamando a api para cadastrar Event');
+export const storeEventReason = async (itemEventReason) => {
+  console.log('chamando a api para cadastrar EventReason');
   try {
-    const response = await api.post('event_reason/salvar', itemEvent);
-    console.log(response);
-    alert('Event cadastrado com sucesso');
+    const response = await api.post('/event_reason/salvar', itemEventReason);
+    alert('EventReason cadastrado com sucesso');
   } catch (error) {
-    console.log('Erro post Event: ', error);
+    console.log('Erro post EventReason: ', error);
   }
 };
 
-
-  export const getEvent = async () => {
-    try {
-      const arrayGetAlms = [];
-      const response = await api.get('event_reason/listar')
-      // console.log(response.data);
-  
-      // o key pega a chave/index do array
-      for (let key in response.data) {
-        const teste = {
-          ...response.data[key],
-          id: key,
-        };
-  
-        arrayGetAlms.push(teste);
-      }
-      console.log(arrayGetAlms);
-      // console.log(arrayGetAlms.map((alm) => alm.nome));
-      return arrayGetAlms;
-    } catch (error) {
-      console.log('Erro em pegar dados Event: ', error);
-    }
-  };
-
-
-export const deleteEvent = async (idEventReason) => {
+export const getEventReason = async () => {
   try {
-    const response = await api.delete(`event_reason/deletar/${idEventReason}`);
-    console.log('Id deletado com sucesso ');
+    const response = await api.get('/event_reason/listar');
+    return response.data;
   } catch (error) {
-    console.log('Erro em deletar Event: ', error);
+    console.log('Erro em pegar dados EventReason: ', error);
+  }
+};
+
+export const deleteEventReason = async (idEventReason) => {
+  try {
+    await api.delete(`/event_reason/deletar/${idEventReason}`);
+    alert('EventReason deletado com sucesso');
+  } catch (error) {
+    console.log('Erro em deletar EventReason: ', error);
   }
 };
 
 export const updateEventReason = async (idEventReason, itemEventReason) => {
   try {
-    const response = await api.patch(`event_reason/atualizar/${idEventReason}`, itemEventReason);
-    alert('Event alterado com sucesso');
+    await api.put(`/event_reason/atualizar/${idEventReason}`, itemEventReason);
+    alert('EventReason alterado com sucesso');
   } catch (error) {
-    console.log('Erro em atualizar Event: ', error);
-    alert('Falha ao atualizar o Event');
+    console.log('Erro em atualizar EventReason: ', error);
+    alert('Falha ao atualizar EventReason');
   }
 };

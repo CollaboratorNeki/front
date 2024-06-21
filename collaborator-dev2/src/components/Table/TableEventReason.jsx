@@ -1,206 +1,150 @@
-import React, { useState, useEffect } from 'react'; // Importa React e hooks necessários
-import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm, Switch } from 'antd'; // Importa componentes do Ant Design
-import "./Table.css"; // Importa estilos CSS
+import React, { useState, useEffect } from 'react';
+import { storeEventReason, getEventReason, updateEventReason, deleteEventReason } from '../../services/eventReasonService';
+import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
-import { deleteEvent, storeEvent, getEvent, updateEventReason } from '../../services/eventReasonService';
-import {useTranslation} from "react-i18next"
+import './Table.css';
 
-const { useBreakpoint } = Grid; // Hook para detectar breakpoints
-const { Search } = Input; // Componente de entrada com funcionalidade de pesquisa
+const { useBreakpoint } = Grid;
+const { Search } = Input;
 
-const defaultTitle = () => 'Motivos de Eventos'; // Função para título padrão da tabela
-const defaultFooter = () => 'Here is footer'; // Função para rodapé padrão da tabela
+const defaultTitle = () => 'EventReason';
+const defaultFooter = () => 'footer';
 
 const TableEventReason = () => {
-  const screens = useBreakpoint(); // Detecta o tamanho da tela
-  const isSmallScreen = screens.xs; // Define se a tela é pequena
- const {t} = useTranslation();
-
-  // Estados para gerenciar dados e UI
+  const screens = useBreakpoint();
+  const isSmallScreen = screens.xs;
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const [form] = Form.useForm(); // Hook do Ant Design para gerenciar formulários
+  const [form] = Form.useForm();
   const [cadastro, setCadastro] = useState({
     nome: '',
     descricao: '',
-    status: '',
+    status: false,
   });
-  const [status, setStatus] = useState(false);
-  // useEffect para buscar dados ao carregar o componente
-  useEffect(() => {
-  const response = async () => {
-      const dadosEvent = await getEvent();
-      const setDadosEvent= dadosEvent?.map((item) => ({
-        id: item.idEventReason,
-        nome: item.nome,
-        descricao: item.descricao,
-        status: item.status,
-      }));
-      // console.log(setDadosAlm);
-      // setDataAlm(setDadosAlm);
-      setFilteredData(setDadosEvent);
-    };
 
-    response();
+  useEffect(() => {
+    const fetchData = async () => {
+      const dadosEventReason = await getEventReason();
+      setFilteredData(dadosEventReason);
+    };
+    fetchData();
   }, []);
 
-  // Função para filtrar dados com base na pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase()) ||
-      item.description.toString().includes(value) ||
-      item.status.toLowerCase().includes(value.toLowerCase())
+    const filtered = filteredData.filter(
+      (item) =>
+        item.nome.toLowerCase().includes(value.toLowerCase()) ||
+        item.descricao.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
-  // Função para mostrar o modal de adicionar
+
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
 
-  // Função para cancelar o modal de adicionar
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
   };
 
-  const handleAdd = () => {
-
+  const handleAdd = async () => {
     if (
       cadastro.nome !== '' &&
-      cadastro.descricao !== '' &&
-      cadastro.status !== ''
+      cadastro.descricao !== ''
     ) {
-      return storeEvent(cadastro);
+      await storeEventReason(cadastro);
+      setIsAddModalVisible(false);
+      setCadastro({ nome: '', descricao: '', status: false });
+      const dadosEventReason = await getEventReason();
+      setFilteredData(dadosEventReason);
+    } else {
+      alert('Preencha todos os campos!');
     }
-    return alert('Preencha todos os campos!');
   };
 
-  // Função para mostrar o modal de edição
   const showEditModal = (item) => {
-    console.log('Dados que estão renderizados na linha da tabela showEditModal', item);
     setEditingItem(item);
-    // o parametro (item) aqui é passado para jogar os dados do input do formulário de edição na função handleEdit, no handleEdit o parametro values são os dados do formulário
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
 
-  // Função para cancelar o modal de edição
   const handleEditCancel = () => {
     setIsEditModalVisible(false);
     setEditingItem(null);
   };
 
-  // Função para salvar as edições
-  const handleEdit = () => {
+  const handleEdit = async () => {
     form
       .validateFields()
       .then(async (values) => {
-        console.log('Dados do formulário parametro values', values);
-        console.log('dados editingItem', editingItem);
-        console.log('dados filteredData', filteredData);
         const idEditingItem = editingItem.idEventReason;
-        console.log(idEditingItem, 'id item separado');
-        //parametro values são os dados do formulário, e o método validateFields é responsável por validar os dados
         form.resetFields();
         setIsEditModalVisible(false);
-
+        await updateEventReason(idEditingItem, values);
         const updatedData = filteredData.map((item) =>
-          item.idEventReason === editingItem.idEventReason ? { ...item, ...values } : item,
+          item.idEventReason === idEditingItem ? { ...item, ...values } : item
         );
-
-        const filtro = updatedData.filter((item) => item.idEventReason === idEditingItem);
-        // console.log(filtro, 'filtro');
-        // console.log(filtro[0]);
-
-        console.log(updatedData, 'Dados da variavel updatedData');
         setFilteredData(updatedData);
-        const response = await updateEventReason(idEditingItem, filtro[0]);
         setEditingItem(null);
-        console.log(filteredData, 'Dados do filteredData');
-       
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
   };
 
-  // Função para deletar um item
-  const handleDelete = async (id) => {
-    //  console.log(record.id);
+  const handleDelete = async (record) => {
     try {
-      const response = await deleteEvent(id);
+      await deleteEventReason(record.idEventReason);
+      const updatedData = filteredData.filter((item) => item.idEventReason !== record.idEventReason);
+      setFilteredData(updatedData);
     } catch (error) {
       console.log(error);
     }
-
-    // setFilteredData(newData);
   };
 
-  // lógica do switch de status
-
-  const onChangeSwitch = (checked) => {
-    console.log(checked)
-    setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus(false) : setStatus(true);
-  };
-  // Define as colunas da tabela
   const columns = [
     {
-    
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'idEventReason',
-        sorter: (a, b) => a.id - b.id, //método para ordenar a coluna id
-        width: 50,
-      
+      title: 'Id',
+      dataIndex: 'idEventReason',
+      key: 'idEventReason',
+      sorter: (a, b) => a.idEventReason - b.idEventReason,
+      width: 50,
     },
-    
     {
       title: 'Nome',
       dataIndex: 'nome',
+      key: 'nomeEventReason',
       width: 150,
-      key: 'nomeEvent'
     },
     {
       title: 'Descrição',
       dataIndex: 'descricao',
-      width: 80,
-      key: 'decricaoEvent',
+      key: 'descricaoEventReason',
+      width: 150,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 200,
-      key:'statusEvent',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      width: 150,
+      key: 'statusEventReason',
+      render: (text) => (text ? 'Ativo' : 'Inativo'),
     },
     {
-      title: "Ação",
-      key: 'action',
+      title: 'Ação',
+      key: 'acao',
       width: 150,
-
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
-          <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => {
-            console.log("record", record)
-            handleDelete(record.key)
-          }}>
+          <Popconfirm
+            title="Deseja deletar?"
+            onConfirm={() => handleDelete(record)}
+          >
             <Button><MdDeleteForever /></Button>
           </Popconfirm>
         </Space>
@@ -208,7 +152,10 @@ const TableEventReason = () => {
     },
   ];
 
-  // Propriedades da tabela
+  const onChangeSwitch = (checked) => {
+    setCadastro({ ...cadastro, status: checked });
+  };
+
   const tableProps = {
     bordered: true,
     size: 'small',
@@ -224,39 +171,37 @@ const TableEventReason = () => {
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Search..."
+          placeholder="Buscar evento..."
           enterButton
           onSearch={handleSearch}
-          backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
-        <Button type="primary" onClick={showAddModal}>
-        {t("Cadastrar")}
+        <Button
+          type="primary"
+          onClick={showAddModal}
+          style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
+        >
+          Cadastrar
         </Button>
       </Space>
+
       <Table
         {...tableProps}
-        pagination={{
-          position: ['bottomRight'],
-        }}
+        pagination={{ position: ['bottomRight'] }}
         columns={columns}
         dataSource={filteredData}
       />
+
       <Modal
-        title="Cadastrar Novo Item"
+        title="Cadastrar Novo Evento"
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-        >
+        <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name="name"
+            name="nome"
             label="Nome"
-            rules={[{ required: true, message: 'Por favor, insira o nome!' }]}
-
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
             <Input
               type="text"
@@ -264,58 +209,64 @@ const TableEventReason = () => {
               onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
             />
           </Form.Item>
-          <Form.Item
-            name="description"
-            label="Descrição"
-            rules={[{ message: 'Por favor, insira a descrição!' }]}>
-            <Input
 
+          <Form.Item
+            name="descricao"
+            label="Descrição"
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
+          >
+            <Input
               type="text"
               required
-              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })} />
-          </Form.Item>
-          <Form.Item name="statusEvent" label="Status">
-            <Switch onChange={(checked) => onChangeSwitch(checked)} />
-            {status ? <p>Ativo</p> : <p>Inativo</p>}
+              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}
+            />
           </Form.Item>
 
+          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+            <Switch onChange={() => onChangeSwitch(status)} />
+            {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
+          </Form.Item>
         </Form>
       </Modal>
+
       <Modal
-        title="Editar Item"
+        title="Editar Evento"
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-        >
+        <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name="name"
+            name="nome"
             label="Nome"
-            rules={[{ required: true, message: 'Por favor, insira o nome!' }]}
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            <Input />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+            />
           </Form.Item>
+
           <Form.Item
-            name="description"
+            name="descricao"
             label="Descrição"
-            rules={[{ message: 'Por favor, insira a descrição!' }]}
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
           >
-            <Input />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}
+            />
           </Form.Item>
 
-          <Form.Item name="statusEvent" label="Status">
-            <Switch onChange={(status) => setStatus(status)} />
-            {!status ? <p>Inativo</p> : <p>Ativo</p>}
+          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+            <Switch onChange={() => onChangeSwitch(status)} />
+            {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
-
         </Form>
       </Modal>
     </>
-
   );
 };
 
