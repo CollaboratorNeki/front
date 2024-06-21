@@ -1,55 +1,38 @@
 import api from './api';
 
 export const storeRole = async (itemRole) => {
-  console.log('chamando a api para cadastrar funcao');
   try {
     const response = await api.post('/role/cadastro_role', itemRole);
-    console.log(response);
-    alert('Funcao cadastrada com sucesso');
+    alert('Role cadastrada com sucesso');
   } catch (error) {
-    console.log('Erro post Funcao: ', error);
+    console.log('Erro post role: ', error);
   }
 };
 
 export const getRole = async () => {
   try {
-    const arrayGetRole = [];
-    const response = await api.get('role/listar_role');
-    // console.log(response.data);
-
-    for (let key in response.data) {
-      const teste = {
-        ...response.data[key],
-        id: key,
-      };
-      arrayGetRole.push(teste);
-    }
-    // console.log(arrayGetRole);
-    return arrayGetRole;
+    const response = await api.get('/role/listar_role'); // Corrigido para incluir a barra inicial
+    return response.data;
   } catch (error) {
-    console.log('Erro em pegar dados Funcao: ', error);
+    console.log('Erro em pegar dados Role: ', error);
   }
-}
+};
 
-  export const deleteRole = async (idRole) => {
-  console.log('chamando a api para deletar função');
+export const deleteRole = async (idRole) => {
   try {
-    const response = await api.delete(`/role/deletar/${idRole}`);
-    console.log(response);
-    alert('Função deletada com sucesso');
+    await api.delete(`/role/deletar/${idRole}`);
+    alert('Role deletada com sucesso');
   } catch (error) {
-    console.log('Erro ao deletar função: ', error);
+    console.log('Erro em deletar role: ', error);
   }
-}
+};
 
-export const updateRole = async (idRole, updatedRole) => {
-    console.log('chamando a api para atualizar função');
-    try {
-      const response = await api.put(`/role/atualizar/${idRole}`, updatedRole);
-      console.log(response);
-      alert('Função atualizada com sucesso');
-    } catch (error) {
-      console.log('Erro ao atualizar função: ', error);
-    }
-  };
-
+export const updateRole = async (idRole, itemRole) => {
+  try {
+    await api.patch(`/role/atualizar/${idRole}`, itemRole);
+    alert('Role alterada com sucesso');
+  } catch (error) {
+    console.log('Erro em atualizar role: ', error);
+    alert('Falha ao atualizar o role');
+  }
+};
