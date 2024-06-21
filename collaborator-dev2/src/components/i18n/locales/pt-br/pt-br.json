@@ -18,7 +18,21 @@
      "Funções":"Funções",
      "Motivos de Eventos":"Motivos de Eventos",
      "Mensagens":"Mensagens",
-     "Voltar":"Voltar"
+     "Voltar":"Voltar",
+     "Nome":"Nome",
+     "Descrição":"Descrição",
+     "Ação":"Ação",
+     "Senha":"Senha",
+     "Tipo":"Tipo",
+     "Telefone":"Telefone",
+     "Código Externo":"Código",
+     "Versão":"Versão",
+     "Categoria":"Categoria",
+     "Valor":"Valor",
+     "Custos Extras":"Custos Extras"
+
+     
+
     }
     
     }

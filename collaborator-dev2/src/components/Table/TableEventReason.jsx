@@ -14,6 +14,7 @@ const defaultFooter = () => 'Here is footer'; // Função para rodapé padrão d
 const TableEventReason = () => {
   const screens = useBreakpoint(); // Detecta o tamanho da tela
   const isSmallScreen = screens.xs; // Define se a tela é pequena
+  const { t } = useTranslation();
 
   // Estados para gerenciar dados e UI
   const [searchText, setSearchText] = useState('');
@@ -174,7 +175,7 @@ const TableEventReason = () => {
       onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
-      title: 'Ação',
+      title: t("Ação"),
       key: 'action',
       width: 150,
 
@@ -214,7 +215,7 @@ const TableEventReason = () => {
           backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
         <Button type="primary" onClick={showAddModal}>
-          Cadastrar
+        {t("Cadastrar")}
         </Button>
       </Space>
       <Table

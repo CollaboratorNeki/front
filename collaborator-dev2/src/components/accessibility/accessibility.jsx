@@ -2,7 +2,6 @@ import './accessibility.css'
 // import Brightness4Icon from '@mui/icons-material/Brightness4';
 // import {  useTheme } from '../../themes/Dark';
 import i18n from '../i18n';
-import { MoonOutlined  } from '@ant-design/icons';
 import { SiGoogletranslate } from "react-icons/si";
 
 
@@ -13,7 +12,7 @@ const MaxFontSize = 22
 
 //Função para aumentar e diminuir a fonte, no selectors passar os elementos que quer aumentar e diminuir da pagina
 function handleFontSize(updateValue) {
-  const selectors = "h1, h2, h3, h4, h5, h6, a, p, span";
+  const selectors = "h1, h2, h3, h4, h5, h6, a, p, t, span";
   let elements = document.querySelectorAll(selectors);
   elements.forEach((element) => {
       let currentFontSize = parseInt(window.getComputedStyle(element).fontSize);
@@ -55,7 +54,7 @@ function Accessibility() {
    <button className='translateIcon' aria-label='Mudar de idioma' accessKey='1' tabIndex={0} onClick={toggleLanguage}><SiGoogletranslate  className='translateIcon' style={{fontSize:"27px",}}/> </button>
    {/* <ToggleButton /> */}
     <button  id= "decrease" className='decreaseFontSize' aria-label='Diminuir o tamanho da fonte,-A' accessKey='1' tabIndex={0} onClick={() => handleFontSize(-1)}></button>
-    <button  id= "increase" className='increaseFontSize' aria-label='Aumentar o tamnho da fonte' accessKey='1' tabIndex={0} onClick={() => handleFontSize(1)}></button>
+    <button  id= "increase" className='increaseFontSize' aria-label='Aumentar o tamnho da fonte, +A' accessKey='1' tabIndex={0} onClick={() => handleFontSize(1)}></button>
     </div>
     )
 }
