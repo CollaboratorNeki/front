@@ -1,37 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { storeRole, getRole } from '../../services/roleService';
-import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm, Switch, } from 'antd';
-import './Table.css';
+import { storeRole, getRole, updateRole, deleteRole } from '../../services/roleService';
+import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import './Table.css';
+
 const { useBreakpoint } = Grid;
 const { Search } = Input;
-import { useTranslation } from 'react-i18next';
 
-const initialData = [];
-// for (let i = 1; i <= 10; i++) {
-//   initialData.push({
-//     key: i,
-//     nome: 'Python',
-//     descricao: Number(`${i}2`),
-//     status: `New York No. ${i} Lake Park`,
-//     description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-//   });
-// }
+const defaultTitle = () => 'Role';
+const defaultFooter = () => 'footer';
 
-const defaultTitle = () => 'Funçao';
-const defaultFooter = () => 'Aqui é o footer';
-
-
-
-// Componente de tabela
 const TableFunction = () => {
   const screens = useBreakpoint();
-  const isSmallScreen = screens.xs; // Consider xs as small screen
-  const { t } = useTranslation();
-
+  const isSmallScreen = screens.xs;
   const [searchText, setSearchText] = useState('');
-  const [filteredData, setFilteredData] = useState(initialData);
+  const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -40,38 +24,27 @@ const TableFunction = () => {
     nome: '',
     descricao: '',
     status: '',
-    
   });
-
   const [status, setStatus] = useState(false);
-  const [dataRole, setDataRole] = useState([]);
 
-  // Chamando os dados do banco e guardando em um useState para poder usar na lista, é preciso usar useEffect para não criar o erro do loop infinito na renderização
   useEffect(() => {
-    const response = async () => {
-      const pegandoRole = await getRole();
-      console.log(pegandoRole);
-      setDataRole(pegandoRole);
+    const fetchData = async () => {
+      const dadosRole = await getRole();
+      setFilteredData(dadosRole);
     };
-
-    response();
+    fetchData();
   }, []);
-
-
-  // essa função é para filtrar a tabela
 
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = initialData.filter((item) =>
-      item.nome.toLowerCase().includes(value.toLowerCase()) ||
-      item.descricao.toString().includes(value) ||
-      item.status.toLowerCase().includes(value.toLowerCase())
+    const filtered = filteredData.filter(
+      (item) =>
+        item.nome.toLowerCase().includes(value.toLowerCase()) ||
+        item.descricao.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
   };
-  // FIM ############# lógica filtrar ROle
 
-  // essa função é para abrir e fechar o modal de cadastro de ALM
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
@@ -79,113 +52,112 @@ const TableFunction = () => {
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
   };
-  // FIM ############# lógica abrir e fechar modal de cadastro 
 
-  // essa função é para clicar no botão de OK dentro do modal de cadastro 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (
       cadastro.nome !== '' &&
       cadastro.descricao !== '' &&
       cadastro.status !== ''
     ) {
-      return storeRole(cadastro);
+      await storeRole(cadastro);
+      setIsAddModalVisible(false);
+      setCadastro({ nome: '', descricao: '', status: '' });
+      const dadosRole = await getRole();
+      setFilteredData(dadosRole);
+    } else {
+      alert('Preencha todos os campos!');
     }
-
-    return alert('Preencha todos os campos!');
-    // setCadastro({ nome: '', url: '', login: '', senha: '', tipo: '', vpn: '', status: '' });
-
-    // form
-    //   .validateFields()
-    //   .then((values) => {
-    //     form.resetFields();
-    //     setIsAddModalVisible(false);
-    //     const newItem = {
-    //       key: filteredData.length + 1,
-    //       ...values,
-    //     };
-    //     setFilteredData([...filteredData, newItem]);
-    //   })
-    //   .catch((info) => {
-    //     console.log('Validate Failed:', info);
-    //   });
   };
-  // essa função é para abrir o modal de edição de um item
+
   const showEditModal = (item) => {
     setEditingItem(item);
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
-  // essa função é para fechar o modal de edição de um item
+
   const handleEditCancel = () => {
     setIsEditModalVisible(false);
     setEditingItem(null);
   };
-  //  essa função é para salvar o item editado
-  const handleEdit = () => {
+
+  const handleEdit = async () => {
     form
       .validateFields()
-      .then(values => {
+      .then(async (values) => {
+        const idEditingItem = editingItem.idRole;
         form.resetFields();
         setIsEditModalVisible(false);
-        const updatedData = filteredData.map((item) => 
-          item.key === editingItem.key ? { ...item, ...values } : item
+        await updateRole(idEditingItem, values);
+        const updatedData = filteredData.map((item) =>
+          item.idRole === idEditingItem ? { ...item, ...values } : item
         );
         setFilteredData(updatedData);
         setEditingItem(null);
       })
       .catch((info) => {
-        // console.log('Validate Failed:', info);
+        console.log('Validate Failed:', info);
       });
   };
-  // essa função é para deletar um item da tabela
-  const handleDelete = (key) => {
-    const newData = filteredData.filter((item) => item.key !== key);
-    setFilteredData(newData);
+
+  const handleDelete = async (record) => {
+    try {
+      await deleteRole(record.idRole);
+      const updatedData = filteredData.filter((item) => item.idRole !== record.idRole);
+      setFilteredData(updatedData);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  // esse array é para definir as colunas da tabela
+
   const columns = [
     {
-      title: t("Nome"),
-      dataIndex: 'nome',
-      sorter: (a, b) => a.nome - b.nome,
-      width: 200,
+      title: 'Id',
+      dataIndex: 'idRole',
+      key: 'idRole',
+      sorter: (a, b) => a.idRole - b.idRole,
+      width: 50,
     },
     {
-      title: t("Descrição"),
+      title: 'Nome',
+      dataIndex: 'nome',
+      key: 'nomeRole',
+      width: 150,
+    },
+    {
+      title: 'Descrição',
       dataIndex: 'descricao',
-    
-      width: 200,
+      key: 'descricaoRole',
+      width: 150,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 50,
-      filters: [
-        {
-          text: 'Ativo',
-          value: 'ativo',
-        },
-        {
-          text: 'Inativo',
-          value: 'inativo',
-        },
-      ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
+      width: 150,
+      key: 'statusRole',
+      render: (text) => (text ? 'Ativo' : 'Inativo'),
     },
     {
-      title: t("Ação"),
+      title: 'Ação',
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
-        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
-        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
-          <Button><MdDeleteForever/></Button>
-        </Popconfirm>
-      </Space>
+          <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
+          <Popconfirm
+            title="Deseja deletar?"
+            onConfirm={() => handleDelete(record)}
+          >
+            <Button><MdDeleteForever /></Button>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
+
+  const onChangeSwitch = (checked) => {
+    setCadastro({ ...cadastro, status: checked });
+    checked ? setStatus(true) : setStatus(false);
+  };
 
   const tableProps = {
     bordered: true,
@@ -198,142 +170,108 @@ const TableFunction = () => {
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };
 
-    // lógica do switch de status
-    const onChangeSwitch = (checked) => {
-      setCadastro({ ...cadastro, status: checked });
-      checked ? setStatus(false) : setStatus(true);
-    };
-
   return (
     <>
-          {/* Container botao e barra de pesquisa */}
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Procurar..."
+          placeholder="Buscar nome da função..."
           enterButton
           onSearch={handleSearch}
+          backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
-        <Button type="primary" onClick={showAddModal}>
-        {t("Cadastrar")}
+        <Button
+          type="primary"
+          onClick={showAddModal}
+          style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
+        >
+          Cadastrar
         </Button>
       </Space>
 
-            {/* FIM ############# Container botao e barra de pesquisa */}
-
-
-                  {/* Tabela modal */}
       <Table
         {...tableProps}
-        pagination={{
-          position: ['bottomRight'],
-        }}
+        pagination={{ position: ['bottomRight'] }}
         columns={columns}
         dataSource={filteredData}
       />
 
-            {/* FIM ############# Tabela modal */}
-
-            {/* Esse modal é para cadastrar um novo item na tabela, apertando o botão de cadastro */}
       <Modal
-        title="Cadastrar Novo Item"
+        title="Cadastrar Nova Função"
         visible={isAddModalVisible}
-            // função para fechar o modal de cadastro
         onCancel={handleAddCancel}
-                // função para que faz o botão OK do modal de cadastro ser executado
         onOk={handleAdd}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-        >
+        <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="nome"
             label="Nome"
-            rules={[{ required: false, message: 'Por favor, insira o nome!' }]}
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            {/*dentro de setCadastro é criado um novo objeto {}, e dentro dele é criado uma cópia do objeto cadastro(está no useState) por meio do rest operator e em seguida é adicionado a propriedade a ser alterada ou criada  */}
             <Input
               type="text"
               required
               onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
             />
-
-
-            <Input />
           </Form.Item>
+
           <Form.Item
-          
             name="descricao"
             label="Descrição"
-            rules={[{ required: false, message: 'Por favor, insira a descrição!' }]}
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
           >
             <Input
               type="text"
               required
-              onChange={(e) => setDescricao({ ...cadastro, descricao: e.target.value })}
+              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}
             />
+          </Form.Item>
 
-              {/* Aqui entra o Switch */}
-
-          <Form.Item name="statusRole" label="Status" rules={[{ required: false }]}>
+          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
             <Switch onChange={() => onChangeSwitch(status)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
-
-
-            {/* <InputNumber min={0} />
-          </Form.Item>
-          <Form.Item
-            name="status"
-            label="Status"
-            rules={[{ required: true, message: 'Por favor, insira o status!' }]}
-          >
-            <Input /> */}
-          </Form.Item>
         </Form>
       </Modal>
+
       <Modal
-        title="Editar Item"
+        title="Editar Função"
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-        >
+        <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="nome"
             label="Nome"
-            rules={[{ required: false, message: 'Por favor, insira o nome!' }]}
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            <Input />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+            />
           </Form.Item>
+
           <Form.Item
             name="descricao"
             label="Descrição"
-            rules={[{ required: false, message: 'Por favor, insira a descrição!' }]}
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
           >
-            <InputNumber min={0} />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, descricao: e.target.value })}
+            />
           </Form.Item>
-          <Form.Item
-            name="status"
-            label="Status"
-            rules={[{ required: false, message: 'Por favor, insira o status!' }]}
-          >
-            <Input />
+
+          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+            <Switch onChange={() => onChangeSwitch(status)} />
+            {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
-            {/* FIM ############# Modal Editar Alm */}
     </>
   );
 };
-
-
-
-
 
 export default TableFunction;
