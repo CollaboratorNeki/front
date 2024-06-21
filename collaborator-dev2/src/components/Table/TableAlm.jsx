@@ -78,11 +78,11 @@ const TableAlm = () => {
   // essa função é para utilizar a barra de pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = initialData.filter(
+    const filtered = filteredData.filter(
       (item) =>
-        item.name.toLowerCase().includes(value.toLowerCase()) ||
-        item.age.toString().includes(value) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
+        item.nome.toLowerCase().includes(value.toLowerCase()) ||
+        item.url.toString().includes(value) ||
+        item.login.toLowerCase().includes(value.toLowerCase()),
     );
     setFilteredData(filtered);
   };
@@ -212,6 +212,15 @@ const TableAlm = () => {
       title: t('Nome'),
       dataIndex: 'nome',
       key: 'nomeAlm',
+      sorter: (a, b) => {
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0;
+      },
       width: 150,
     },
     // {
@@ -236,6 +245,15 @@ const TableAlm = () => {
       title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoAlm',
+      sorter: (a, b) => {
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0;
+      },
       width: 150,
     },
     {
@@ -244,23 +262,23 @@ const TableAlm = () => {
       key: 'vpnAlm',
       width: 150,
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 150,
-      key: 'statusAlm',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'status',
+    //   width: 150,
+    //   key: 'statusAlm',
+    //   filters: [
+    //     {
+    //       text: 'London',
+    //       value: 'London',
+    //     },
+    //     {
+    //       text: 'New York',
+    //       value: 'New York',
+    //     },
+    //   ],
+    //   onFilter: (value, record) => record.address.indexOf(value) === 0,
+    // },
 
     // const [filteredData, setFilteredData] = useState([]);
     /*

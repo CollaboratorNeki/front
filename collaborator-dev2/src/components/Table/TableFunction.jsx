@@ -40,7 +40,7 @@ const TableFunction = () => {
     const filtered = filteredData.filter(
       (item) =>
         item.nome.toLowerCase().includes(value.toLowerCase()) ||
-        item.descricao.toLowerCase().includes(value.toLowerCase())
+        item.descricao.toLowerCase().includes(value.toLowerCase()),
     );
     setFilteredData(filtered);
   };
@@ -54,11 +54,7 @@ const TableFunction = () => {
   };
 
   const handleAdd = async () => {
-    if (
-      cadastro.nome !== '' &&
-      cadastro.descricao !== '' &&
-      cadastro.status !== ''
-    ) {
+    if (cadastro.nome !== '' && cadastro.descricao !== '' && cadastro.status !== '') {
       await storeRole(cadastro);
       setIsAddModalVisible(false);
       setCadastro({ nome: '', descricao: '', status: '' });
@@ -89,7 +85,7 @@ const TableFunction = () => {
         setIsEditModalVisible(false);
         await updateRole(idEditingItem, values);
         const updatedData = filteredData.map((item) =>
-          item.idRole === idEditingItem ? { ...item, ...values } : item
+          item.idRole === idEditingItem ? { ...item, ...values } : item,
         );
         setFilteredData(updatedData);
         setEditingItem(null);
@@ -121,6 +117,15 @@ const TableFunction = () => {
       title: 'Nome',
       dataIndex: 'nome',
       key: 'nomeRole',
+      sorter: (a, b) => {
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0;
+      },
       width: 150,
     },
     {
@@ -129,25 +134,26 @@ const TableFunction = () => {
       key: 'descricaoRole',
       width: 150,
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 150,
-      key: 'statusRole',
-      render: (text) => (text ? 'Ativo' : 'Inativo'),
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'status',
+    //   width: 150,
+    //   key: 'statusRole',
+    //   render: (text) => (text ? 'Ativo' : 'Inativo'),
+    // },
     {
       title: 'Ação',
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
-          <Popconfirm
-            title="Deseja deletar?"
-            onConfirm={() => handleDelete(record)}
-          >
-            <Button><MdDeleteForever /></Button>
+          <Button onClick={() => showEditModal(record)}>
+            <FaEdit />
+          </Button>
+          <Popconfirm title="Deseja deletar?" onConfirm={() => handleDelete(record)}>
+            <Button>
+              <MdDeleteForever />
+            </Button>
           </Popconfirm>
         </Space>
       ),
