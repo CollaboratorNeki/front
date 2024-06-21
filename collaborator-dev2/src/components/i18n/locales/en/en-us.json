@@ -26,7 +26,10 @@
      "Senha":"Password",
      "Telefone":"Phone",
      "Código Externo":"External Code",
-     "Versão":"Version"
+     "Versão":"Version",
+     "Categoria":"Category",
+     "Valor":"Amount",
+     "Custos Extras":"Extra Costs"
     
     }
     

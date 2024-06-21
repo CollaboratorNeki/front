@@ -26,7 +26,11 @@
      "Tipo":"Tipo",
      "Telefone":"Telefone",
      "Código Externo":"Código",
-     "Versão":"Versão"
+     "Versão":"Versão",
+     "Categoria":"Categoria",
+     "Valor":"Valor",
+     "Custos Extras":"Custos Extras"
+
      
 
     }
