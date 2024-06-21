@@ -14,6 +14,8 @@ import {
 } from 'antd';
 import './Table.css';
 import { deleteAlm } from '../../services/almService';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
@@ -275,14 +277,15 @@ const TableAlm = () => {
       // o parametro record é a linha da tabela e os dados correspondentes
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}>Editar</Button>
+          <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
           <Popconfirm
             title="Deseja deletar?"
             onConfirm={() => {
               handleDelete(record);
             }}
           >
-            <a>Deletar</a>
+             <Button><MdDeleteForever/></Button>
+            {/* <a>Deletar</a> */}
           </Popconfirm>
         </Space>
       ),
