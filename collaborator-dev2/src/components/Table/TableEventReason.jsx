@@ -3,7 +3,8 @@ import { Space, Table, Grid, Input, Button, Modal, Form, InputNumber, Popconfirm
 import "./Table.css"; // Importa estilos CSS
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
-import { deleteEvent, storeEvent, getEvent } from '../../services/eventReasonService';
+import { deleteEvent, storeEvent, getEvent, updateEventReason } from '../../services/eventReasonService';
+import {useTranslation} from "react-i18next"
 
 const { useBreakpoint } = Grid; // Hook para detectar breakpoints
 const { Search } = Input; // Componente de entrada com funcionalidade de pesquisa
@@ -14,7 +15,7 @@ const defaultFooter = () => 'Here is footer'; // Função para rodapé padrão d
 const TableEventReason = () => {
   const screens = useBreakpoint(); // Detecta o tamanho da tela
   const isSmallScreen = screens.xs; // Define se a tela é pequena
-  const { t } = useTranslation();
+ const {t} = useTranslation();
 
   // Estados para gerenciar dados e UI
   const [searchText, setSearchText] = useState('');
@@ -36,8 +37,8 @@ const TableEventReason = () => {
       const setDadosEvent= dadosEvent?.map((item) => ({
         id: item.idEventReason,
         nome: item.nome,
-        url: item.descricao,
-        login: item.status,
+        descricao: item.descricao,
+        status: item.status,
       }));
       // console.log(setDadosAlm);
       // setDataAlm(setDadosAlm);
@@ -50,14 +51,11 @@ const TableEventReason = () => {
   // Função para filtrar dados com base na pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = data.filter((item) => {
-      const nameMatch = item.name.toString().toLowerCase().includes(value.toLowerCase());
-      const descriptionMatch = item.description.toString().toLowerCase().includes(value.toLowerCase());
-      const statusMatch = item.status.toLowerCase().includes(value.toLowerCase());
-      
-      // Retorna true se qualquer uma das condições for satisfeita
-      return nameMatch || descriptionMatch || statusMatch;
-    });
+    const filtered = data.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase()) ||
+      item.description.toString().includes(value) ||
+      item.status.toLowerCase().includes(value.toLowerCase())
+    );
     setFilteredData(filtered);
   };
   // Função para mostrar o modal de adicionar
@@ -84,7 +82,9 @@ const TableEventReason = () => {
 
   // Função para mostrar o modal de edição
   const showEditModal = (item) => {
+    console.log('Dados que estão renderizados na linha da tabela showEditModal', item);
     setEditingItem(item);
+    // o parametro (item) aqui é passado para jogar os dados do input do formulário de edição na função handleEdit, no handleEdit o parametro values são os dados do formulário
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
@@ -99,20 +99,35 @@ const TableEventReason = () => {
   const handleEdit = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(async (values) => {
+        console.log('Dados do formulário parametro values', values);
+        console.log('dados editingItem', editingItem);
+        console.log('dados filteredData', filteredData);
+        const idEditingItem = editingItem.idEventReason;
+        console.log(idEditingItem, 'id item separado');
+        //parametro values são os dados do formulário, e o método validateFields é responsável por validar os dados
         form.resetFields();
         setIsEditModalVisible(false);
+
         const updatedData = filteredData.map((item) =>
-          item.key === editingItem.key ? { ...item, ...values } : item,
+          item.idEventReason === editingItem.idEventReason ? { ...item, ...values } : item,
         );
+
+        const filtro = updatedData.filter((item) => item.idEventReason === idEditingItem);
+        // console.log(filtro, 'filtro');
+        // console.log(filtro[0]);
+
+        console.log(updatedData, 'Dados da variavel updatedData');
         setFilteredData(updatedData);
+        const response = await updateEventReason(idEditingItem, filtro[0]);
         setEditingItem(null);
+        console.log(filteredData, 'Dados do filteredData');
+       
       })
       .catch((info) => {
-        // console.log('Validate Failed:', info);
+        console.log('Validate Failed:', info);
       });
   };
-
 
   // Função para deletar um item
   const handleDelete = async (id) => {
@@ -175,7 +190,7 @@ const TableEventReason = () => {
       onFilter: (value, record) => record.address.indexOf(value) === 0,
     },
     {
-      title: t("Ação"),
+      title: "Ação",
       key: 'action',
       width: 150,
 

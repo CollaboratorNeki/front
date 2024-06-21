@@ -3,7 +3,7 @@ import api from './api';
 export const storeEvent = async (itemEvent) => {
   console.log('chamando a api para cadastrar Event');
   try {
-    const response = await api.post('/event_reason/salvar', itemEvent);
+    const response = await api.post('event_reason/salvar', itemEvent);
     console.log(response);
     alert('Event cadastrado com sucesso');
   } catch (error) {
@@ -15,7 +15,7 @@ export const storeEvent = async (itemEvent) => {
   export const getEvent = async () => {
     try {
       const arrayGetAlms = [];
-      const response = await api.get('/event_reason/listar')
+      const response = await api.get('event_reason/listar')
       // console.log(response.data);
   
       // o key pega a chave/index do array
@@ -38,9 +38,19 @@ export const storeEvent = async (itemEvent) => {
 
 export const deleteEvent = async (idEventReason) => {
   try {
-    const response = await api.delete(`/event_reason/deletar/${idEventReason}`);
+    const response = await api.delete(`event_reason/deletar/${idEventReason}`);
     console.log('Id deletado com sucesso ');
   } catch (error) {
     console.log('Erro em deletar Event: ', error);
+  }
+};
+
+export const updateEventReason = async (idEventReason, itemEventReason) => {
+  try {
+    const response = await api.patch(`event_reason/atualizar/${idEventReason}`, itemEventReason);
+    alert('Event alterado com sucesso');
+  } catch (error) {
+    console.log('Erro em atualizar Event: ', error);
+    alert('Falha ao atualizar o Event');
   }
 };
