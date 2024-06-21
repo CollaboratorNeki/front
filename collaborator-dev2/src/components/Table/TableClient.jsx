@@ -20,7 +20,7 @@ for (let i = 1; i <= 10; i++) {
 }
 
 const defaultTitle = () => 'Client Management';
-const defaultFooter = () => 'Here is footer';
+const defaultFooter = () => 'Neki';
 
 const TableClient = () => {
   const screens = useBreakpoint();

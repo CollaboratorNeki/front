@@ -31,7 +31,7 @@ const initialData = [
 ];
 
 const defaultTitle = () => 'Company Costs Management';
-const defaultFooter = () => 'Here is footer';
+const defaultFooter = () => 'Neki';
 
 const TableCost = () => {
   const screens = useBreakpoint();

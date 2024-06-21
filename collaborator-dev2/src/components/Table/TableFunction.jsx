@@ -9,7 +9,7 @@ const { useBreakpoint } = Grid;
 const { Search } = Input;
 
 const defaultTitle = () => 'Role';
-const defaultFooter = () => 'footer';
+const defaultFooter = () => 'Neki';
 
 const TableFunction = () => {
   const screens = useBreakpoint();

@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 const defaultTitle = () => 'Alm';
-const defaultFooter = () => 'footer';
+const defaultFooter = () =>'Neki' ;
 
 
 

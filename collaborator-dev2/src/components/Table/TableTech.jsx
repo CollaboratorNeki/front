@@ -40,8 +40,8 @@ const initialData = [
   { key: 30, tecnologia: 'Kubernetes', tipo: 'DevOps', versao: '1.20' },
 ];
 
-const defaultTitle = () => 'Cadastro de Tecnologias';
-const defaultFooter = () => 'Footer';
+const defaultTitle = () => 'Tech';
+const defaultFooter = () => 'Neki';
 
 const TechTable = () => {
   const screens = useBreakpoint();

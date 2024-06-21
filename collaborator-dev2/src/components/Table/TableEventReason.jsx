@@ -8,8 +8,8 @@ import './Table.css';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
-const defaultTitle = () => 'EventReason';
-const defaultFooter = () => 'footer';
+const defaultTitle = () => 'Event Reason';
+const defaultFooter = () => 'Neki';
 
 const TableEventReason = () => {
   const screens = useBreakpoint();

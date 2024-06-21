@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/img/logo.png';
 import { useTranslation } from "react-i18next";
 import Accessibility from "../accessibility/accessibility";
+import "./Modal.css"
 
 
 
