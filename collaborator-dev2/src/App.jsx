@@ -28,13 +28,20 @@ const App = () => {
   const themeToggle = () => {
     setDarkTheme(!darkTheme);
   };
+  const onCollapse = (collapsed) => {
+    setCollapsed(collapsed);
+  };
+
 
   return (
     <BrowserRouter >
-      <Layout style={{ minHeight: '100vh' }} >
+      <Layout style={{ minHeight: '100vh', overflow: 'hidden' }}>
         <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
           collapsed={collapsed}
           collapsible
+          onCollapse={onCollapse}
           trigger={null}
           theme={darkTheme ? 'dark' : 'light'}
           className="sidebar"
