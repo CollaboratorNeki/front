@@ -42,3 +42,13 @@ export const deleteAlm = async (idAlm) => {
     console.log('Erro em deletar alm: ', error);
   }
 };
+
+export const updateAlm = async (idAlm, itemAlm) => {
+  try {
+    const response = await api.patch(`almtools/alterar_alm/${idAlm}`, itemAlm);
+    alert('Alm alterado com sucesso');
+  } catch (error) {
+    console.log('Erro em atualizar alm: ', error);
+    alert('Falha ao atualizar o alm');
+  }
+};

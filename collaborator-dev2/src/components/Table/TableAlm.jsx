@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { storeAlm, getAlm } from '../../services/almService';
+import { storeAlm, getAlm, updateAlm } from '../../services/almService';
 import {
   Space,
   Table,
@@ -14,9 +14,6 @@ import {
 } from 'antd';
 import './Table.css';
 import { deleteAlm } from '../../services/almService';
-import { FaEdit } from 'react-icons/fa';
-import { MdDeleteForever } from 'react-icons/md';
-import { useTranslation } from 'react-i18next';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
@@ -32,11 +29,11 @@ const TableAlm = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const [searchText, setSearchText] = useState('');
-  const { t } = useTranslation();
   //usando esse use state para guardar os dados da listagem da tabela
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  //useState que pega os valores atualizados do formulário e guarda em uma variável
   const [editingItem, setEditingItem] = useState(null);
   const [form] = Form.useForm();
   const [cadastro, setCadastro] = useState({
@@ -56,7 +53,7 @@ const TableAlm = () => {
     const response = async () => {
       const dadosAlm = await getAlm();
       const setDadosAlm = dadosAlm?.map((item) => ({
-        id: item.idAlmTool,
+        idAlmTool: item.idAlmTool,
         nome: item.nome,
         url: item.url,
         login: item.login,
@@ -64,7 +61,6 @@ const TableAlm = () => {
         tipo: item.tipo,
         vpn: item.vpn,
         status: item.status,
-        acao: item.idAlmTool,
       }));
       // console.log(setDadosAlm);
       // setDataAlm(setDadosAlm);
@@ -130,9 +126,13 @@ const TableAlm = () => {
     //   });
   };
 
-  // essa função é para abrir o modal de edição de um item
+  // essa função é para abrir o modal de edição da coluna ação e é passado no parametro (item) os dados do input do formulário de edição
+
   const showEditModal = (item) => {
+    console.log('Dados que estão renderizados na linha da tabela showEditModal', item);
     setEditingItem(item);
+
+    // o parametro (item) aqui é passado para jogar os dados do input do formulário de edição na função handleEdit, no handleEdit o parametro values são os dados do formulário
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
@@ -147,25 +147,43 @@ const TableAlm = () => {
   const handleEdit = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(async (values) => {
+        console.log('Dados do formulário parametro values', values);
+        console.log('dados editingItem', editingItem);
+        console.log('dados filteredData', filteredData);
+        const idEditingItem = editingItem.idAlmTool;
+        console.log(idEditingItem, 'id item separado');
+        //parametro values são os dados do formulário, e o método validateFields é responsável por validar os dados
         form.resetFields();
         setIsEditModalVisible(false);
+
         const updatedData = filteredData.map((item) =>
-          item.key === editingItem.key ? { ...item, ...values } : item,
+          item.idAlmTool === editingItem.idAlmTool ? { ...item, ...values } : item,
         );
+
+        const filtro = updatedData.filter((item) => item.idAlmTool === idEditingItem);
+        // console.log(filtro, 'filtro');
+        // console.log(filtro[0]);
+
+        console.log(updatedData, 'Dados da variavel updatedData');
         setFilteredData(updatedData);
+        const response = await updateAlm(idEditingItem, filtro[0]);
         setEditingItem(null);
+        console.log(filteredData, 'Dados do filteredData');
+        // console.log(filteredData)
+        // const atualizarAlm = await updateAlm(editingItem.id,filteredData); //esse método é responsável por atualizar o item no banco de dados
+        // console.log(atualizarAlm);
       })
       .catch((info) => {
-        // console.log('Validate Failed:', info);
+        console.log('Validate Failed:', info);
       });
   };
 
   // essa função é para deletar um item da tabela usando o botão de deletar da coluna ação
   const handleDelete = async (record) => {
-    //  console.log(record.id);
+    console.log(record.idAlmTool);
     try {
-      const response = await deleteAlm(record.id);
+      const response = await deleteAlm(record.idAlmTool);
     } catch (error) {
       console.log(error);
     }
@@ -177,13 +195,13 @@ const TableAlm = () => {
   const columns = [
     {
       title: 'Id',
-      dataIndex: 'id',
+      dataIndex: 'idAlmTool',
       key: 'idAlmTool',
-      sorter: (a, b) => a.id - b.id, //método para ordenar a coluna id
+      sorter: (a, b) => a.idAlmTool - b.idAlmTool, //método para ordenar a coluna id
       width: 50,
     },
     {
-      title: t("Nome"),
+      title: 'Nome',
       dataIndex: 'nome',
       key: 'nomeAlm',
       width: 150,
@@ -201,13 +219,13 @@ const TableAlm = () => {
       width: 150,
     },
     {
-      title: t("Senha"),
+      title: 'Senha',
       dataIndex: 'senha',
       key: 'senhaAlm',
       width: 150,
     },
     {
-      title: t("Tipo"),
+      title: 'Tipo',
       dataIndex: 'tipo',
       key: 'tipoAlm',
       width: 150,
@@ -251,17 +269,22 @@ const TableAlm = () => {
 
     // pop up para deletar o item pelo botão editar
     {
-      title: t("Ação"),
+      title: 'Ação',
       key: 'acao',
       width: 150,
       // o parametro record é a linha da tabela e os dados correspondentes
       render: (_, record) => (
         <Space size="middle">
-        <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
-        <Popconfirm title="Tem certeza que deseja excluir?" onConfirm={() => handleDelete(record.key)}>
-          <Button><MdDeleteForever/></Button>
-        </Popconfirm>
-      </Space>
+          <Button onClick={() => showEditModal(record)}>Editar</Button>
+          <Popconfirm
+            title="Deseja deletar?"
+            onConfirm={() => {
+              handleDelete(record);
+            }}
+          >
+            <a>Deletar</a>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
@@ -289,7 +312,7 @@ const TableAlm = () => {
       {/* Container botao e barra de pesquisa */}
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Search..."
+          placeholder="Buscar nome do projeto..."
           enterButton
           onSearch={handleSearch}
           backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
@@ -299,7 +322,7 @@ const TableAlm = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          {t("Cadastrar")}
+          Cadastrar
         </Button>
       </Space>
 
@@ -410,32 +433,88 @@ const TableAlm = () => {
       {/* Esse modal é para editar um item na tabela pelo botão de editar */}
 
       <Modal
-        title="Editar Item"
+        title="Editar Item ALM"
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input the name!' }]}
+            name="nome"
+            label="Nome"
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            <Input />
+            {/*dentro de setCadastro é criado um novo objeto {}, e dentro dele é criado uma cópia do objeto cadastro(está no useState) por meio do rest operator e em seguida é adicionado a propriedade a ser alterada ou criada  */}
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="url"
+            label="Url"
+            rules={[{ required: true, message: 'Coloque a URL por favor!' }]}
+          >
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, url: e.target.value })}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="login"
+            label="Login"
+            rules={[{ required: true, message: 'Coloque o usuário de login por favor!' }]}
+          >
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, login: e.target.value })}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="senha"
+            label="Senha"
+            rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
+          >
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, senha: e.target.value })}
+            />
           </Form.Item>
           <Form.Item
-            name="age"
-            label="Age"
-            rules={[{ required: true, message: 'Please input the age!' }]}
+            name="tipo"
+            label="Tipo"
+            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
-            <InputNumber min={0} />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, tipo: e.target.value })}
+            />
           </Form.Item>
           <Form.Item
-            name="address"
-            label="Address"
-            rules={[{ required: true, message: 'Please input the address!' }]}
+            name="vpn"
+            label="Vpn"
+            rules={[{ required: true, message: 'Coloque o vpn por favor!' }]}
           >
-            <Input />
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, vpn: e.target.value })}
+            />
+          </Form.Item>
+
+          {/* Aqui entra o Switch */}
+
+          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+            <Switch onChange={() => onChangeSwitch(status)} />
+            {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
