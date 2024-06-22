@@ -29,7 +29,13 @@
      "Versão":"Versão",
      "Categoria":"Categoria",
      "Valor":"Valor",
-     "Custos Extras":"Custos Extras"
+     "Custos Extras":"Custos Extras",
+     "Adicionar novo cliente":"Adicionar novo cliente",
+    " Gerenciamento de Custos Extras":"Gerenciamento de Custos Extras",
+    "Cadastrar Custos":"Cadastrar Custos",
+    "Tipo de Custo":"Tipo de Custo",
+    "Editar CLientes":"Editar Clientes",
+    "Editar Custos":"Editar Custos"
 
      
 

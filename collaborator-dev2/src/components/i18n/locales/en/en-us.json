@@ -29,7 +29,13 @@
      "Versão":"Version",
      "Categoria":"Category",
      "Valor":"Amount",
-     "Custos Extras":"Extra Costs"
+     "Custos Extras":"Extra Costs",
+     "Adicionar novo cliente":"Add new client",
+     "Gerenciamento de Custos Extras":"Extra Costs Management",
+     "Cadastrar Custos":"Add Costs",
+     "Tipo de Custo":"Cost Type",
+     "Editar Clientes":"Edit Clients",
+     "Editar Custos":"Edit Costs"
     
     }
     

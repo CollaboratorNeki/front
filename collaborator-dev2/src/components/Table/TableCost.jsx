@@ -30,13 +30,13 @@ const initialData = [
   { key: 20, costType: 'Ajuda de Custo Home Office', amountSpent: 350, category: 'Diversos' },
 ];
 
-const defaultTitle = () => 'Company Costs Management';
-const defaultFooter = () => 'Neki';
 
 const TableCost = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const { t } = useTranslation();
+  const defaultTitle = () => t("Gerenciamento de Custos Extras");
+  const defaultFooter = () => 'Neki';
 
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(initialData);
@@ -74,7 +74,7 @@ const TableCost = () => {
           ...values,
         };
         setFilteredData([...filteredData, newItem]);
-        message.success('Cost added successfully!');
+        message.success('Custos inseridos com successo!');
       })
       .catch(info => {
         console.log('Validate Failed:', info);
@@ -103,7 +103,7 @@ const TableCost = () => {
         );
         setFilteredData(updatedData);
         setEditingItem(null);
-        message.success('Cost updated successfully!');
+        message.success('Custos atualizados com successo!');
       })
       .catch(info => {
         console.log('Validate Failed:', info);
@@ -113,7 +113,7 @@ const TableCost = () => {
   const handleDelete = (key) => {
     const newData = filteredData.filter((item) => item.key !== key);
     setFilteredData(newData);
-    message.success('Cost deleted successfully!');
+    message.success('Custos deletados com successo!');
   };
 
   const columns = [
@@ -180,7 +180,7 @@ const TableCost = () => {
         dataSource={filteredData}
       />
       <Modal
-        title="Add New Cost"
+        title={t("Cadastrar Custos")}
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
@@ -191,30 +191,30 @@ const TableCost = () => {
           name="form_in_modal"
         >
           <Form.Item
-            name="costType"
-            label="Cost Type"
-            rules={[{ required: true, message: 'Please input the cost type!' }]}
+            name={t("Tipo de Custo")}
+            label= {t("Tipo de Custo")}
+            rules={[{ required: true, message: 'Por favor coloque o tipo de custo!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="amountSpent"
-            label="Amount Spent"
-            rules={[{ required: true, message: 'Please input the amount spent!' }]}
+            name={t("Valor")}
+            label={t("Valor")}
+            rules={[{ required: true, message: 'Por favor coloque o valor!' }]}
           >
             <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: 'Please input the category!' }]}
+            name={t("Categoria")}
+            label={t("Categoria")}
+            rules={[{ required: true, message: 'Por favor coloque a categoria!' }]}
           >
             <Input />
           </Form.Item>
         </Form>
       </Modal>
       <Modal
-        title="Edit Cost"
+        title={t("Editar Custos")}
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
@@ -225,23 +225,23 @@ const TableCost = () => {
           name="form_in_modal"
         >
           <Form.Item
-            name="costType"
-            label="Cost Type"
-            rules={[{ required: true, message: 'Please input the cost type!' }]}
+            name={t("Tipo de Custo")}
+            label={t("Tipo de Custo")}
+            rules={[{ required: true, message: 'Por favor insira o tipo de custo!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="amountSpent"
-            label="Amount Spent"
-            rules={[{ required: true, message: 'Please input the amount spent!' }]}
+            name={t("Valor")}
+            label={t("Valor")}
+            rules={[{ required: true, message: 'Por favor insira o valor!' }]}
           >
             <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
-            name="category"
-            label="Category"
-            rules={[{ required: true, message: 'Please input the category!' }]}
+            name={t("Categoria")}
+            label={t("Categoria")}
+            rules={[{ required: true, message: 'Por favor insira a categoria!' }]}
           >
             <Input />
           </Form.Item>

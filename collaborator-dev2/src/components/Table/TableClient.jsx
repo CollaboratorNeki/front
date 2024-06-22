@@ -19,13 +19,13 @@ for (let i = 1; i <= 10; i++) {
   });
 }
 
-const defaultTitle = () => 'Client Management';
-const defaultFooter = () => 'Neki';
 
 const TableClient = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const { t } = useTranslation();
+  const defaultTitle = () => t('Clientes');
+  const defaultFooter = () => 'Neki';
 
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState(initialData);
@@ -65,7 +65,7 @@ const TableClient = () => {
           ...values,
         };
         setFilteredData([...filteredData, newItem]);
-        message.success('Client added successfully!');
+        message.success('Clienta adicionado com successo!');
       })
       .catch(info => {
         console.log('Validate Failed:', info);
@@ -94,7 +94,7 @@ const TableClient = () => {
         );
         setFilteredData(updatedData);
         setEditingItem(null);
-        message.success('Client updated successfully!');
+        message.success('Client atualizado com successo!');
       })
       .catch(info => {
         console.log('Validate Failed:', info);
@@ -104,7 +104,7 @@ const TableClient = () => {
   const handleDelete = (key) => {
     const newData = filteredData.filter((item) => item.key !== key);
     setFilteredData(newData);
-    message.success('Client deleted successfully!');
+    message.success('Cliente deletado com successo!');
   };
 
   const columns = [
@@ -180,7 +180,7 @@ const TableClient = () => {
         dataSource={filteredData}
       />
       <Modal
-        title="Add New Client"
+        title= {t("Adicionar novo cliente")}
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
@@ -191,9 +191,9 @@ const TableClient = () => {
           name="form_in_modal"
         >
           <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input the name!' }]}
+            name= {t("Nome")}
+            label= {t("Nome")}
+            rules={[{ required: true, message: 'Por favor coloque o nome!' }]}
           >
             <Input />
           </Form.Item>
@@ -201,16 +201,16 @@ const TableClient = () => {
             name="email"
             label="Email"
             rules={[
-              { required: true, message: 'Please input the email!' },
-              { type: 'email', message: 'Please input a valid email!' }
+              { required: true, message: 'Por favor coloque o email!' },
+              { type: 'email', message: 'Por favor coloque o email!' }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[{ required: true, message: 'Please input the phone number!' }]}
+            name={t("Telefone")}
+            label={t("Telefone")}
+            rules={[{ required: true, message: 'Por favor coloque o telefone!' }]}
           >
             <Input />
           </Form.Item>
@@ -218,7 +218,7 @@ const TableClient = () => {
             name="cpfCnpj"
             label="CPF/CNPJ"
             rules={[
-              { required: true, message: 'Please input the CPF or CNPJ!' },
+              { required: true, message: 'Por favor insira o CPF ou CNPJ!' },
               {
                 pattern: /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/,
                 message: 'Please input a valid CPF or CNPJ!'
@@ -228,15 +228,15 @@ const TableClient = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="externalCode"
-            label="External Code"
+            name={t("Código Externo")}
+            label={t("Código Externo")}
           >
             <Input />
           </Form.Item>
         </Form>
       </Modal>
       <Modal
-        title="Edit Client"
+        title={t("Editar Clientes")}
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
@@ -247,9 +247,9 @@ const TableClient = () => {
           name="form_in_modal"
         >
           <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: 'Please input the name!' }]}
+            name={t("Nome")}
+            label={t("Nome")}
+            rules={[{ required: true, message: 'Por favor insira um nome!' }]}
           >
             <Input />
           </Form.Item>
@@ -257,16 +257,16 @@ const TableClient = () => {
             name="email"
             label="Email"
             rules={[
-              { required: true, message: 'Please input the email!' },
-              { type: 'email', message: 'Please input a valid email!' }
+              { required: true, message: 'Por favor insira um email!' },
+              { type: 'email', message: 'Por favor insira um email válido!' }
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[{ required: true, message: 'Please input the phone number!' }]}
+            name={t("Telefone")}
+            label={t("Telefone")}
+            rules={[{ required: true, message: 'Por favor insira um telefone!' }]}
           >
             <Input />
           </Form.Item>
@@ -274,7 +274,7 @@ const TableClient = () => {
             name="cpfCnpj"
             label="CPF/CNPJ"
             rules={[
-              { required: true, message: 'Please input the CPF or CNPJ!' },
+              { required: true, message: 'Por favor insira um CPF ou CNPJ!' },
               {
                 pattern: /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/,
                 message: 'Please input a valid CPF or CNPJ!'
@@ -284,8 +284,8 @@ const TableClient = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="externalCode"
-            label="External Code"
+            name={t("Código Externo")}
+            label={t("Código Externo")}
           >
             <Input />
           </Form.Item>
