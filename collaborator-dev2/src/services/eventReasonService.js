@@ -30,7 +30,7 @@ export const deleteEventReason = async (idEventReason) => {
 
 export const updateEventReason = async (idEventReason, itemEventReason) => {
   try {
-    await api.put(`/event_reason/atualizar/${idEventReason}`, itemEventReason);
+    await api.patch(`/event_reason/atualizar/${idEventReason}`, itemEventReason);
     alert('EventReason alterado com sucesso');
   } catch (error) {
     console.log('Erro em atualizar EventReason: ', error);
