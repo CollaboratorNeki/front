@@ -8,7 +8,7 @@ import './Table.css';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
-const defaultTitle = () => 'Role';
+const defaultTitle = () => 'Cadastro de Função';
 const defaultFooter = () => 'footer';
 
 const TableFunction = () => {
@@ -112,7 +112,8 @@ const TableFunction = () => {
       dataIndex: 'idRole',
       key: 'idRole',
       sorter: (a, b) => a.idRole - b.idRole,
-      width: 50,
+      width: 25,
+      
     },
     {
       title: 'Nome',
@@ -127,13 +128,13 @@ const TableFunction = () => {
         }
         return 0;
       },
-      width: 150,
+      width: 200,
     },
     {
       title: 'Descrição',
       dataIndex: 'descricao',
       key: 'descricaoRole',
-      width: 150,
+      width: 250,
     },
     // {
     //   title: 'Status',
@@ -180,7 +181,7 @@ const TableFunction = () => {
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
+    // rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };

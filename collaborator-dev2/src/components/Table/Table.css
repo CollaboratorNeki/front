@@ -18,6 +18,12 @@
   background: linear-gradient(to bottom, #2d939c, #68c7cf);
 }
 
+.ant-table-footer {
+  font-size: 0px;
+  height: 35px;
+  
+}
+
 
 /* .ant-btn-primary {
     background: linear-gradient(to bottom, #2d939c, #68C7CF);
