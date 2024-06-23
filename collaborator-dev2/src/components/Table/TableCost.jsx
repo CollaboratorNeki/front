@@ -163,7 +163,7 @@ const TableCost = () => {
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Search..."
+          placeholder="Procurar..."
           enterButton
           onSearch={handleSearch}
         />
