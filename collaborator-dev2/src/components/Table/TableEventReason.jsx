@@ -25,7 +25,7 @@ const TableEventReason = () => {
     descricao: '',
     status: '',
   });
-  const [status, setStatus] = useState();
+ const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
   useEffect(() => {
     const fetchData = async () => {

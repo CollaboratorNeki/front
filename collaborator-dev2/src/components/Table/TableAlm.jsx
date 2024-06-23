@@ -78,14 +78,15 @@ const TableAlm = () => {
   // essa função é para utilizar a barra de pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = initialData.filter(
+    const filtered = filteredData.filter(
       (item) =>
-        item.name.toLowerCase().includes(value.toLowerCase()) ||
-        item.age.toString().includes(value) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
+        item.nome.toLowerCase().includes(value.toLowerCase()) ||
+      item.url.toString().includes(value) ||
+      item.login.toLowerCase().includes(value.toLowerCase()),
     );
     setFilteredData(filtered);
   };
+  
   // FIM ############# lógica filtrar ALM
 
   // essa função é para abrir e fechar o modal de cadastro de ALM
@@ -236,6 +237,15 @@ const TableAlm = () => {
       title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoAlm',
+      sorter: (a, b) => {
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0;
+      },
       width: 150,
     },
     {
