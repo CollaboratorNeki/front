@@ -25,8 +25,9 @@ const TableEventReason = () => {
     descricao: '',
     status: '',
   });
- const [status, setStatus] = useState();
+  const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       const dadosEventReason = await getEventReason();
@@ -37,12 +38,22 @@ const TableEventReason = () => {
 
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = filteredData.filter(
-      (item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase()) ||
-        item.descricao.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
+    if (value === '') {
+      const fetchData = async () => {
+        const dadosEventReason = await getEventReason();
+        setFilteredData(dadosEventReason);
+      };
+      fetchData();
+    } else {
+      const filtered = filteredData.filter(
+        (item) =>
+          item.nome.toLowerCase().includes(value.toLowerCase()) ||
+          item.descricao.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+    // Limpar o campo de pesquisa após a busca
+    setSearchText('');
   };
 
   const showAddModal = () => {
@@ -54,13 +65,10 @@ const TableEventReason = () => {
   };
 
   const handleAdd = async () => {
-    if (
-      cadastro.nome !== '' &&
-      cadastro.descricao !== ''
-    ) {
+    if (cadastro.nome !== '' && cadastro.descricao !== '') {
       await storeEventReason(cadastro);
       setIsAddModalVisible(false);
-      setCadastro({ nome: '', descricao: '', status: ''});
+      setCadastro({ nome: '', descricao: '', status: '' });
       const dadosEventReason = await getEventReason();
       setFilteredData(dadosEventReason);
     } else {
@@ -152,31 +160,31 @@ const TableEventReason = () => {
       ),
     },
   ];
+
   const onChangeSwitch = (checked) => {
     console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
-    checked ?  setStatus(true) : setStatus(false);
+    checked ? setStatus(true) : setStatus(false);
   };
 
- // lógica do switch de status de editar
- const onChangeSwitch2 = (checked) => {
-  console.log(checked, "switch editar status2  ");
-  setCadastro({ ...cadastro, status: checked });
-  checked ?  setStatus2(true) : setStatus2(false);
-};
+  // Lógica do switch de status de editar
+  const onChangeSwitch2 = (checked) => {
+    console.log(checked, "switch editar status2  ");
+    setCadastro({ ...cadastro, status: checked });
+    checked ? setStatus2(true) : setStatus2(false);
+  };
 
-
-
-const tableProps = {
-  bordered: true,
-  size: 'small',
-  title: defaultTitle,
-  showHeader: true,
-  footer: defaultFooter,
-  rowSelection: {},
-  scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
-  pagination: isSmallScreen ? { pageSize: 5 } : false,
-};
+  const tableProps = {
+    bordered: true,
+    size: 'small',
+    title: defaultTitle,
+    showHeader: true,
+    footer: defaultFooter,
+    // Remova o rowSelection para eliminar os checkboxes
+    // rowSelection: {},
+    scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
+    pagination: isSmallScreen ? { pageSize: 5 } : false,
+  };
 
   return (
     <>
@@ -184,6 +192,8 @@ const tableProps = {
         <Search
           placeholder="Buscar evento..."
           enterButton
+          value={searchText} // Adicionado para limpar o campo de pesquisa
+          onChange={(e) => setSearchText(e.target.value)} // Adicionado para controlar o campo de pesquisa
           onSearch={handleSearch}
         />
         <Button
