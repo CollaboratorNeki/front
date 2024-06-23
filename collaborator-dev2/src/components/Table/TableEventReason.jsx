@@ -136,13 +136,13 @@ const TableEventReason = () => {
       key: 'descricaoEventReason',
       width: 200,
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 50,
-      key: 'statusEventReason',
-      render: (text) => (text ? 'Ativo' : 'Inativo'),
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'status',
+    //   width: 50,
+    //   key: 'statusEventReason',
+    //   render: (text) => (text ? 'Ativo' : 'Inativo'),
+    // },
     {
       title: 'Ação',
       key: 'acao',
@@ -243,10 +243,10 @@ const TableEventReason = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" rules={[{ required: false }]}>
+          {/* <Form.Item name="status" label="Status" rules={[{ required: false }]}>
             <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Modal>
 
