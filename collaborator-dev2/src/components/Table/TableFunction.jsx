@@ -38,12 +38,22 @@ const TableFunction = () => {
 
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = filteredData.filter(
-      (item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase()) ||
-        item.descricao.toLowerCase().includes(value.toLowerCase()),
-    );
-    setFilteredData(filtered);
+    if (value === '') {
+      const fetchData = async () => {
+        const dadosRole = await getRole();
+        setFilteredData(dadosRole);
+      };
+      fetchData();
+    } else {
+      const filtered = filteredData.filter(
+        (item) =>
+          item.nome.toLowerCase().includes(value.toLowerCase()) ||
+          item.descricao.toLowerCase().includes(value.toLowerCase()),
+      );
+      setFilteredData(filtered);
+    }
+    // Limpar o campo de pesquisa após a busca
+    setSearchText('');
   };
 
   const showAddModal = () => {
@@ -192,6 +202,8 @@ const TableFunction = () => {
         <Search
           placeholder="Buscar nome da função..."
           enterButton
+          value={searchText} // Adicionado para limpar o campo de pesquisa
+          onChange={(e) => setSearchText(e.target.value)} // Adicionado para controlar o campo de pesquisa
           onSearch={handleSearch}
           backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />

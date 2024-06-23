@@ -39,12 +39,22 @@ const TableMessages = () => {
   const handleSearch = (value) => {
     // Função para filtrar os dados da tabela com base no texto de busca
     setSearchText(value);
-    const filtered = filteredData.filter(
-      (item) =>
-        item.conteudo.toLowerCase().includes(value.toLowerCase()) ||
-        item.tipo.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredData(filtered);
+    if (value === '') {
+      const fetchData = async () => {
+        const dadosMessage = await getMessage();
+        setFilteredData(dadosMessage);
+      };
+      fetchData();
+    } else {
+      const filtered = filteredData.filter(
+        (item) =>
+          item.conteudo.toLowerCase().includes(value.toLowerCase()) ||
+          item.tipo.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+    // Limpar o campo de pesquisa após a busca
+    setSearchText('');
   };
 
   const showAddModal = () => {
@@ -118,11 +128,10 @@ const TableMessages = () => {
       console.log(error);
     }
   };
-   
-  
+
   // FUNÇÃO PARA FORMATAR A DATA ( CRIA UMA VARIAVEL D E RECEBE A DATA, CRIA UMA VARIAVEL DAY QUE RECEBE O DIA, CRIA 
-    // UMA VARIAVEL MONTH QUE RECEBE O MES, CRIA UMA VARIAVEL YEAR QUE RECEBE O ANO, RETORNA A DATA FORMATADA  "return `${day}/${month}/${year}`")
-    // OBS. NA COLUNA DATA INICIO E DATA FIM, FOI INSERIDO O CÓDIGO QUE CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
+  // UMA VARIAVEL MONTH QUE RECEBE O MES, CRIA UMA VARIAVEL YEAR QUE RECEBE O ANO, RETORNA A DATA FORMATADA  "return `${day}/${month}/${year}`")
+  // OBS. NA COLUNA DATA INICIO E DATA FIM, FOI INSERIDO O CÓDIGO QUE CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
   const formatDate = (date) => {
     const d = new Date(date);
     const day = String(d.getDate()).padStart(2, '0');
@@ -130,10 +139,9 @@ const TableMessages = () => {
     const year = d.getFullYear();
     return `${day}/${month}/${year}`;
   };
-    // FIM DA FUNÇÃO PARA FORMATAR A DATA
+  // FIM DA FUNÇÃO PARA FORMATAR A DATA
 
-  
-    const columns = [
+  const columns = [
     {
       title: 'Id',
       dataIndex: 'idMessage',
@@ -176,14 +184,14 @@ const TableMessages = () => {
       dataIndex: 'dataInicio',
       key: 'dataInicioMessage',
       width: 150,
-      render: (text) => formatDate(text),     // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
+      render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
       title: 'Data Fim',
       dataIndex: 'dataFim',
       key: 'dataFimMessage',
       width: 150,
-      render: (text) => formatDate(text),   // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
+      render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
       title: 'Ação',
@@ -209,7 +217,8 @@ const TableMessages = () => {
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
+    // Remova o rowSelection para eliminar os checkboxes
+    // rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };
@@ -220,6 +229,8 @@ const TableMessages = () => {
         <Search
           placeholder="Buscar mensagem..."
           enterButton
+          value={searchText} // Adicionado para limpar o campo de pesquisa
+          onChange={(e) => setSearchText(e.target.value)} // Adicionado para controlar o campo de pesquisa
           onSearch={handleSearch}
         />
         <Button
