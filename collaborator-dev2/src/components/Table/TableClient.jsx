@@ -68,7 +68,7 @@ const TableClient = () => {
         message.success('Clienta adicionado com successo!');
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        console.log('Falha na validação:', info);
       });
   };
 
@@ -97,7 +97,7 @@ const TableClient = () => {
         message.success('Client atualizado com successo!');
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+        console.log('Falha na validação:', info);
       });
   };
 
@@ -163,7 +163,7 @@ const TableClient = () => {
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Search..."
+          placeholder="Procurar..."
           enterButton
           onSearch={handleSearch}
         />
@@ -216,12 +216,13 @@ const TableClient = () => {
           </Form.Item>
           <Form.Item
             name="cpfCnpj"
+            maxLength={14} // Limita a 14 caracteres
             label="CPF/CNPJ"
             rules={[
               { required: true, message: 'Por favor insira o CPF ou CNPJ!' },
               {
                 pattern: /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/,
-                message: 'Please input a valid CPF or CNPJ!'
+                message: 'Por favor, insira um CPF ou CNPJ válido!'
               }
             ]}
           >
@@ -277,7 +278,7 @@ const TableClient = () => {
               { required: true, message: 'Por favor insira um CPF ou CNPJ!' },
               {
                 pattern: /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/,
-                message: 'Please input a valid CPF or CNPJ!'
+                message: 'Por favor, insira um CPF ou CNPJ válido!'
               }
             ]}
           >
