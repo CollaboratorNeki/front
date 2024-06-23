@@ -1,8 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { storeAlm, getAlm, updateAlm } from '../../services/almService';
-import {Space,Table,Grid,Input,Button, Modal,Form,InputNumber,
-Popconfirm,Switch,Select
+import {
+  Space,
+  Table,
+  Grid,
+  Input,
+  Button,
+  Modal,
+  Form,
+  InputNumber,
+  Popconfirm,
+  Switch,
 } from 'antd';
 import './Table.css';
 import { deleteAlm } from '../../services/almService';
@@ -19,7 +28,7 @@ const defaultFooter = () => 'footer';
 
 
 const TableAlm = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs; // Consider xs as small screen
   const [searchText, setSearchText] = useState('');
@@ -39,9 +48,6 @@ const TableAlm = () => {
     tipo: '',
     vpn: '',
     status: '',
-    statusTarefa: '', 
-  statusFechamento: '', 
-
   });
   const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
@@ -60,8 +66,7 @@ const TableAlm = () => {
         senha: item.senha,
         tipo: item.tipo,
         vpn: item.vpn,
-        status: item.status, statusTarefa: item.statusTarefa,
-        statusFechamento: item.statusFechamento,
+        status: item.status,
       }));
       // console.log(setDadosAlm);
       // setDataAlm(setDadosAlm);
@@ -74,19 +79,15 @@ const TableAlm = () => {
   // essa função é para utilizar a barra de pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = initialData.filter(
+    const filtered = filteredData.filter(
       (item) =>
         item.nome.toLowerCase().includes(value.toLowerCase()) ||
-        item.login.toLowerCase().includes(value.toLowerCase()) ||
-        item.senha.includes(value) ||
-        item.tipo.toLowerCase().includes(value.toLowerCase()) ||
-        item.vpn.toLowerCase().includes(value.toLowerCase()) ||
-        item.status.toLowerCase().includes(value.toLowerCase()) ||
-        item.statusTarefa.toLowerCase().includes(value.toLowerCase()) || 
-        item.statusFechamento.toLowerCase().includes(value.toLowerCase()) 
+      item.url.toString().includes(value) ||
+      item.login.toLowerCase().includes(value.toLowerCase()),
     );
     setFilteredData(filtered);
   };
+  
   // FIM ############# lógica filtrar ALM
 
   // essa função é para abrir e fechar o modal de cadastro de ALM
@@ -111,12 +112,7 @@ const TableAlm = () => {
       cadastro.senha === cadastro.confirmPassword && // Verifica as senhas 
       cadastro.tipo !== '' &&
       cadastro.vpn !== '' &&
-      cadastro.statusTarefa !== '' && // Verificar campo statusTarefa
-      cadastro.statusFechamento !== ''&& 
-      cadastro.status !== ''
-
-      
-
+      cadastro.status !== '' 
       // &&
       // cadastro.status !== null
 
@@ -125,7 +121,6 @@ const TableAlm = () => {
     }
 
     return alert('Preencha todos os campos e verifique se as senhas coincidem!');
-
     // setCadastro({ nome: '', url: '', login: '', senha: '', tipo: '', vpn: '', status: '' });
 
     // form
@@ -143,9 +138,6 @@ const TableAlm = () => {
     //     console.log('Validate Failed:', info);
     //   });
   };
-
-
-
 
   // essa função é para abrir o modal de edição da coluna ação e é passado no parametro (item) os dados do input do formulário de edição
 
@@ -174,6 +166,10 @@ const TableAlm = () => {
         console.log('dados filteredData', filteredData);
         const idEditingItem = editingItem.idAlmTool;
         console.log(idEditingItem, 'id item separado');
+        const updatedItem = {
+          status: status2, 
+      };
+      await updateAlm(idEditingItem, updatedItem);
         //parametro values são os dados do formulário, e o método validateFields é responsável por validar os dados
         form.resetFields();
         setIsEditModalVisible(false);
@@ -182,13 +178,13 @@ const TableAlm = () => {
           item.idAlmTool === editingItem.idAlmTool ? { ...item, ...values } : item,
         );
 
-        const filtro = updatedData.filter((item) => item.idAlmTool === idEditingItem);
+        // const filtro = updatedData.filter((item) => item.idAlmTool === idEditingItem);
         // console.log(filtro, 'filtro');
         // console.log(filtro[0]);
 
         console.log(updatedData, 'Dados da variavel updatedData');
         setFilteredData(updatedData);
-        const response = await updateAlm(idEditingItem, filtro[0]);
+        // const response = await updateAlm(idEditingItem, filtro[0]);
         setEditingItem(null);
         console.log(filteredData, 'Dados do filteredData');
         // console.log(filteredData)
@@ -210,21 +206,6 @@ const TableAlm = () => {
 
     // setFilteredData(newData);
   };
-  const renderStatusTarefaSelect = (value, onChange) => (
-    <Select value={value} onChange={onChange}>
-      <Option value="Pendente">Pendente</Option>
-      <Option value="Em andamento">Em andamento</Option>
-      <Option value="Testando">Testando</Option>
-      <Option value="Homologacao">Homologação</Option>
-    </Select>
-  );
-
-  const renderStatusFechamentoSelect = (value, onChange) => (
-    <Select value={value} onChange={onChange}>
-      <Option value="Aberto">Aberto</Option>
-      <Option value="Fechado">Fechado</Option>
-    </Select>
-  );
 
   // esse array é para definir as colunas da tabela
   const columns = [
@@ -263,6 +244,15 @@ const TableAlm = () => {
       title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoAlm',
+      sorter: (a, b) => {
+        if (a.nome < b.nome) {
+          return -1;
+        }
+        if (a.nome > b.nome) {
+          return 1;
+        }
+        return 0;
+      },
       width: 150,
     },
     {
@@ -272,36 +262,28 @@ const TableAlm = () => {
       width: 150,
     },
     {
-      title: 'Status Tarefa',
-      dataIndex: 'statusTarefa',
-      key: 'statusTarefa',
-      width: 150,
-      render: (_, record) => renderStatusTarefaSelect(record.statusTarefa, (value) => handleStatusTarefaChange(record, value)),
-    },
-    {
-      title: 'Status Fechamento',
-      dataIndex: 'statusFechamento',
-      key: 'statusFechamento',
-      width: 150,
-      render: (_, record) => renderStatusFechamentoSelect(record.statusFechamento, (value) => handleStatusFechamentoChange(record, value)),
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       width: 150,
       key: 'statusAlm',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
+      render: (status) => (
+        <>
+          {status ? <p>Ativo</p> : <p>Inativo</p>}
+        </>
+      ),
     },
+    //   filters: [
+    //     {
+    //       text: 'London',
+    //       value: 'London',
+    //     },
+    //     {
+    //       text: 'New York',
+    //       value: 'New York',
+    //     },
+    //   ],
+    //   onFilter: (value, record) => record.address.indexOf(value) === 0,
+    // },
 
     // const [filteredData, setFilteredData] = useState([]);
     /*
@@ -324,34 +306,22 @@ const TableAlm = () => {
       // o parametro record é a linha da tabela e os dados correspondentes
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
+          <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
           <Popconfirm
             title="Deseja deletar?"
             onConfirm={() => {
               handleDelete(record);
             }}
           >
-            <Button><MdDeleteForever /></Button>
+             <Button><MdDeleteForever/></Button>
           </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  
-  const handleStatusTarefaChange = (record, value) => {
-    const updatedData = filteredData.map((item) =>
-      item.idAlmTool === record.idAlmTool ? { ...item, statusTarefa: value } : item
-    );
-    setFilteredData(updatedData);
-  };
 
-  const handleStatusFechamentoChange = (record, value) => {
-    const updatedData = filteredData.map((item) =>
-      item.idAlmTool === record.idAlmTool ? { ...item, statusFechamento: value } : item
-    );
-    setFilteredData(updatedData);
-  }
+
 
 
 
@@ -364,15 +334,15 @@ const TableAlm = () => {
   const onChangeSwitch = (checked) => {
     console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus(true) : setStatus(false);
+    checked ?  setStatus(true) : setStatus(false);
   };
 
-  // lógica do switch de status de editar
-  const onChangeSwitch2 = (checked) => {
-    console.log(checked, "switch editar status2  ");
-    setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus2(true) : setStatus2(false);
-  };
+ // lógica do switch de status de editar
+ const onChangeSwitch2 = (checked) => {
+  console.log(checked, "switch editar status2  ");
+  setCadastro({ ...cadastro, status: checked });
+  checked ?  setStatus2(true) : setStatus2(false);
+};
 
 
 
@@ -484,8 +454,9 @@ const TableAlm = () => {
             label="Senha"
             rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
           >
-            <Input
-              type="password"
+            
+            <Input.Password
+              type="text"
               required
               onChange={(e) => setCadastro({ ...cadastro, senha: e.target.value })}
             />
@@ -499,35 +470,16 @@ const TableAlm = () => {
               onChange={(e) => setCadastro({ ...cadastro, confirmPassword: e.target.value })}
             />
           </Form.Item>
-
-
           <Form.Item
-            name="tipo"
+            name="tipoAlm"
             label="Tipo"
             rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
-            <Select
-              value={cadastro.tipo}
-              onChange={(value) => setCadastro({ ...cadastro, tipo: value })}
-            >
-              <Option value="Jira">Jira</Option>
-              <Option value="Polarion">Polarion</Option>
-              <Option value="GitLab">GitLab</Option>
-              <Option value="Azure DevOps">Azure DevOps</Option>
-              <Option value="Rally ">Rally </Option>
-              <Option value="VersionOne">VersionOne</Option>
-              <Option value="Pivotal Tracker">Pivotal Tracker</Option>
-              <Option value="Targetprocess">Targetprocess</Option>
-              <Option value="Redmine">Redmine</Option>
-              <Option value="Taiga">Taiga</Option>
-              <Option value="Backlog">Backlog</Option>
-              <Option value="Agilefant">Agilefant</Option>
-              <Option value="YouTrack">YouTrack</Option>
-              <Option value="AgileCraft">AgileCraft</Option>
-              <Option value="CollabNet ">CollabNet </Option>
-
-
-            </Select>
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, tipo: e.target.value })}
+            />
           </Form.Item>
           <Form.Item
             name="vpnAlm"
@@ -542,30 +494,19 @@ const TableAlm = () => {
           </Form.Item>
 
 
+
+
+
+
+
+
+
           {/* Aqui entra o Switch de cadastrar */}
 
           <Form.Item name="statusAlm" label="Status">
             <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
-
-          <Form.Item
-            label={t('Status Tarefa')}
-            name="statusTarefa"
-            rules={[{ required: true, message: t('Por favor, insira o status de tarefa!') }]}
-          >
-            {renderStatusTarefaSelect(cadastro.statusTarefa, (value) => setCadastro({ ...cadastro, statusTarefa: value }))}
-          </Form.Item>
-          <Form.Item
-            label={t('Status Fechamento')}
-            name="statusFechamento"
-            rules={[{ required: true, message: t('Por favor, insira o status de fechamento!') }]}
-          >
-            {renderStatusFechamentoSelect(cadastro.statusFechamento, (value) => setCadastro({ ...cadastro, statusFechamento: value }))}
-          </Form.Item>
-
-
-
         </Form>
       </Modal>
       {/* FIM ############# Modal Cadastrar Alm */}
@@ -634,7 +575,7 @@ const TableAlm = () => {
             label="Senha"
             rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
           >
-            <Input.Password
+            <Input
               type="text"
               required
               onChange={(e) => setCadastro({ ...cadastro, senha: e.target.value })}
@@ -645,26 +586,11 @@ const TableAlm = () => {
             label="Tipo"
             rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
-            <Select
-              value={editingItem?.tipo}
-              onChange={(value) => setEditingItem({ ...editingItem, tipo: value })}
-            >
-                 <Option value="Jira">Jira</Option>
-              <Option value="Polarion">Polarion</Option>
-              <Option value="GitLab">GitLab</Option>
-              <Option value="Azure DevOps">Azure DevOps</Option>
-              <Option value="Rally ">Rally </Option>
-              <Option value="VersionOne">VersionOne</Option>
-              <Option value="Pivotal Tracker">Pivotal Tracker</Option>
-              <Option value="Targetprocess">Targetprocess</Option>
-              <Option value="Redmine">Redmine</Option>
-              <Option value="Taiga">Taiga</Option>
-              <Option value="Backlog">Backlog</Option>
-              <Option value="Agilefant">Agilefant</Option>
-              <Option value="YouTrack">YouTrack</Option>
-              <Option value="AgileCraft">AgileCraft</Option>
-              <Option value="CollabNet ">CollabNet </Option>
-            </Select>
+            <Input
+              type="text"
+              required
+              onChange={(e) => setCadastro({ ...cadastro, tipo: e.target.value })}
+            />
           </Form.Item>
           <Form.Item
             name="vpn"
@@ -682,26 +608,16 @@ const TableAlm = () => {
 
 
 
+
+
+
+
+
           {/* Aqui entra o Switch de editar*/}
 
           <Form.Item name="status" label="Status" >
-            <Switch onChange={(checked) => onChangeSwitch2(checked)} />
-            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
-          </Form.Item>
-
-          <Form.Item
-            label={t('Status Tarefa')}
-            name="statusTarefa"
-            rules={[{ required: true, message: t('Por favor, insira o status de tarefa!') }]}
-          >
-            {renderStatusTarefaSelect(cadastro.statusTarefa, (value) => setCadastro({ ...cadastro, statusTarefa: value }))}
-          </Form.Item>
-          <Form.Item
-            label={t('Status Fechamento')}
-            name="statusFechamento"
-            rules={[{ required: true, message: t('Por favor, insira o status de fechamento!') }]}
-          >
-            {renderStatusFechamentoSelect(cadastro.statusFechamento, (value) => setCadastro({ ...cadastro, statusFechamento: value }))}
+            <Switch onChange={(checked) => onChangeSwitch2(checked) } />
+            { status2 ? <p>Ativo</p> : <p>Inativo</p>  }
           </Form.Item>
         </Form>
       </Modal>
