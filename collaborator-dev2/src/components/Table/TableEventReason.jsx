@@ -23,9 +23,10 @@ const TableEventReason = () => {
   const [cadastro, setCadastro] = useState({
     nome: '',
     descricao: '',
-    status: true,
+    status: '',
   });
-
+  const [status, setStatus] = useState();
+  const [status2, setStatus2] = useState();
   useEffect(() => {
     const fetchData = async () => {
       const dadosEventReason = await getEventReason();
@@ -59,7 +60,7 @@ const TableEventReason = () => {
     ) {
       await storeEventReason(cadastro);
       setIsAddModalVisible(false);
-      setCadastro({ nome: '', descricao: '', status: false });
+      setCadastro({ nome: '', descricao: '', status: ''});
       const dadosEventReason = await getEventReason();
       setFilteredData(dadosEventReason);
     } else {
@@ -151,21 +152,31 @@ const TableEventReason = () => {
       ),
     },
   ];
-
   const onChangeSwitch = (checked) => {
+    console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
+    checked ?  setStatus(true) : setStatus(false);
   };
 
-  const tableProps = {
-    bordered: true,
-    size: 'small',
-    title: defaultTitle,
-    showHeader: true,
-    footer: defaultFooter,
-    rowSelection: {},
-    scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
-    pagination: isSmallScreen ? { pageSize: 5 } : false,
-  };
+ // lógica do switch de status de editar
+ const onChangeSwitch2 = (checked) => {
+  console.log(checked, "switch editar status2  ");
+  setCadastro({ ...cadastro, status: checked });
+  checked ?  setStatus2(true) : setStatus2(false);
+};
+
+
+
+const tableProps = {
+  bordered: true,
+  size: 'small',
+  title: defaultTitle,
+  showHeader: true,
+  footer: defaultFooter,
+  rowSelection: {},
+  scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
+  pagination: isSmallScreen ? { pageSize: 5 } : false,
+};
 
   return (
     <>
@@ -223,8 +234,8 @@ const TableEventReason = () => {
           </Form.Item>
 
           <Form.Item name="status" label="Status" rules={[{ required: false }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
-            {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
+            <Switch onChange={(checked) => onChangeSwitch(checked)} />
+            {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
@@ -261,8 +272,8 @@ const TableEventReason = () => {
           </Form.Item>
 
           <Form.Item name="status" label="Status" rules={[{ required: false }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
-            {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
+            <Switch onChange={(checked) => onChangeSwitch2(checked)} />
+            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>

@@ -279,7 +279,7 @@ const TableFunction = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" >
+          <Form.Item name="status" label="Status"  rules={[{ required: false }]}>
             <Switch onChange={(checked) => onChangeSwitch2(checked)} />
             {status2 ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
