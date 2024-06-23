@@ -8,8 +8,8 @@ import './Table.css';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
-const defaultTitle = () => 'Event Reason';
-const defaultFooter = () => 'Neki';
+const defaultTitle = () => 'EventReason';
+const defaultFooter = () => 'footer';
 
 const TableEventReason = () => {
   const screens = useBreakpoint();
@@ -23,7 +23,7 @@ const TableEventReason = () => {
   const [cadastro, setCadastro] = useState({
     nome: '',
     descricao: '',
-    status: false,
+    status: true,
   });
 
   useEffect(() => {
@@ -222,7 +222,7 @@ const TableEventReason = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+          <Form.Item name="status" label="Status" rules={[{ required: false }]}>
             <Switch onChange={() => onChangeSwitch(status)} />
             {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
@@ -260,7 +260,7 @@ const TableEventReason = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+          <Form.Item name="status" label="Status" rules={[{ required: false }]}>
             <Switch onChange={() => onChangeSwitch(status)} />
             {cadastro.status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>

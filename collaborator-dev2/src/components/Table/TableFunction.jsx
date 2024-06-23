@@ -9,7 +9,7 @@ const { useBreakpoint } = Grid;
 const { Search } = Input;
 
 const defaultTitle = () => 'Role';
-const defaultFooter = () => 'Neki';
+const defaultFooter = () => 'footer';
 
 const TableFunction = () => {
   const screens = useBreakpoint();
@@ -25,7 +25,8 @@ const TableFunction = () => {
     descricao: '',
     status: '',
   });
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState();
+  const [status2, setStatus2] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,7 +140,7 @@ const TableFunction = () => {
     //   dataIndex: 'status',
     //   width: 150,
     //   key: 'statusRole',
-    //   render: (text) => (text ? 'Ativo' : 'Inativo'),
+ 
     // },
     {
       title: 'Ação',
@@ -159,11 +160,19 @@ const TableFunction = () => {
       ),
     },
   ];
-
   const onChangeSwitch = (checked) => {
+    console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
-    checked ? setStatus(true) : setStatus(false);
+    checked ?  setStatus(true) : setStatus(false);
   };
+
+ // lógica do switch de status de editar
+ const onChangeSwitch2 = (checked) => {
+  console.log(checked, "switch editar status2  ");
+  setCadastro({ ...cadastro, status: checked });
+  checked ?  setStatus2(true) : setStatus2(false);
+};
+
 
   const tableProps = {
     bordered: true,
@@ -232,8 +241,8 @@ const TableFunction = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
+          <Form.Item name="statusRole" label="Status" rules={[{ required: false }]}>
+            <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
@@ -270,9 +279,9 @@ const TableFunction = () => {
             />
           </Form.Item>
 
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
-            <Switch onChange={() => onChangeSwitch(status)} />
-            {status ? <p>Ativo</p> : <p>Inativo</p>}
+          <Form.Item name="status" label="Status" >
+            <Switch onChange={(checked) => onChangeSwitch2(checked)} />
+            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>

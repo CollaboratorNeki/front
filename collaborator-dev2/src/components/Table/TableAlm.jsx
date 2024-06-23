@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 const defaultTitle = () => 'Alm';
-const defaultFooter = () =>'Neki' ;
+const defaultFooter = () => 'footer';
 
 
 
@@ -48,7 +48,7 @@ const TableAlm = () => {
     vpn: '',
     status: '',
   });
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
   // const [dataAlm, setDataAlm] = useState([]);
 
@@ -78,11 +78,11 @@ const TableAlm = () => {
   // essa função é para utilizar a barra de pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = filteredData.filter(
+    const filtered = initialData.filter(
       (item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase()) ||
-        item.url.toString().includes(value) ||
-        item.login.toLowerCase().includes(value.toLowerCase()),
+        item.name.toLowerCase().includes(value.toLowerCase()) ||
+        item.age.toString().includes(value) ||
+        item.address.toLowerCase().includes(value.toLowerCase()),
     );
     setFilteredData(filtered);
   };
@@ -212,15 +212,6 @@ const TableAlm = () => {
       title: t('Nome'),
       dataIndex: 'nome',
       key: 'nomeAlm',
-      sorter: (a, b) => {
-        if (a.nome < b.nome) {
-          return -1;
-        }
-        if (a.nome > b.nome) {
-          return 1;
-        }
-        return 0;
-      },
       width: 150,
     },
     // {
@@ -245,15 +236,6 @@ const TableAlm = () => {
       title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoAlm',
-      sorter: (a, b) => {
-        if (a.nome < b.nome) {
-          return -1;
-        }
-        if (a.nome > b.nome) {
-          return 1;
-        }
-        return 0;
-      },
       width: 150,
     },
     {
@@ -262,23 +244,23 @@ const TableAlm = () => {
       key: 'vpnAlm',
       width: 150,
     },
-    // {
-    //   title: 'Status',
-    //   dataIndex: 'status',
-    //   width: 150,
-    //   key: 'statusAlm',
-    //   filters: [
-    //     {
-    //       text: 'London',
-    //       value: 'London',
-    //     },
-    //     {
-    //       text: 'New York',
-    //       value: 'New York',
-    //     },
-    //   ],
-    //   onFilter: (value, record) => record.address.indexOf(value) === 0,
-    // },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      width: 150,
+      key: 'statusAlm',
+      filters: [
+        {
+          text: 'London',
+          value: 'London',
+        },
+        {
+          text: 'New York',
+          value: 'New York',
+        },
+      ],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
+    },
 
     // const [filteredData, setFilteredData] = useState([]);
     /*
@@ -488,7 +470,7 @@ const TableAlm = () => {
 
           {/* Aqui entra o Switch de cadastrar */}
 
-          <Form.Item name="statusAlm" label="Status" rules={[{ required: false }]}>
+          <Form.Item name="statusAlm" label="Status">
             <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
@@ -600,7 +582,7 @@ const TableAlm = () => {
 
           {/* Aqui entra o Switch de editar*/}
 
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+          <Form.Item name="status" label="Status" >
             <Switch onChange={(checked) => onChangeSwitch2(checked) } />
             { status2 ? <p>Ativo</p> : <p>Inativo</p>  }
           </Form.Item>
