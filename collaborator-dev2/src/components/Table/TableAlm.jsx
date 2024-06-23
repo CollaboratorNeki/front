@@ -44,6 +44,7 @@ const TableAlm = () => {
     url: '',
     login: '',
     senha: '',
+    confirmarSenha: '',
     tipo: '',
     vpn: '',
     status: '',
@@ -107,17 +108,19 @@ const TableAlm = () => {
       cadastro.url !== '' &&
       cadastro.login !== '' &&
       cadastro.senha !== '' &&
+      cadastro.confirmPassword !== '' &&
+      cadastro.senha === cadastro.confirmPassword && // Verifica as senhas 
       cadastro.tipo !== '' &&
       cadastro.vpn !== ''
 
       // &&
       // cadastro.status !== null
-      
+
     ) {
       return storeAlm(cadastro);
     }
 
-    return alert('Preencha todos os campos!');
+    return alert('Preencha todos os campos e verifique se as senhas coincidem!');
     // setCadastro({ nome: '', url: '', login: '', senha: '', tipo: '', vpn: '', status: '' });
 
     // form
@@ -441,10 +444,20 @@ const TableAlm = () => {
             label="Senha"
             rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
           >
-            <Input
+            
+            <Input.Password
               type="text"
               required
               onChange={(e) => setCadastro({ ...cadastro, senha: e.target.value })}
+            />
+          </Form.Item>
+          <Form.Item
+            name="confirmPassword"
+            label="Confirmação de Senha"
+            required>
+            <Input.Password
+              value={cadastro.confirmPassword}
+              onChange={(e) => setCadastro({ ...cadastro, confirmPassword: e.target.value })}
             />
           </Form.Item>
           <Form.Item
