@@ -1,42 +1,24 @@
-
 import React, { useState, useEffect } from 'react';
-import { storeAlm, getAlm, updateAlm } from '../../services/almService';
-import {
-  Space,
-  Table,
-  Grid,
-  Input,
-  Button,
-  Modal,
-  Form,
-  InputNumber,
-  Popconfirm,
-  Switch,
-} from 'antd';
-import './Table.css';
-import { deleteAlm } from '../../services/almService';
+import { storeAlm, getAlm, updateAlm, deleteAlm } from '../../services/almService';
+import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import './Table.css';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 const defaultTitle = () => 'Alm';
 const defaultFooter = () => 'footer';
 
-
-
-
 const TableAlm = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const screens = useBreakpoint();
-  const isSmallScreen = screens.xs; // Consider xs as small screen
+  const isSmallScreen = screens.xs;
   const [searchText, setSearchText] = useState('');
-  //usando esse use state para guardar os dados da listagem da tabela
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  //useState que pega os valores atualizados do formulário e guarda em uma variável
   const [editingItem, setEditingItem] = useState(null);
   const [form] = Form.useForm();
   const [cadastro, setCadastro] = useState({
@@ -51,46 +33,35 @@ const TableAlm = () => {
   });
   const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
-  // const [dataAlm, setDataAlm] = useState([]);
 
-  // Chamando os dados do banco e guardando em um useState para poder usar na lista, é preciso usar useEffect para não criar o erro do loop infinito na renderização
   useEffect(() => {
-    const response = async () => {
+    const fetchData = async () => {
       const dadosAlm = await getAlm();
-      console.log(dadosAlm);
-      const setDadosAlm = dadosAlm?.map((item) => ({
-        idAlmTool: item.idAlmTool,
-        nome: item.nome,
-        url: item.url,
-        login: item.login,
-        senha: item.senha,
-        tipo: item.tipo,
-        vpn: item.vpn,
-        status: item.status,
-      }));
-      // console.log(setDadosAlm);
-      // setDataAlm(setDadosAlm);
-      setFilteredData(setDadosAlm);
+      setFilteredData(dadosAlm);
     };
-
-    response();
+    fetchData();
   }, []);
 
-  // essa função é para utilizar a barra de pesquisa
   const handleSearch = (value) => {
     setSearchText(value);
-    const filtered = filteredData.filter(
-      (item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase()) ||
-      item.url.toString().includes(value) ||
-      item.login.toLowerCase().includes(value.toLowerCase()),
-    );
-    setFilteredData(filtered);
+    if (value === '') {
+      const fetchData = async () => {
+        const dadosAlm = await getAlm();
+        setFilteredData(dadosAlm);
+      };
+      fetchData();
+    } else {
+      const filtered = filteredData.filter(
+        (item) =>
+          item.nome.toLowerCase().includes(value.toLowerCase()) ||
+          item.url.toString().includes(value) ||
+          item.login.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+    setSearchText('');
   };
-  
-  // FIM ############# lógica filtrar ALM
 
-  // essa função é para abrir e fechar o modal de cadastro de ALM
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
@@ -98,152 +69,81 @@ const TableAlm = () => {
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
   };
-  // FIM ############# lógica abrir e fechar modal de cadastro de ALM
 
-  // essa função é para clicar no botão de OK dentro do modal de cadastrar
-  const handleAdd = () => {
-    console.log(filteredData)
+  const handleAdd = async () => {
     if (
       cadastro.nome !== '' &&
       cadastro.url !== '' &&
       cadastro.login !== '' &&
       cadastro.senha !== '' &&
       cadastro.confirmPassword !== '' &&
-      cadastro.senha === cadastro.confirmPassword && // Verifica as senhas 
+      cadastro.senha === cadastro.confirmPassword &&
       cadastro.tipo !== '' &&
-      cadastro.vpn !== '' &&
-      cadastro.status !== '' 
-      // &&
-      // cadastro.status !== null
-
+      cadastro.vpn !== ''
     ) {
-      return storeAlm(cadastro);
+      await storeAlm(cadastro);
+      setIsAddModalVisible(false);
+      setCadastro({ nome: '', url: '', login: '', senha: '', confirmarSenha: '', tipo: '', vpn: '', status: '' });
+      const dadosAlm = await getAlm();
+      setFilteredData(dadosAlm);
+    } else {
+      alert('Preencha todos os campos e verifique se as senhas coincidem!');
     }
-
-    return alert('Preencha todos os campos e verifique se as senhas coincidem!');
-    // setCadastro({ nome: '', url: '', login: '', senha: '', tipo: '', vpn: '', status: '' });
-
-    // form
-    //   .validateFields()
-    //   .then((values) => {
-    //     form.resetFields();
-    //     setIsAddModalVisible(false);
-    //     const newItem = {
-    //       key: filteredData.length + 1,
-    //       ...values,
-    //     };
-    //     setFilteredData([...filteredData, newItem]);
-    //   })
-    //   .catch((info) => {
-    //     console.log('Validate Failed:', info);
-    //   });
   };
 
-  // essa função é para abrir o modal de edição da coluna ação e é passado no parametro (item) os dados do input do formulário de edição
-
   const showEditModal = (item) => {
-    console.log('Dados que estão renderizados na linha da tabela showEditModal', item);
     setEditingItem(item);
-
-    // o parametro (item) aqui é passado para jogar os dados do input do formulário de edição na função handleEdit, no handleEdit o parametro values são os dados do formulário
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
-  // essa função é para fechar o modal de edição de um item
+
   const handleEditCancel = () => {
     setIsEditModalVisible(false);
     setEditingItem(null);
   };
 
-  //  essa função é para editar utilizando a coluna ação e clicando no botão ok
-
-  const handleEdit = () => {
+  const handleEdit = async () => {
     form
       .validateFields()
       .then(async (values) => {
-        console.log('Dados do formulário parametro values', values);
-        console.log('dados editingItem', editingItem);
-        console.log('dados filteredData', filteredData);
         const idEditingItem = editingItem.idAlmTool;
-        console.log(idEditingItem, 'id item separado');
-        const updatedItem = {
-          status: status2, 
-      };
-      await updateAlm(idEditingItem, updatedItem);
-        //parametro values são os dados do formulário, e o método validateFields é responsável por validar os dados
+        const updatedItem = { ...values, status: status2 };
+        await updateAlm(idEditingItem, updatedItem);
         form.resetFields();
         setIsEditModalVisible(false);
-
         const updatedData = filteredData.map((item) =>
-          item.idAlmTool === editingItem.idAlmTool ? { ...item, ...values } : item,
+          item.idAlmTool === idEditingItem ? { ...item, ...updatedItem } : item
         );
-
-        // const filtro = updatedData.filter((item) => item.idAlmTool === idEditingItem);
-        // console.log(filtro, 'filtro');
-        // console.log(filtro[0]);
-
-        console.log(updatedData, 'Dados da variavel updatedData');
         setFilteredData(updatedData);
-        // const response = await updateAlm(idEditingItem, filtro[0]);
         setEditingItem(null);
-        console.log(filteredData, 'Dados do filteredData');
-        // console.log(filteredData)
-        // console.log(atualizarAlm);
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
   };
 
-  // essa função é para deletar um item da tabela usando o botão de deletar da coluna ação
   const handleDelete = async (record) => {
-    console.log(record.idAlmTool);
     try {
-      const response = await deleteAlm(record.idAlmTool);
+      await deleteAlm(record.idAlmTool);
+      const updatedData = filteredData.filter((item) => item.idAlmTool !== record.idAlmTool);
+      setFilteredData(updatedData);
     } catch (error) {
       console.log(error);
     }
-
-    // setFilteredData(newData);
   };
 
-  // esse array é para definir as colunas da tabela
   const columns = [
     {
       title: 'Id',
       dataIndex: 'idAlmTool',
       key: 'idAlmTool',
-      sorter: (a, b) => a.idAlmTool - b.idAlmTool, //método para ordenar a coluna id
-      width: 50,
+      sorter: (a, b) => a.idAlmTool - b.idAlmTool,
+      width: 40,
     },
     {
       title: t('Nome'),
       dataIndex: 'nome',
       key: 'nomeAlm',
-      width: 150,
-    },
-    // {
-    //   title: 'Age trocar',
-    //   dataIndex: 'age',
-    //   sorter: (a, b) => a.age - b.age,
-    //   width: 80,
-    // },
-    {
-      title: 'Login',
-      dataIndex: 'login',
-      key: 'loginAlm',
-      width: 150,
-    },
-    {
-      title: t('Senha'),
-      dataIndex: 'senha',
-      key: 'senhaAlm',
-      width: 150,
-    },
-    {
-      title: t('Tipo'),
-      dataIndex: 'tipo',
-      key: 'tipoAlm',
       sorter: (a, b) => {
         if (a.nome < b.nome) {
           return -1;
@@ -256,15 +156,42 @@ const TableAlm = () => {
       width: 150,
     },
     {
+      title: 'Login',
+      dataIndex: 'login',
+      key: 'loginAlm',
+      width: 200,
+    },
+    {
+      title: t('Senha'),
+      dataIndex: 'senha',
+      key: 'senhaAlm',
+      width: 100,
+    },
+    {
+      title: t('Tipo'),
+      dataIndex: 'tipo',
+      key: 'tipoAlm',
+      sorter: (a, b) => {
+        if (a.tipo < b.tipo) {
+          return -1;
+        }
+        if (a.tipo > b.tipo) {
+          return 1;
+        }
+        return 0;
+      },
+      width: 170,
+    },
+    {
       title: 'Vpn',
       dataIndex: 'vpn',
       key: 'vpnAlm',
-      width: 150,
+      width: 100,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 150,
+      width: 80,
       key: 'statusAlm',
       render: (status) => (
         <>
@@ -272,106 +199,52 @@ const TableAlm = () => {
         </>
       ),
     },
-    //   filters: [
-    //     {
-    //       text: 'London',
-    //       value: 'London',
-    //     },
-    //     {
-    //       text: 'New York',
-    //       value: 'New York',
-    //     },
-    //   ],
-    //   onFilter: (value, record) => record.address.indexOf(value) === 0,
-    // },
-
-    // const [filteredData, setFilteredData] = useState([]);
-    /*
-              id: item.idAlmTool,
-              nome: item.nome,
-              url: item.url,
-              login: item.login,
-              senha: item.senha,
-              tipo: item.tipo,
-              vpn: item.vpn,
-              status: item.status,'
-
-    */
-
-    // pop up para deletar o item pelo botão editar
     {
       title: 'Ação',
       key: 'acao',
       width: 150,
-      // o parametro record é a linha da tabela e os dados correspondentes
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showEditModal(record)}><FaEdit/></Button>
+          <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
           <Popconfirm
             title="Deseja deletar?"
-            onConfirm={() => {
-              handleDelete(record);
-            }}
+            onConfirm={() => handleDelete(record)}
           >
-             <Button><MdDeleteForever/></Button>
+            <Button><MdDeleteForever /></Button>
           </Popconfirm>
         </Space>
       ),
     },
   ];
 
-
-
-
-
-
-
-
-  //duas lógicas para alterar o valor do switch de cadastro e editar
-
-
-  // lógica do switch de status de cadastro
   const onChangeSwitch = (checked) => {
-    console.log(checked, "switch cadastro status");
     setCadastro({ ...cadastro, status: checked });
-    checked ?  setStatus(true) : setStatus(false);
+    setStatus(checked);
   };
 
- // lógica do switch de status de editar
- const onChangeSwitch2 = (checked) => {
-  console.log(checked, "switch editar status2  ");
-  setCadastro({ ...cadastro, status: checked });
-  checked ?  setStatus2(true) : setStatus2(false);
-};
+  const onChangeSwitch2 = (checked) => {
+    setCadastro({ ...cadastro, status: checked });
+    setStatus2(checked);
+  };
 
-
-
-
-
-
-
-
-
-
-  // Variável que define estilo da tabela principal
   const tableProps = {
     bordered: true,
     size: 'small',
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };
 
   return (
     <>
-      {/* Container botao e barra de pesquisa */}
       <Space style={{ marginBottom: 16 }}>
         <Search
           placeholder="Buscar nome do projeto..."
           enterButton
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           onSearch={handleSearch}
           backgroud="linear-gradient(to bottom, #2d939c, #68C7CF)"
         />
@@ -384,31 +257,17 @@ const TableAlm = () => {
         </Button>
       </Space>
 
-      {/* FIM ############# Container botao e barra de pesquisa */}
-
-      {/* Definição da tabela principal */}
       <Table
         {...tableProps}
-        pagination={{
-          position: ['bottomRight'],
-        }}
+        pagination={{ position: ['bottomRight'] }}
         columns={columns}
         dataSource={filteredData}
       />
-      {/* FIM ############# Tabela principal */}
 
-
-
-
-
-
-      {/* Esse modal é para cadastrar um novo item na tabela, apertando o botão de cadastro */}
       <Modal
         title="Cadastrar Novo ALM"
         visible={isAddModalVisible}
-        // função para fechar o modal de cadastro
         onCancel={handleAddCancel}
-        // função para que faz o botão OK do modal de cadastro ser executado
         onOk={handleAdd}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
@@ -417,7 +276,6 @@ const TableAlm = () => {
             label="Nome"
             rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            {/*dentro de setCadastro é criado um novo objeto {}, e dentro dele é criado uma cópia do objeto cadastro(está no useState) por meio do rest operator e em seguida é adicionado a propriedade a ser alterada ou criada  */}
             <Input
               type="text"
               required
@@ -454,7 +312,6 @@ const TableAlm = () => {
             label="Senha"
             rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
           >
-            
             <Input.Password
               type="text"
               required
@@ -464,7 +321,8 @@ const TableAlm = () => {
           <Form.Item
             name="confirmPassword"
             label="Confirmação de Senha"
-            required>
+            required
+          >
             <Input.Password
               value={cadastro.confirmPassword}
               onChange={(e) => setCadastro({ ...cadastro, confirmPassword: e.target.value })}
@@ -493,38 +351,12 @@ const TableAlm = () => {
             />
           </Form.Item>
 
-
-
-
-
-
-
-
-
-          {/* Aqui entra o Switch de cadastrar */}
-
           <Form.Item name="statusAlm" label="Status">
             <Switch onChange={(checked) => onChangeSwitch(checked)} />
             {status ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
-      {/* FIM ############# Modal Cadastrar Alm */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/* Esse modal é para editar um item na tabela pelo botão de editar */}
 
       <Modal
         title="Editar Item ALM"
@@ -538,7 +370,6 @@ const TableAlm = () => {
             label="Nome"
             rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
-            {/*dentro de setCadastro é criado um novo objeto {}, e dentro dele é criado uma cópia do objeto cadastro(está no useState) por meio do rest operator e em seguida é adicionado a propriedade a ser alterada ou criada  */}
             <Input
               type="text"
               required
@@ -604,24 +435,12 @@ const TableAlm = () => {
             />
           </Form.Item>
 
-
-
-
-
-
-
-
-
-
-          {/* Aqui entra o Switch de editar*/}
-
-          <Form.Item name="status" label="Status" >
-            <Switch onChange={(checked) => onChangeSwitch2(checked) } />
-            { status2 ? <p>Ativo</p> : <p>Inativo</p>  }
+          <Form.Item name="status" label="Status">
+            <Switch onChange={(checked) => onChangeSwitch2(checked)} />
+            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
           </Form.Item>
         </Form>
       </Modal>
-      {/* FIM ############# Modal Editar Alm */}
     </>
   );
 };
