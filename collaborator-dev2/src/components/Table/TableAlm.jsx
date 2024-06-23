@@ -4,6 +4,7 @@ import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } fr
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import './Table.css';
 
 const { useBreakpoint } = Grid;
@@ -33,6 +34,7 @@ const TableAlm = () => {
   });
   const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
+  const [passwordVisibility, setPasswordVisibility] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,6 +134,13 @@ const TableAlm = () => {
     }
   };
 
+  const togglePasswordVisibility = (id) => {
+    setPasswordVisibility((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
+
   const columns = [
     {
       title: 'Id',
@@ -159,13 +168,23 @@ const TableAlm = () => {
       title: 'Login',
       dataIndex: 'login',
       key: 'loginAlm',
-      width: 200,
+      width: 220,
     },
     {
       title: t('Senha'),
       dataIndex: 'senha',
       key: 'senhaAlm',
-      width: 100,
+      width: 150,
+      render: (senha, record) => (
+        <>
+          {passwordVisibility[record.idAlmTool] ? senha : '•'.repeat(senha.length)}
+          <Button
+            icon={passwordVisibility[record.idAlmTool] ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+            onClick={() => togglePasswordVisibility(record.idAlmTool)}
+            type="link"
+          />
+        </>
+      ),
     },
     {
       title: t('Tipo'),
@@ -180,18 +199,18 @@ const TableAlm = () => {
         }
         return 0;
       },
-      width: 170,
+      width: 180,
     },
     {
       title: 'Vpn',
       dataIndex: 'vpn',
       key: 'vpnAlm',
-      width: 100,
+      width: 80,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 80,
+      width: 70,
       key: 'statusAlm',
       render: (status) => (
         <>
