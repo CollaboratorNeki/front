@@ -122,7 +122,7 @@ const TableEventReason = () => {
       dataIndex: 'idEventReason',
       key: 'idEventReason',
       sorter: (a, b) => a.idEventReason - b.idEventReason,
-      width: 50,
+      width: 20,
     },
     {
       title: 'Nome',
@@ -134,12 +134,12 @@ const TableEventReason = () => {
       title: 'Descrição',
       dataIndex: 'descricao',
       key: 'descricaoEventReason',
-      width: 150,
+      width: 200,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 150,
+      width: 50,
       key: 'statusEventReason',
       render: (text) => (text ? 'Ativo' : 'Inativo'),
     },

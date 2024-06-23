@@ -147,7 +147,7 @@ const TableMessages = () => {
       dataIndex: 'idMessage',
       key: 'idMessage',
       sorter: (a, b) => a.idMessage - b.idMessage,
-      width: 50,
+      width: 30,
     },
     {
       title: 'Conteúdo',
@@ -162,7 +162,7 @@ const TableMessages = () => {
         }
         return 0;
       },
-      width: 150,
+      width: 200,
     },
     {
       title: 'Tipo',
@@ -177,20 +177,20 @@ const TableMessages = () => {
         }
         return 0;
       },
-      width: 150,
+      width: 100,
     },
     {
       title: 'Data Início',
       dataIndex: 'dataInicio',
       key: 'dataInicioMessage',
-      width: 150,
+      width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
       title: 'Data Fim',
       dataIndex: 'dataFim',
       key: 'dataFimMessage',
-      width: 150,
+      width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {

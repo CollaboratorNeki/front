@@ -121,17 +121,17 @@ const TableClient = () => {
     {
       title: t("Telefone"),
       dataIndex: 'phone',
-      width: 150,
+      width: 100,
     },
     {
       title: 'CPF/CNPJ',
       dataIndex: 'cpfCnpj',
-      width: 150,
+      width: 130,
     },
     {
       title: t("Código Externo"),
       dataIndex: 'externalCode',
-      width: 150,
+      width: 70,
     },
     {
       title: t("Ação"),
@@ -154,7 +154,7 @@ const TableClient = () => {
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
+    // rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };

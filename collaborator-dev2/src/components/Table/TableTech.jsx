@@ -130,17 +130,17 @@ const TechTable = () => {
     {
       title: t("Tecnologia"),
       dataIndex: 'tecnologia',
-      width: 150,
+      width: 200,
     },
     {
       title: t("Tipo"),
       dataIndex: 'tipo',
-      width: 150,
+      width: 70,
     },
     {
       title: t("Versão"),
       dataIndex: 'versao',
-      width: 100,
+      width: 30,
     },
     {
       title: t("Ação"),
@@ -163,7 +163,7 @@ const TechTable = () => {
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
+    // rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };

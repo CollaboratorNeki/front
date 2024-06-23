@@ -125,13 +125,13 @@ const TableCost = () => {
     {
       title: t("Valor"),
       dataIndex: 'amountSpent',
-      width: 150,
+      width: 70,
       render: (value) => `R$ ${value.toFixed(2)}`
     },
     {
       title: t("Categoria"),
       dataIndex: 'category',
-      width: 150,
+      width: 70,
     },
     {
       title: t("Ação"),
@@ -154,7 +154,7 @@ const TableCost = () => {
     title: defaultTitle,
     showHeader: true,
     footer: defaultFooter,
-    rowSelection: {},
+    // rowSelection: {},
     scroll: isSmallScreen ? { x: 'max-content', y: 620 } : { y: 620 },
     pagination: isSmallScreen ? { pageSize: 5 } : false,
   };
