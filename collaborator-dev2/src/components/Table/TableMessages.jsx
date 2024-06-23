@@ -28,6 +28,7 @@ const TableMessages = () => {
   });
 
   useEffect(() => {
+    // Função para buscar os dados das mensagens
     const fetchData = async () => {
       const dadosMessage = await getMessage();
       setFilteredData(dadosMessage);
@@ -36,6 +37,7 @@ const TableMessages = () => {
   }, []);
 
   const handleSearch = (value) => {
+    // Função para filtrar os dados da tabela com base no texto de busca
     setSearchText(value);
     const filtered = filteredData.filter(
       (item) =>
@@ -46,14 +48,17 @@ const TableMessages = () => {
   };
 
   const showAddModal = () => {
+    // Função para exibir o modal de adicionar mensagem
     setIsAddModalVisible(true);
   };
 
   const handleAddCancel = () => {
+    // Função para cancelar a adição de mensagem e fechar o modal
     setIsAddModalVisible(false);
   };
 
   const handleAdd = async () => {
+    // Função para adicionar uma nova mensagem
     if (
       cadastro.conteudo !== '' &&
       cadastro.dataInicio !== '' &&
@@ -71,17 +76,20 @@ const TableMessages = () => {
   };
 
   const showEditModal = (item) => {
+    // Função para exibir o modal de edição de mensagem
     setEditingItem(item);
     form.setFieldsValue(item);
     setIsEditModalVisible(true);
   };
 
   const handleEditCancel = () => {
+    // Função para cancelar a edição de mensagem e fechar o modal
     setIsEditModalVisible(false);
     setEditingItem(null);
   };
 
   const handleEdit = async () => {
+    // Função para editar uma mensagem existente
     form
       .validateFields()
       .then(async (values) => {
@@ -101,6 +109,7 @@ const TableMessages = () => {
   };
 
   const handleDelete = async (record) => {
+    // Função para deletar uma mensagem
     try {
       await deleteMessage(record.idMessage);
       const updatedData = filteredData.filter((item) => item.idMessage !== record.idMessage);
@@ -109,8 +118,22 @@ const TableMessages = () => {
       console.log(error);
     }
   };
+   
+  
+  // FUNÇÃO PARA FORMATAR A DATA ( CRIA UMA VARIAVEL D E RECEBE A DATA, CRIA UMA VARIAVEL DAY QUE RECEBE O DIA, CRIA 
+    // UMA VARIAVEL MONTH QUE RECEBE O MES, CRIA UMA VARIAVEL YEAR QUE RECEBE O ANO, RETORNA A DATA FORMATADA  "return `${day}/${month}/${year}`")
+    // OBS. NA COLUNA DATA INICIO E DATA FIM, FOI INSERIDO O CÓDIGO QUE CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+    // FIM DA FUNÇÃO PARA FORMATAR A DATA
 
-  const columns = [
+  
+    const columns = [
     {
       title: 'Id',
       dataIndex: 'idMessage',
@@ -129,8 +152,8 @@ const TableMessages = () => {
         if (a.conteudo > b.conteudo) {
           return 1;
         }
-        return 0;
-      },
+        return 0;
+      },
       width: 150,
     },
     {
@@ -144,8 +167,8 @@ const TableMessages = () => {
         if (a.tipo > b.tipo) {
           return 1;
         }
-        return 0;
-      },
+        return 0;
+      },
       width: 150,
     },
     {
@@ -153,12 +176,14 @@ const TableMessages = () => {
       dataIndex: 'dataInicio',
       key: 'dataInicioMessage',
       width: 150,
+      render: (text) => formatDate(text),     // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
       title: 'Data Fim',
       dataIndex: 'dataFim',
       key: 'dataFimMessage',
       width: 150,
+      render: (text) => formatDate(text),   // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
       title: 'Ação',
