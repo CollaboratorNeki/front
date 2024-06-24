@@ -260,4 +260,4 @@ const TechTable = () => {
   );
 };
 
-export default TechTable;
+export default TechTable;
