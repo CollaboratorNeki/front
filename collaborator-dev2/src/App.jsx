@@ -17,6 +17,7 @@ import ThemeToggleButton from './components/ThemeToggleButton';
 import Clients from './pages/Clients/Clients';
 import Tech from './pages/Tech/Tech';
 import ExtraCost from './pages/ExtraCost/ExtraCost';
+import BreadCrumb from './components/Breadcrumb/Breadcrumb';
 
 
 const { Content, Header, Sider, Footer } = Layout;
@@ -73,6 +74,7 @@ const App = () => {
             <Accessibility/>
             </Layout>
           </Header>
+          <BreadCrumb/>
           <Content
             style={{
               margin: '24px 16px 0',
