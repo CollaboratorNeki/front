@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { storeAlm, getAlm, updateAlm, deleteAlm } from '../../services/almService';
-import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
-import { FaEdit } from 'react-icons/fa';
+import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch, Select } from 'antd';
+import { FaEdit, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import './Table.css';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
+const { Option } = Select;
 const defaultTitle = () => 'Alm';
 const defaultFooter = () => 'footer';
 
@@ -22,6 +22,7 @@ const TableAlm = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [form] = Form.useForm();
+  const [visiblePasswords, setVisiblePasswords] = useState({});
   const [cadastro, setCadastro] = useState({
     nome: '',
     url: '',
@@ -31,10 +32,11 @@ const TableAlm = () => {
     tipo: '',
     vpn: '',
     status: '',
+    taskStatus: '',  // Adicione os campos
+    closureStatus: ''
   });
   const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
-  const [passwordVisibility, setPasswordVisibility] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,11 +83,13 @@ const TableAlm = () => {
       cadastro.confirmPassword !== '' &&
       cadastro.senha === cadastro.confirmPassword &&
       cadastro.tipo !== '' &&
-      cadastro.vpn !== ''
+      cadastro.vpn !== '' &&
+      cadastro.taskStatus !== '' &&  // Adicione a validação
+      cadastro.closureStatus !== ''
     ) {
       await storeAlm(cadastro);
       setIsAddModalVisible(false);
-      setCadastro({ nome: '', url: '', login: '', senha: '', confirmarSenha: '', tipo: '', vpn: '', status: '' });
+      setCadastro({ nome: '', url: '', login: '', senha: '', confirmarSenha: '', tipo: '', vpn: '', status: '', taskStatus: '', closureStatus: '' });
       const dadosAlm = await getAlm();
       setFilteredData(dadosAlm);
     } else {
@@ -135,9 +139,9 @@ const TableAlm = () => {
   };
 
   const togglePasswordVisibility = (id) => {
-    setPasswordVisibility((prevState) => ({
+    setVisiblePasswords(prevState => ({
       ...prevState,
-      [id]: !prevState[id],
+      [id]: !prevState[id]
     }));
   };
 
@@ -168,20 +172,20 @@ const TableAlm = () => {
       title: 'Login',
       dataIndex: 'login',
       key: 'loginAlm',
-      width: 220,
+      width: 200,
     },
     {
       title: t('Senha'),
       dataIndex: 'senha',
       key: 'senhaAlm',
-      width: 150,
-      render: (senha, record) => (
+      width: 100,
+      render: (text, record) => (
         <>
-          {passwordVisibility[record.idAlmTool] ? senha : '•'.repeat(senha.length)}
+          <span>{visiblePasswords[record.idAlmTool] ? text : '••••••••'}</span>
           <Button
-            icon={passwordVisibility[record.idAlmTool] ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-            onClick={() => togglePasswordVisibility(record.idAlmTool)}
             type="link"
+            onClick={() => togglePasswordVisibility(record.idAlmTool)}
+            icon={visiblePasswords[record.idAlmTool] ? <FaEyeSlash /> : <FaEye />}
           />
         </>
       ),
@@ -199,24 +203,63 @@ const TableAlm = () => {
         }
         return 0;
       },
-      width: 180,
+      width: 170,
     },
     {
       title: 'Vpn',
       dataIndex: 'vpn',
       key: 'vpnAlm',
-      width: 80,
+      width: 100,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      width: 70,
+      width: 80,
       key: 'statusAlm',
+      sorter: (a, b) => {
+        if (a.tipo < b.tipo) {
+          return -1;
+        }
+        if (a.tipo > b.tipo) {
+          return 1;
+        }
+        return 0;
+      },
       render: (status) => (
         <>
           {status ? <p>Ativo</p> : <p>Inativo</p>}
         </>
       ),
+    },
+    {
+      title: 'Status Tarefa',
+      dataIndex: 'taskStatus',
+      width: 130,
+      key: 'taskStatus',
+      sorter: (a, b) => {
+        if (a.tipo < b.tipo) {
+          return -1;
+        }
+        if (a.tipo > b.tipo) {
+          return 1;
+        }
+        return 0;
+      },
+    },
+    {
+      title: 'Status Fechamento',
+      dataIndex: 'closureStatus',
+      width: 170,
+      key: 'closureStatus',
+      sorter: (a, b) => {
+        if (a.tipo < b.tipo) {
+          return -1;
+        }
+        if (a.tipo > b.tipo) {
+          return 1;
+        }
+        return 0;
+      },
     },
     {
       title: 'Ação',
@@ -291,7 +334,7 @@ const TableAlm = () => {
       >
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name="nameAlm"
+            name="nome"
             label="Nome"
             rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
@@ -303,7 +346,7 @@ const TableAlm = () => {
           </Form.Item>
 
           <Form.Item
-            name="urlAlm"
+            name="url"
             label="Url"
             rules={[{ required: true, message: 'Coloque a URL por favor!' }]}
           >
@@ -315,7 +358,7 @@ const TableAlm = () => {
           </Form.Item>
 
           <Form.Item
-            name="loginAlm"
+            name="login"
             label="Login"
             rules={[{ required: true, message: 'Coloque o usuário de login por favor!' }]}
           >
@@ -327,7 +370,7 @@ const TableAlm = () => {
           </Form.Item>
 
           <Form.Item
-            name="senhaAlm"
+            name="senha"
             label="Senha"
             rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
           >
@@ -348,7 +391,7 @@ const TableAlm = () => {
             />
           </Form.Item>
           <Form.Item
-            name="tipoAlm"
+            name="tipo"
             label="Tipo"
             rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
@@ -359,7 +402,7 @@ const TableAlm = () => {
             />
           </Form.Item>
           <Form.Item
-            name="vpnAlm"
+            name="vpn"
             label="Vpn"
             rules={[{ required: true, message: 'Coloque o vpn por favor!' }]}
           >
@@ -368,6 +411,29 @@ const TableAlm = () => {
               required
               onChange={(e) => setCadastro({ ...cadastro, vpn: e.target.value })}
             />
+          </Form.Item>
+          <Form.Item
+            name="taskStatus"
+            label="Status Tarefa"
+            rules={[{ required: true, message: 'Selecione o status da tarefa por favor!' }]}
+          >
+            <Select onChange={(value) => setCadastro({ ...cadastro, taskStatus: value })}>
+              <Option value="to do">To Do</Option>
+              <Option value="in progress">In Progress</Option>
+              <Option value="test">Test</Option>
+              <Option value="homol">Homol</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="closureStatus"
+            label="Fechamento Status"
+            rules={[{ required: true, message: 'Selecione o status de fechamento por favor!' }]}
+          >
+            <Select onChange={(value) => setCadastro({ ...cadastro, closureStatus: value })}>
+              <Option value="done">Done</Option>
+              <Option value="closed">Closed</Option>
+              <Option value="open">Open</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item name="statusAlm" label="Status">
@@ -453,7 +519,29 @@ const TableAlm = () => {
               onChange={(e) => setCadastro({ ...cadastro, vpn: e.target.value })}
             />
           </Form.Item>
-
+          <Form.Item
+            name="taskStatus"
+            label="Status Tarefa"
+            rules={[{ required: true, message: 'Selecione o status da tarefa por favor!' }]}
+          >
+            <Select onChange={(value) => setCadastro({ ...cadastro, taskStatus: value })}>
+              <Option value="to do">To Do</Option>
+              <Option value="in progress">In Progress</Option>
+              <Option value="test">Test</Option>
+              <Option value="homol">Homol</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="closureStatus"
+            label="Status Encerramento"
+            rules={[{ required: true, message: 'Selecione o status de fechamento por favor!' }]}
+          >
+            <Select onChange={(value) => setCadastro({ ...cadastro, closureStatus: value })}>
+              <Option value="done">Done</Option>
+              <Option value="closed">Closed</Option>
+              <Option value="open">Open</Option>
+            </Select>
+          </Form.Item>
           <Form.Item name="status" label="Status">
             <Switch onChange={(checked) => onChangeSwitch2(checked)} />
             {status2 ? <p>Ativo</p> : <p>Inativo</p>}
