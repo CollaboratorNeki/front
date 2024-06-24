@@ -10,6 +10,7 @@
     align-items: center;
     background-color: transparent;
     margin-right: 10px;
+    cursor: pointer;
 
 }
 .divAccessibility{
@@ -41,6 +42,20 @@
     background-size: 30px;
     background-repeat: no-repeat;
 
+}
+.Mais,
+.Menos{
+    height: 25px;
+    width: 25px;
+    align-items: center;
+    justify-content: center;
+}
+:where(.css-dev-only-do-not-override-1n03bv).ant-btn {
+    border: none;
+}
+:where(.css-dev-only-do-not-override-fxui8b).ant-btn-default {
+    border: none;
+    color: black;
 }
 
 
