@@ -22,6 +22,8 @@
     "Nome":"Name",
      "Descrição":"Description",
      "Ação":"Action",
+     "Ativo":"Active",
+     "Inativo":"Inactive",
      "Tipo":"Type",
      "Senha":"Password",
      "Telefone":"Phone",
@@ -33,9 +35,18 @@
      "Adicionar novo cliente":"Add new client",
      "Gerenciamento de Custos Extras":"Extra Costs Management",
      "Cadastrar Custos":"Add Costs",
+     "Cadastrar Novo Evento":"Register New Event",
      "Tipo de Custo":"Cost Type",
      "Editar Clientes":"Edit Clients",
-     "Editar Custos":"Edit Costs"
+     "Editar Evento":"Edit Event",
+     "Editar Custos":"Edit Costs",
+     "Preencha todos os campos":"Fill in all fields",
+     "Coloque o nome por favor!":"Put the name please!",
+     "Coloque a descrição por favor!":"Put the description please!",
+     "Coloque o valor por favor!":"Please enter the amount!",
+     "Coloque o tipo de custo por favor!":"Put the type of cost please!",
+     "Coloque a categoria por favor!":"Put the category please!",
+     "Deseja deletar?": "Do you want to delete it?"
     
     }
     

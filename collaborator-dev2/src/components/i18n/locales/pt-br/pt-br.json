@@ -22,6 +22,8 @@
      "Nome":"Nome",
      "Descrição":"Descrição",
      "Ação":"Ação",
+     "Ativo":"Ativo",
+     "Inativo":"Inativo",
      "Senha":"Senha",
      "Tipo":"Tipo",
      "Telefone":"Telefone",
@@ -31,11 +33,20 @@
      "Valor":"Valor",
      "Custos Extras":"Custos Extras",
      "Adicionar novo cliente":"Adicionar novo cliente",
-    " Gerenciamento de Custos Extras":"Gerenciamento de Custos Extras",
-    "Cadastrar Custos":"Cadastrar Custos",
-    "Tipo de Custo":"Tipo de Custo",
-    "Editar CLientes":"Editar Clientes",
-    "Editar Custos":"Editar Custos"
+     " Gerenciamento de Custos Extras":"Gerenciamento de Custos Extras",
+     "Cadastrar Custos":"Cadastrar Custos",
+     "Cadastrar Novo Evento":"Cadastrar Novo Evento",
+     "Tipo de Custo":"Tipo de Custo",
+     "Editar CLientes":"Editar Clientes",
+     "Editar Evento":"Editar Evento",
+     "Editar Custos":"Editar Custos",
+     "Preencha todos os campos":"Preencha todos os campos",
+     "Coloque o nome por favor!":"Coloque o nome por favor!",
+     "Coloque a descrição por favor!":"Coloque a descrição por favor!",
+     "Coloque o valor por favor!":"Coloque o valor por favor!",
+     "Coloque o tipo de custo por favor!":"Coloque o tipo de custo por favor!",
+     "Coloque a categoria por favor!":"Coloque a categoria por favor!",
+     "Deseja deletar?": "Deseja deletar?"
 
      
 
