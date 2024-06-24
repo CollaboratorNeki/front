@@ -49,7 +49,7 @@ const App = () => {
         >
           <Logo />
           <MenuList darkTheme={darkTheme} />
-          <ThemeToggleButton darkTheme={darkTheme} themeToggle={themeToggle} />
+          {/* <ThemeToggleButton darkTheme={darkTheme} themeToggle={themeToggle} /> */}
         </Sider>
         <Layout className="site-layout">
           <Header
