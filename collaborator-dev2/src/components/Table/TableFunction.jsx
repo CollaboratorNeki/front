@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { storeRole, getRole, updateRole, deleteRole } from '../../services/roleService';
 import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import './Table.css';
@@ -15,6 +16,7 @@ const TableFunction = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs;
   const [searchText, setSearchText] = useState('');
+  const { t } = useTranslation();
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -126,7 +128,7 @@ const TableFunction = () => {
       
     },
     {
-      title: 'Nome',
+      title: t("Nome"),
       dataIndex: 'nome',
       key: 'nomeRole',
       sorter: (a, b) => {
@@ -141,7 +143,7 @@ const TableFunction = () => {
       width: 200,
     },
     {
-      title: 'Descrição',
+      title: t("Descrição"),
       dataIndex: 'descricao',
       key: 'descricaoRole',
       width: 250,
@@ -154,7 +156,7 @@ const TableFunction = () => {
  
     // },
     {
-      title: 'Ação',
+      title: t("Ação"),
       key: 'acao',
       width: 150,
       render: (_, record) => (
@@ -212,7 +214,7 @@ const TableFunction = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          Cadastrar
+         {t("Cadastrar")}
         </Button>
       </Space>
 
