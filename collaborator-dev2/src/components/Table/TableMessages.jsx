@@ -3,17 +3,20 @@ import { storeMessage, getMessage, updateMessage, deleteMessage } from '../../se
 import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import './Table.css';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
-const defaultTitle = () => 'Message';
-const defaultFooter = () => 'Neki';
+
 
 const TableMessages = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs;
+  const { t } = useTranslation();
+  const defaultTitle = () => t('Mensagens');
+const defaultFooter = () => 'Neki';
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -81,7 +84,7 @@ const TableMessages = () => {
       const dadosMessage = await getMessage();
       setFilteredData(dadosMessage);
     } else {
-      alert('Preencha todos os campos!');
+      alert ('Preencha todos os campos!');
     }
   };
 
@@ -150,7 +153,7 @@ const TableMessages = () => {
       width: 30,
     },
     {
-      title: 'Conteúdo',
+      title: t('Conteúdo'),
       dataIndex: 'conteudo',
       key: 'conteudoMessage',
       sorter: (a, b) => {
@@ -165,7 +168,7 @@ const TableMessages = () => {
       width: 200,
     },
     {
-      title: 'Tipo',
+      title: t('Tipo'),
       dataIndex: 'tipo',
       key: 'tipoMessage',
       sorter: (a, b) => {
@@ -180,28 +183,28 @@ const TableMessages = () => {
       width: 100,
     },
     {
-      title: 'Data Início',
+      title: t('Data Início'),
       dataIndex: 'dataInicio',
       key: 'dataInicioMessage',
       width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
-      title: 'Data Fim',
+      title: t('Data Fim'),
       dataIndex: 'dataFim',
       key: 'dataFimMessage',
       width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
-      title: 'Ação',
+      title: t('Ação'),
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
           <Popconfirm
-            title="Deseja deletar?"
+            title= {t("Deseja deletar?")}
             onConfirm={() => handleDelete(record)}
           >
             <Button><MdDeleteForever /></Button>
@@ -227,7 +230,7 @@ const TableMessages = () => {
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Buscar mensagem..."
+          placeholder= {t("Buscar mensagem...")}
           enterButton
           value={searchText} // Adicionado para limpar o campo de pesquisa
           onChange={(e) => setSearchText(e.target.value)} // Adicionado para controlar o campo de pesquisa
@@ -238,7 +241,7 @@ const TableMessages = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          Cadastrar
+         {t("Cadastrar")}
         </Button>
       </Space>
 
@@ -250,7 +253,7 @@ const TableMessages = () => {
       />
 
       <Modal
-        title="Cadastrar Nova Mensagem"
+        title= {t("Cadastrar Nova Mensagem")}
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
@@ -258,8 +261,8 @@ const TableMessages = () => {
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="conteudo"
-            label="Conteúdo"
-            rules={[{ required: true, message: 'Coloque o conteúdo por favor!' }]}
+            label= {t("Conteúdo")}
+            rules={[{ required: true, message: t("Coloque o conteúdo por favor!") }]}
           >
             <Input
               type="text"
@@ -270,8 +273,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="tipo"
-            label="Tipo"
-            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
+            label={t("Tipo")}
+            rules={[{ required: true, message: t("Coloque o tipo por favor!") }]}
           >
             <Input
               type="text"
@@ -282,8 +285,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="dataInicio"
-            label="Data Início"
-            rules={[{ required: true, message: 'Coloque a data de início por favor!' }]}
+            label={t("Data Início")}
+            rules={[{ required: true, message: t("Coloque a data de início por favor!") }]}
           >
             <Input
               type="date"
@@ -294,8 +297,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="dataFim"
-            label="Data Fim"
-            rules={[{ required: true, message: 'Coloque a data de fim por favor!' }]}
+            label={t("Data Fim")}
+            rules={[{ required: true, message: t("Coloque a data de fim por favor!" )}]}
           >
             <Input
               type="date"
@@ -307,7 +310,7 @@ const TableMessages = () => {
       </Modal>
 
       <Modal
-        title="Editar Mensagem"
+        title={t("Editar Mensagem")}
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
@@ -315,8 +318,8 @@ const TableMessages = () => {
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="conteudo"
-            label="Conteúdo"
-            rules={[{ required: true, message: 'Coloque o conteúdo por favor!' }]}
+            label={t("Conteúdo")}
+            rules={[{ required: true, message: t( "Coloque o conteúdo por favor!") }]}
           >
             <Input
               type="text"
@@ -327,8 +330,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="tipo"
-            label="Tipo"
-            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
+            label={t("Tipo")}
+            rules={[{ required: true, message: t("Coloque o tipo por favor!" )}]}
           >
             <Input
               type="text"
@@ -339,8 +342,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="dataInicio"
-            label="Data Início"
-            rules={[{ required: true, message: 'Coloque a data de início por favor!' }]}
+            label={t("Data Início")}
+            rules={[{ required: true, message: t("Coloque a data de início por favor!") }]}
           >
             <Input
               type="date"
@@ -351,8 +354,8 @@ const TableMessages = () => {
 
           <Form.Item
             name="dataFim"
-            label="Data Fim"
-            rules={[{ required: true, message: 'Coloque a data de fim por favor!' }]}
+            label={t("Data Fim")}
+            rules={[{ required: true, message: t("Coloque a data de fim por favor!") }]}
           >
             <Input
               type="date"

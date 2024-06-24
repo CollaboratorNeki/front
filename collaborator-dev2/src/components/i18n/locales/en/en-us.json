@@ -46,7 +46,18 @@
      "Coloque o valor por favor!":"Please enter the amount!",
      "Coloque o tipo de custo por favor!":"Put the type of cost please!",
      "Coloque a categoria por favor!":"Put the category please!",
-     "Deseja deletar?": "Do you want to delete it?"
+     "Deseja deletar?": "Do you want to delete it?",
+     "Conteúdo":"Content",
+     "Data Início":"Start Date",
+     "Data Fim":"End Date",
+     "Buscar mensagem...":"Search...",
+     "Cadastrar Nova Mensagem":"Register New Message",
+     "Coloque o conteúdo por favor!":"Post the content please!",
+     "Editar Mensagem":"Edit Message",
+     "Coloque o tipo por favor!":"Post the type please!",
+     "Coloque a data de início por favor!":"Post the start date please!",
+     "Coloque a data de fim por favor!":"Post the end date please!"
+
     
     }
     
