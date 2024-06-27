@@ -1,11 +1,17 @@
-:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light>.ant-menu .ant-menu-item-selected{
-
-    background:linear-gradient(to bottom, #2d939c, #68C7CF)
-}   
-:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-zg0ahe).ant-menu-dark>.ant-menu .ant-menu-item-selected{
-    background:linear-gradient(to bottom, #2d939c, #68C7CF)
-
+/* Define o estilo para o item de menu selecionado em menus de tema claro (.ant-menu-light) */
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light > .ant-menu .ant-menu-item-selected {
+    background: linear-gradient(to bottom, #2d939c, #68C7CF); /* Aplica um fundo gradiente linear azul claro a azul escuro */
 }
-:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light>.ant-menu .ant-menu-item-selected {
-    color: black;
+
+/* Define o estilo para o item de menu selecionado em menus de tema escuro (.ant-menu-dark) */
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-dark .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-dark > .ant-menu .ant-menu-item-selected {
+    background: linear-gradient(to bottom, #2d939c, #68C7CF); /* Aplica um fundo gradiente linear azul claro a azul escuro */
+}
+
+/* Define a cor do texto para o item de menu selecionado em menus de tema claro (.ant-menu-light) */
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-zg0ahe).ant-menu-light > .ant-menu .ant-menu-item-selected {
+    color: black; /* Define a cor do texto como preto */
 }

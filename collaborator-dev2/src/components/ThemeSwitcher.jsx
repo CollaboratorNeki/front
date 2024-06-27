@@ -1,64 +1,32 @@
-// import React, { useState } from 'react';
-// import { ConfigProvider, theme } from 'antd';
-
-// // eslint-disable-next-line react/prop-types
-// const ThemeSwitcher = ({ children }) => {
-//   const [currentTheme, setCurrentTheme] = useState('light');
-
-//   const toggleTheme = () => {
-//     const newTheme = currentTheme === 'light'? 'dark' : 'light';
-//     setCurrentTheme(newTheme);
-//   };
-
-//   const themeConfig = {
-//     algorithm: currentTheme === 'dark'? theme.darkAlgorithm : undefined,
-//     components: {
-//       Layout: {
-//         colorBgHeader: '#e7e7e7',
-//       },
-//     },
-//   };
-
-//   return (
-//     <ConfigProvider theme={themeConfig}>
-//       {children}
-//       <button onClick={toggleTheme}>Toggle Theme</button>
-//     </ConfigProvider>
-//   );
-// };
-
-// export default ThemeSwitcher;
-
-
-
 import React, { useState } from 'react';
 import { ConfigProvider, theme } from 'antd';
-import ThemeToggleButton from './ThemeToggleButton'; // Importe o componente ThemeToggleButton
+import ThemeToggleButton from './ThemeToggleButton'; // Importa o componente ThemeToggleButton
 
 const ThemeSwitcher = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const [currentTheme, setCurrentTheme] = useState('light'); // Estado para controlar o tema atual
 
+  // Função para alternar entre os temas claro e escuro
   const toggleTheme = () => {
-    const newTheme = currentTheme === 'light'? 'dark' : 'light';
-    setCurrentTheme(newTheme);
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light'; // Alterna entre 'light' e 'dark'
+    setCurrentTheme(newTheme); // Atualiza o estado com o novo tema
   };
 
-  const isDarkTheme = currentTheme === 'dark'; // Determina se o tema é escuro
+  const isDarkTheme = currentTheme === 'dark'; // Determina se o tema atual é escuro
 
+  // Configuração do tema com base no estado atual
   const themeConfig = {
-    algorithm: currentTheme === 'dark'? theme.darkAlgorithm : undefined,
+    algorithm: currentTheme === 'dark' ? theme.darkAlgorithm : undefined, // Define um algoritmo específico para o tema escuro
     components: {
       Layout: {
-        colorBgHeader: '#e7e7e7',
+        colorBgHeader: '#e7e7e7', // Define a cor de fundo do cabeçalho para todos os layouts
       },
     },
   };
 
   return (
-    
-    <ConfigProvider theme={themeConfig}>
-      {children}
-      <ThemeToggleButton toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
+    <ConfigProvider theme={themeConfig}> {/* Configura o provedor de configuração de tema */}
+      {children} {/* Renderiza os componentes filhos dentro do ConfigProvider */}
+      <ThemeToggleButton toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} /> {/* Renderiza o botão de alternância de tema */}
     </ConfigProvider>
   );
 };

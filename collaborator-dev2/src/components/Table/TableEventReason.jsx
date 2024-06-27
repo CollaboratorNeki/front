@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { storeEventReason, getEventReason, updateEventReason, deleteEventReason } from '../../services/eventReasonService';
 import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
-import { useTranslation } from 'react-i18next';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import './Table.css';
@@ -9,12 +8,13 @@ import './Table.css';
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
+const defaultTitle = () => 'EventReason';
+const defaultFooter = () => 'footer';
 
 const TableEventReason = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs;
   const [searchText, setSearchText] = useState('');
-  const { t } = useTranslation();
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -25,10 +25,6 @@ const TableEventReason = () => {
     descricao: '',
     status: '',
   });
-
-  const defaultTitle = () => t('Motivos de Eventos');
-  const defaultFooter = () => 'Neki';
-
   const [status, setStatus] = useState();
   const [status2, setStatus2] = useState();
 
@@ -129,13 +125,13 @@ const TableEventReason = () => {
       width: 20,
     },
     {
-      title: t("Nome"),
+      title: 'Nome',
       dataIndex: 'nome',
       key: 'nomeEventReason',
       width: 150,
     },
     {
-      title: t("Descrição"),
+      title: 'Descrição',
       dataIndex: 'descricao',
       key: 'descricaoEventReason',
       width: 200,
@@ -148,14 +144,14 @@ const TableEventReason = () => {
     //   render: (text) => (text ? 'Ativo' : 'Inativo'),
     // },
     {
-      title: t("Ação"),
+      title: 'Ação',
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
           <Popconfirm
-            title={t("Deseja deletar?")}
+            title="Deseja deletar?"
             onConfirm={() => handleDelete(record)}
           >
             <Button><MdDeleteForever /></Button>
@@ -205,7 +201,7 @@ const TableEventReason = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          {t("Cadastrar")}
+          Cadastrar
         </Button>
       </Space>
 
@@ -217,16 +213,16 @@ const TableEventReason = () => {
       />
 
       <Modal
-        title={t("Cadastrar Novo Evento")}
+        title="Cadastrar Novo Evento"
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name={t("Nome")}
-            label={t("Nome")}
-            rules={[{ required: true, message: t('Coloque o nome por favor!') }]}
+            name="nome"
+            label="Nome"
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
             <Input
               type="text"
@@ -236,9 +232,9 @@ const TableEventReason = () => {
           </Form.Item>
 
           <Form.Item
-            name={t("descricao")}
-            label={t("Descrição")}
-            rules={[{ required: true, message: t('Coloque a descrição por favor!') }]}
+            name="descricao"
+            label="Descrição"
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
           >
             <Input
               type="text"
@@ -255,16 +251,16 @@ const TableEventReason = () => {
       </Modal>
 
       <Modal
-        title={t("Editar Evento")}
+        title="Editar Evento"
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            name={t("nome")}
-            label={t("Nome")}
-            rules={[{ required: true, message: t('Coloque o nome por favor!') }]}
+            name="nome"
+            label="Nome"
+            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
           >
             <Input
               type="text"
@@ -274,9 +270,9 @@ const TableEventReason = () => {
           </Form.Item>
 
           <Form.Item
-            name={t("descricao")}
-            label={t("Descrição")}
-            rules={[{ required: true, message: t('Coloque a descrição por favor!') }]}
+            name="descricao"
+            label="Descrição"
+            rules={[{ required: true, message: 'Coloque a descrição por favor!' }]}
           >
             <Input
               type="text"
@@ -285,10 +281,10 @@ const TableEventReason = () => {
             />
           </Form.Item>
 
-          {/* <Form.Item name="status" label="Status" rules={[{ required: false }]}>
+          <Form.Item name="status" label="Status" rules={[{ required: false }]}>
             <Switch onChange={(checked) => onChangeSwitch2(checked)} />
-            {status2 ? <p>{t("Ativo")}</p> : <p>{t("Inativo")}</p>}
-          </Form.Item> */}
+            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
+          </Form.Item>
         </Form>
       </Modal>
     </>

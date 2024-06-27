@@ -1,16 +1,19 @@
+/* Estilo para botões primários do Ant Design com classe específica */
 :where(.css-dev-only-do-not-override-fxui8b).ant-btn-primary {
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
-    
+    background: linear-gradient(to bottom, #2d939c, #68C7CF); /* Define um fundo com gradiente linear */
 }
 
+/* Estilo para botões padrão do Ant Design com classe específica */
 :where(.css-dev-only-do-not-override-1n03bv).ant-btn-default {
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
+    background: linear-gradient(to bottom, #2d939c, #68C7CF); /* Define um fundo com gradiente linear */
 }
 
+/* Estilo para botões padrão do Ant Design com outra classe específica */
 :where(.css-dev-only-do-not-override-fxui8b).ant-btn-default {
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
+    background: linear-gradient(to bottom, #2d939c, #68C7CF); /* Define um fundo com gradiente linear */
 }
 
+/* Estilo para o ícone de fechar do modal do Ant Design com classe específica */
 :where(.css-dev-only-do-not-override-fxui8b).ant-modal .ant-modal-close {
-    color: #fff;
+    color: #fff; /* Define a cor do ícone de fechar como branco */
 }

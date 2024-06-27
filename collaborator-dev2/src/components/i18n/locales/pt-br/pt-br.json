@@ -40,6 +40,7 @@
      "Editar CLientes":"Editar Clientes",
      "Editar Evento":"Editar Evento",
      "Editar Custos":"Editar Custos",
+     "Editar Item ALM":"Editar Item ALM",
      "Preencha todos os campos":"Preencha todos os campos",
      "Coloque o nome por favor!":"Coloque o nome por favor!",
      "Coloque a descrição por favor!":"Coloque a descrição por favor!",
@@ -47,17 +48,20 @@
      "Coloque o tipo de custo por favor!":"Coloque o tipo de custo por favor!",
      "Coloque a categoria por favor!":"Coloque a categoria por favor!",
      "Deseja deletar?": "Deseja deletar?",
-    "Conteúdo":"Conteúdo",
-    "Data Início":"Data Início",
-    "Data fim":"Data fim",
-    "Buscar mensagem...":"Buscar mensagem...",
-    "Cadastrar Nova Mensagem":"Cadastrar Nova Mensagem",
-    "Coloque o conteúdo por favor!":"Coloque o conteúdo por favor!",
-    "Editar Mensagem":"Editar Mensagem",
-    "Coloque o tipo por favor!":"Coloque o tipo por favor!",
-    "Coloque a data de início por favor!":"Coloque a data de início por favor!",
-    "Coloque a data de fim por favor!":"Coloque a data de fim por favor!"
 
+     "Status Tarefa": "Status Tarefa",
+     "Status Fechamento": "Status Fechamento",
+     "Buscar nome do projeto...": "Buscar nome do projeto...",
+     "Coloque a URL por favor!": "Coloque a URL por favor!",
+     "Coloque o usuário de login por favor!":"Coloque o usuário de login por favor!",
+     "Coloque a senha por favor!":"Coloque a senha por favor!",
+     "Coloque o tipo por favor!":"Coloque o tipo por favor!",
+     "Coloque o vpn por favor!":"Coloque o vpn por favor!",
+     "Selecione o status da tarefa por favor!":"Selecione o status da tarefa por favor!",
+     "Selecione o status de fechamento por favor!":"Selecione o status de fechamento por favor!",
+     "Fechamento Status": "Fechamento Status",
+     "Cadastrar Novo ALM" : "Cadastrar Novo ALM",
+     "Confirmação de Senha" : "Confirmação de Senha"
 
      
 

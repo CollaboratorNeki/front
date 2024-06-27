@@ -1,64 +1,39 @@
 import React from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
-import TableAlm from "../../components/Table/TableAlm";
+import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'; // Importação de ícones do Ant Design
+import { Layout, Menu, theme } from 'antd'; // Importação de componentes do Ant Design
+import TableAlm from "../../components/Table/TableAlm"; // Importação do componente TableAlm
 
+const { Header, Content, Footer, Sider } = Layout; // Destructuring para extrair componentes Layout do Ant Design
 
-
-const { Header, Content, Footer, Sider } = Layout;
+// Criação de itens de menu usando ícones e rótulos
 const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
   (icon, index) => ({
     key: String(index + 1),
-    icon: React.createElement(icon),
-    label: `nav ${index + 1}`,
+    icon: React.createElement(icon), // Criação de elemento React para cada ícone
+    label: `nav ${index + 1}`, // Rótulo do menu
   }),
 );
+
 const Alm = () => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+    token: { colorBgContainer, borderRadiusLG }, // Extração de propriedades de token do tema
+  } = theme.useToken(); // Uso do hook useToken() do tema do Ant Design
+
   return (
     <Layout>
-      
+      {/* Estrutura de layout principal */}
       <Layout>
-        {/* <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            background: 'red'
-          }}
-        /> */}
         <Content
           style={{
-            margin: '24px 16px 0',
+            margin: '24px 16px 0', // Estilo CSS para o conteúdo principal
           }}
         >
-          {/* <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              height: '80vh',
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-            }}
-          >
-            <TableFunction/>
-          </div> */}
+          {/* Componente TableAlm utilizado para exibir uma tabela */}
           <TableAlm/>
         </Content>
-        {/* <Footer
-          style={{
-            textAlign: 'center',
-            background: 'green'
-          }}
-        >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer> */}
       </Layout>
     </Layout>
   );
 };
+
 export default Alm;

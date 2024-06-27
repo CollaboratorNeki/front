@@ -3,20 +3,17 @@ import { storeMessage, getMessage, updateMessage, deleteMessage } from '../../se
 import { Space, Table, Grid, Input, Button, Modal, Form, Popconfirm, Switch } from 'antd';
 import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
-import { useTranslation } from 'react-i18next';
 import './Table.css';
 
 const { useBreakpoint } = Grid;
 const { Search } = Input;
 
-
+const defaultTitle = () => 'Message';
+const defaultFooter = () => 'Neki';
 
 const TableMessages = () => {
   const screens = useBreakpoint();
   const isSmallScreen = screens.xs;
-  const { t } = useTranslation();
-  const defaultTitle = () => t('Mensagens');
-const defaultFooter = () => 'Neki';
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -84,7 +81,7 @@ const defaultFooter = () => 'Neki';
       const dadosMessage = await getMessage();
       setFilteredData(dadosMessage);
     } else {
-      alert ('Preencha todos os campos!');
+      alert('Preencha todos os campos!');
     }
   };
 
@@ -153,7 +150,7 @@ const defaultFooter = () => 'Neki';
       width: 30,
     },
     {
-      title: t('Conteúdo'),
+      title: 'Conteúdo',
       dataIndex: 'conteudo',
       key: 'conteudoMessage',
       sorter: (a, b) => {
@@ -168,7 +165,7 @@ const defaultFooter = () => 'Neki';
       width: 200,
     },
     {
-      title: t('Tipo'),
+      title: 'Tipo',
       dataIndex: 'tipo',
       key: 'tipoMessage',
       sorter: (a, b) => {
@@ -183,28 +180,28 @@ const defaultFooter = () => 'Neki';
       width: 100,
     },
     {
-      title: t('Data Início'),
+      title: 'Data Início',
       dataIndex: 'dataInicio',
       key: 'dataInicioMessage',
       width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
-      title: t('Data Fim'),
+      title: 'Data Fim',
       dataIndex: 'dataFim',
       key: 'dataFimMessage',
       width: 100,
       render: (text) => formatDate(text), // CHAMA A FUNÇÃO FORMATDATE USANDO O MÉTODO RENDER PARA FORMATAR A DATA
     },
     {
-      title: t('Ação'),
+      title: 'Ação',
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
           <Popconfirm
-            title= {t("Deseja deletar?")}
+            title="Deseja deletar?"
             onConfirm={() => handleDelete(record)}
           >
             <Button><MdDeleteForever /></Button>
@@ -230,7 +227,7 @@ const defaultFooter = () => 'Neki';
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder= {t("Buscar mensagem...")}
+          placeholder="Buscar mensagem..."
           enterButton
           value={searchText} // Adicionado para limpar o campo de pesquisa
           onChange={(e) => setSearchText(e.target.value)} // Adicionado para controlar o campo de pesquisa
@@ -241,7 +238,7 @@ const defaultFooter = () => 'Neki';
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-         {t("Cadastrar")}
+          Cadastrar
         </Button>
       </Space>
 
@@ -253,7 +250,7 @@ const defaultFooter = () => 'Neki';
       />
 
       <Modal
-        title= {t("Cadastrar Nova Mensagem")}
+        title="Cadastrar Nova Mensagem"
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
@@ -261,8 +258,8 @@ const defaultFooter = () => 'Neki';
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="conteudo"
-            label= {t("Conteúdo")}
-            rules={[{ required: true, message: t("Coloque o conteúdo por favor!") }]}
+            label="Conteúdo"
+            rules={[{ required: true, message: 'Coloque o conteúdo por favor!' }]}
           >
             <Input
               type="text"
@@ -273,8 +270,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="tipo"
-            label={t("Tipo")}
-            rules={[{ required: true, message: t("Coloque o tipo por favor!") }]}
+            label="Tipo"
+            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
             <Input
               type="text"
@@ -285,8 +282,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="dataInicio"
-            label={t("Data Início")}
-            rules={[{ required: true, message: t("Coloque a data de início por favor!") }]}
+            label="Data Início"
+            rules={[{ required: true, message: 'Coloque a data de início por favor!' }]}
           >
             <Input
               type="date"
@@ -297,8 +294,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="dataFim"
-            label={t("Data Fim")}
-            rules={[{ required: true, message: t("Coloque a data de fim por favor!" )}]}
+            label="Data Fim"
+            rules={[{ required: true, message: 'Coloque a data de fim por favor!' }]}
           >
             <Input
               type="date"
@@ -310,7 +307,7 @@ const defaultFooter = () => 'Neki';
       </Modal>
 
       <Modal
-        title={t("Editar Mensagem")}
+        title="Editar Mensagem"
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
@@ -318,8 +315,8 @@ const defaultFooter = () => 'Neki';
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="conteudo"
-            label={t("Conteúdo")}
-            rules={[{ required: true, message: t( "Coloque o conteúdo por favor!") }]}
+            label="Conteúdo"
+            rules={[{ required: true, message: 'Coloque o conteúdo por favor!' }]}
           >
             <Input
               type="text"
@@ -330,8 +327,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="tipo"
-            label={t("Tipo")}
-            rules={[{ required: true, message: t("Coloque o tipo por favor!" )}]}
+            label="Tipo"
+            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
           >
             <Input
               type="text"
@@ -342,8 +339,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="dataInicio"
-            label={t("Data Início")}
-            rules={[{ required: true, message: t("Coloque a data de início por favor!") }]}
+            label="Data Início"
+            rules={[{ required: true, message: 'Coloque a data de início por favor!' }]}
           >
             <Input
               type="date"
@@ -354,8 +351,8 @@ const defaultFooter = () => 'Neki';
 
           <Form.Item
             name="dataFim"
-            label={t("Data Fim")}
-            rules={[{ required: true, message: t("Coloque a data de fim por favor!") }]}
+            label="Data Fim"
+            rules={[{ required: true, message: 'Coloque a data de fim por favor!' }]}
           >
             <Input
               type="date"

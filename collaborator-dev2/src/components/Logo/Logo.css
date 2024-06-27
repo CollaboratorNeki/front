@@ -1,38 +1,41 @@
 .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  height: 6em; /* Define a altura do elemento com a classe 'logo' */
+  padding: 1.5em; /* Adiciona preenchimento interno ao redor do elemento */
+  will-change: filter; /* Indica ao navegador que o elemento irá mudar a propriedade 'filter' */
+  transition: filter 300ms; /* Adiciona uma transição suave de 300ms para a propriedade 'filter' */
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #2D939C); /* Aplica um efeito de sombra ao elemento quando o mouse está em cima */
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa); /* Aplica um efeito de sombra específico para elementos com a classe 'react' quando o mouse está em cima */
+}
+
+@keyframes logo-spin {
+  from {
+      transform: rotate(0deg); /* Define a rotação inicial do elemento no início da animação */
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #2D939C);
+  to {
+      transform: rotate(360deg); /* Define a rotação final do elemento no fim da animação, completando um círculo completo */
   }
-  .logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear; /* Aplica a animação de rotação infinita por 20 segundos com movimento linear para elementos aninhados dentro de <a> que são o segundo filho */
   }
-  
-  @keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-      animation: logo-spin infinite 20s linear;
-    }
-  }
-  
-  .card {
-    padding: 2em;
-  }
-  
-  .read-the-docs {
-    color: #888;
-  }
-  .logo-img{
-    padding-top: 7%;
-  }
+}
+
+.card {
+  padding: 2em; /* Adiciona preenchimento interno ao redor de elementos com a classe 'card' */
+}
+
+.read-the-docs {
+  color: #888; /* Define a cor do texto para elementos com a classe 'read-the-docs' */
+}
+
+.logo-img {
+  padding-top: 7%; /* Adiciona espaço acima da imagem para elementos com a classe 'logo-img' */
+}

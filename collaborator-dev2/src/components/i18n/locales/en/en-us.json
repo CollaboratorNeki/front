@@ -40,6 +40,7 @@
      "Editar Clientes":"Edit Clients",
      "Editar Evento":"Edit Event",
      "Editar Custos":"Edit Costs",
+     "Editar Item ALM": "Edit ALM Item",
      "Preencha todos os campos":"Fill in all fields",
      "Coloque o nome por favor!":"Put the name please!",
      "Coloque a descrição por favor!":"Put the description please!",
@@ -47,18 +48,22 @@
      "Coloque o tipo de custo por favor!":"Put the type of cost please!",
      "Coloque a categoria por favor!":"Put the category please!",
      "Deseja deletar?": "Do you want to delete it?",
-     "Conteúdo":"Content",
-     "Data Início":"Start Date",
-     "Data Fim":"End Date",
-     "Buscar mensagem...":"Search...",
-     "Cadastrar Nova Mensagem":"Register New Message",
-     "Coloque o conteúdo por favor!":"Post the content please!",
-     "Editar Mensagem":"Edit Message",
-     "Coloque o tipo por favor!":"Post the type please!",
-     "Coloque a data de início por favor!":"Post the start date please!",
-     "Coloque a data de fim por favor!":"Post the end date please!"
 
-    
+     "Status Tarefa":"Task Status",
+     "Status Fechamento":"Closing Status",
+     "Buscar nome do projeto...":"Search project name...",
+     "Coloque a URL por favor!":"Please click URL!",
+     "Coloque o usuário de login por favor!": "Put the login user please!",
+     "Coloque a senha por favor!": "Enter the password please!",
+     "Coloque o tipo por favor!":"Put the type please!",
+     "Coloque o vpn por favor!": "Place or vpn please!",
+     "Selecione o status da tarefa por favor!":"Select the task status please!",
+     "Selecione o status de fechamento por favor!": "Select the closing status please!",
+     "Fechamento Status": "Closing Status",
+     "Cadastrar Novo ALM": "Register New ALM",
+     "Confirmação de Senha" : "Password Confirmation"
+
+
     }
     
     }

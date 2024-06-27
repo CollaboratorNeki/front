@@ -1,59 +1,70 @@
+/* Importa fontes do Google Fonts */
 @import url("http://fonts.googleapis.com/css2?family=Poppins&family=Monoton:wght@200;300;400;500;600;700;800&display=swap");
 
+/* Estilos gerais para todos os elementos */
 *{
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: none;
-  list-style: none;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove preenchimentos padrão */
+  border: 0; /* Remove bordas */
+  outline: none; /* Remove a borda de foco ao clicar */
+  list-style: none; /* Remove marcadores de lista */
+  box-sizing: border-box; /* Aplica o modelo de caixa de borda para todos os elementos */
+  font-family: 'Poppins', sans-serif; /* Define a fonte padrão para o documento */
 }
 
+/* Estilos para a barra lateral */
 .sidebar{
-  color: #fff;
+  color: #fff; /* Cor do texto da barra lateral */
 }
 
+/* Estilos para o logotipo */
 .logo{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  padding: 10px;
+  display: flex; /* Define um layout flexível para o logotipo */
+  align-items: center; /* Centraliza verticalmente os itens do logotipo */
+  justify-content: center; /* Centraliza horizontalmente os itens do logotipo */
+  color: #fff; /* Cor do texto do logotipo */
+  padding: 10px; /* Preenchimento interno do logotipo */
 }
 
+/* Estilos para o ícone do logotipo */
 .logo-icon{
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
+  width: 40px; /* Largura do ícone do logotipo */
+  height: 40px; /* Altura do ícone do logotipo */
+  display: flex; /* Define um layout flexível para o ícone do logotipo */
+  align-items: center; /* Centraliza verticalmente os itens do ícone do logotipo */
+  justify-content: center; /* Centraliza horizontalmente os itens do ícone do logotipo */
+  font-size: 1.5rem; /* Tamanho da fonte do ícone do logotipo */
 }
 
+/* Estilos para a barra de menu */
 .menu-bar{
-  height: 88vh;
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  font-size: 1rem;
-  position: relative;
-}
-.toggle-theme-btn {
-  position: absolute;
-  bottom: 30px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+  height: 88vh; /* Altura da barra de menu (88% da altura da viewport) */
+  margin-top: 2rem; /* Margem superior da barra de menu */
+  display: flex; /* Define um layout flexível para a barra de menu */
+  flex-direction: column; /* Define a direção da coluna para os itens da barra de menu */
+  gap: 15px; /* Espaçamento entre os itens da barra de menu */
+  font-size: 1rem; /* Tamanho da fonte para os itens da barra de menu */
+  position: relative; /* Define a posição relativa para permitir posicionamento absoluto dos elementos filhos */
 }
 
-.toggle{
-  margin-left: 15px;
+/* Estilos para o botão de alternar tema */
+.toggle-theme-btn {
+  position: absolute; /* Posição absoluta para o botão de alternar tema */
+  bottom: 30px; /* Distância do fundo da viewport */
+  left: 20px; /* Distância da esquerda da viewport */
+  display: flex; /* Define um layout flexível para o botão de alternar tema */
+  align-items: center; /* Centraliza verticalmente os itens do botão */
+  justify-content: center; /* Centraliza horizontalmente os itens do botão */
+  font-size: 1rem; /* Tamanho da fonte para o botão de alternar tema */
 }
-.neki{
-width: 50px;
-height: 50px;
+
+/* Estilos para o botão de alternância */
+.toggle{
+  margin-left: 15px; /* Margem à esquerda do botão de alternância */
+}
+
+/* Estilos específicos para a classe .neki */
+.neki {
+  width: 50px; /* Largura do elemento com classe .neki */
+  height: 50px; /* Altura do elemento com classe .neki */
 }

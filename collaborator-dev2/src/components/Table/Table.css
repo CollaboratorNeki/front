@@ -1,30 +1,35 @@
+/* Estilização para o título da tabela */
 .ant-table-title {
-  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+  background: linear-gradient(to bottom, #2d939c, #68c7cf); /* Aplica um gradiente vertical de azul para azul claro */
 }
+
+/* Estilização para o rodapé da tabela dentro do wrapper da tabela */
 :where(.css-dev-only-do-not-override-zg0ahe).ant-table-wrapper .ant-table-footer {
-  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+  background: linear-gradient(to bottom, #2d939c, #68c7cf); /* Aplica um gradiente vertical de azul para azul claro */
 }
 
+/* Estilização para botões primários do Ant Design */
 :where(.css-dev-only-do-not-override-zg0ahe).ant-btn-primary {
-  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+  background: linear-gradient(to bottom, #2d939c, #68c7cf); /* Aplica um gradiente vertical de azul para azul claro */
 }
+
+/* Estilização alternativa para o rodapé da tabela dentro do wrapper da tabela */
 :where(.css-dev-only-do-not-override-fxui8b).ant-table-wrapper .ant-table-footer {
-  background: linear-gradient(to top, #2d939c, #68c7cf);
+  background: linear-gradient(to top, #2d939c, #68c7cf); /* Aplica um gradiente vertical invertido de azul para azul claro */
 }
+
+/* Estilização alternativa para o rodapé da tabela dentro do wrapper da tabela */
 :where(.css-dev-only-do-not-override-1n03bv).ant-table-wrapper .ant-table-footer {
-  background: linear-gradient(to top, #2d939c, #68c7cf);
+  background: linear-gradient(to top, #2d939c, #68c7cf); /* Aplica um gradiente vertical invertido de azul para azul claro */
 }
+
+/* Estilização alternativa para botões primários do Ant Design */
 :where(.css-dev-only-do-not-override-1n03bv).ant-btn-primary {
-  background: linear-gradient(to bottom, #2d939c, #68c7cf);
+  background: linear-gradient(to bottom, #2d939c, #68c7cf); /* Aplica um gradiente vertical de azul para azul claro */
 }
 
+/* Estilização geral para o rodapé da tabela */
 .ant-table-footer {
-  font-size: 0px;
-  height: 35px;
-  
+  font-size: 0px; /* Define o tamanho da fonte como zero */
+  height: 35px; /* Define a altura como 35 pixels */
 }
-
-
-/* .ant-btn-primary {
-    background: linear-gradient(to bottom, #2d939c, #68C7CF);
-  } */

@@ -10,7 +10,7 @@ const { useBreakpoint } = Grid;
 const { Search } = Input;
 const { Option } = Select;
 const defaultTitle = () => 'Alm';
-const defaultFooter = () => 'footer';
+const defaultFooter = () => 'Neki';
 
 const TableAlm = () => {
   const { t } = useTranslation();
@@ -232,7 +232,7 @@ const TableAlm = () => {
       ),
     },
     {
-      title: 'Status Tarefa',
+      title: t('Status Tarefa'),
       dataIndex: 'taskStatus',
       width: 130,
       key: 'taskStatus',
@@ -247,7 +247,7 @@ const TableAlm = () => {
       },
     },
     {
-      title: 'Status Fechamento',
+      title: t('Status Fechamento'),
       dataIndex: 'closureStatus',
       width: 170,
       key: 'closureStatus',
@@ -262,14 +262,14 @@ const TableAlm = () => {
       },
     },
     {
-      title: 'Ação',
+      title: t('Ação'),
       key: 'acao',
       width: 150,
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => showEditModal(record)}><FaEdit /></Button>
           <Popconfirm
-            title="Deseja deletar?"
+            title= {t("Deseja deletar?")}
             onConfirm={() => handleDelete(record)}
           >
             <Button><MdDeleteForever /></Button>
@@ -303,7 +303,7 @@ const TableAlm = () => {
     <>
       <Space style={{ marginBottom: 16 }}>
         <Search
-          placeholder="Buscar nome do projeto..."
+          placeholder= {t("Buscar nome do projeto...")}
           enterButton
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
@@ -315,7 +315,7 @@ const TableAlm = () => {
           onClick={showAddModal}
           style={{ background: 'linear-gradient(to bottom, #2d939c, #68C7CF)', border: 'none' }}
         >
-          Cadastrar
+          {t("Cadastrar")}
         </Button>
       </Space>
 
@@ -327,7 +327,7 @@ const TableAlm = () => {
       />
 
       <Modal
-        title="Cadastrar Novo ALM"
+        title= {t("Cadastrar Novo ALM")}
         visible={isAddModalVisible}
         onCancel={handleAddCancel}
         onOk={handleAdd}
@@ -335,8 +335,8 @@ const TableAlm = () => {
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
             name="nome"
-            label="Nome"
-            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
+            label= {t("Nome")}
+            rules={[{ required: true, message: t('Coloque o nome por favor!') }]}
           >
             <Input
               type="text"
@@ -348,7 +348,7 @@ const TableAlm = () => {
           <Form.Item
             name="url"
             label="Url"
-            rules={[{ required: true, message: 'Coloque a URL por favor!' }]}
+            rules={[{ required: true, message: t('Coloque a URL por favor!') }]}
           >
             <Input
               type="text"
@@ -360,7 +360,7 @@ const TableAlm = () => {
           <Form.Item
             name="login"
             label="Login"
-            rules={[{ required: true, message: 'Coloque o usuário de login por favor!' }]}
+            rules={[{ required: true, message: t('Coloque o usuário de login por favor!') }]}
           >
             <Input
               type="text"
@@ -371,8 +371,8 @@ const TableAlm = () => {
 
           <Form.Item
             name="senha"
-            label="Senha"
-            rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
+            label= {t("Senha")}
+            rules={[{ required: true, message: t('Coloque a senha por favor!') }]}
           >
             <Input.Password
               type="text"
@@ -382,7 +382,7 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="confirmPassword"
-            label="Confirmação de Senha"
+            label= {t("Confirmação de Senha")}
             required
           >
             <Input.Password
@@ -392,8 +392,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="tipo"
-            label="Tipo"
-            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
+            label= {t("Tipo")}
+            rules={[{ required: true, message: t('Coloque o tipo por favor!') }]}
           >
             <Input
               type="text"
@@ -404,7 +404,7 @@ const TableAlm = () => {
           <Form.Item
             name="vpn"
             label="Vpn"
-            rules={[{ required: true, message: 'Coloque o vpn por favor!' }]}
+            rules={[{ required: true, message: t('Coloque o vpn por favor!') }]}
           >
             <Input
               type="text"
@@ -414,8 +414,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="taskStatus"
-            label="Status Tarefa"
-            rules={[{ required: true, message: 'Selecione o status da tarefa por favor!' }]}
+            label= {t("Status Tarefa")}
+            rules={[{ required: true, message: t('Selecione o status da tarefa por favor!') }]}
           >
             <Select onChange={(value) => setCadastro({ ...cadastro, taskStatus: value })}>
               <Option value="to do">To Do</Option>
@@ -426,8 +426,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="closureStatus"
-            label="Fechamento Status"
-            rules={[{ required: true, message: 'Selecione o status de fechamento por favor!' }]}
+            label= {t("Fechamento Status")}
+            rules={[{ required: true, message: t('Selecione o status de fechamento por favor!') }]}
           >
             <Select onChange={(value) => setCadastro({ ...cadastro, closureStatus: value })}>
               <Option value="done">Done</Option>
@@ -438,13 +438,13 @@ const TableAlm = () => {
 
           <Form.Item name="statusAlm" label="Status">
             <Switch onChange={(checked) => onChangeSwitch(checked)} />
-            {status ? <p>Ativo</p> : <p>Inativo</p>}
+            {status ? <p>{t("Ativo")}</p> : <p>{t("Inativo")}</p>}
           </Form.Item>
         </Form>
       </Modal>
 
       <Modal
-        title="Editar Item ALM"
+        title= {t("Editar Item ALM")}
         visible={isEditModalVisible}
         onCancel={handleEditCancel}
         onOk={handleEdit}
@@ -453,7 +453,7 @@ const TableAlm = () => {
           <Form.Item
             name="nome"
             label="Nome"
-            rules={[{ required: true, message: 'Coloque o nome por favor!' }]}
+            rules={[{ required: true, message: t('Coloque o nome por favor!') }]}
           >
             <Input
               type="text"
@@ -465,7 +465,7 @@ const TableAlm = () => {
           <Form.Item
             name="url"
             label="Url"
-            rules={[{ required: true, message: 'Coloque a URL por favor!' }]}
+            rules={[{ required: true, message: t('Coloque a URL por favor!') }]}
           >
             <Input
               type="text"
@@ -477,7 +477,7 @@ const TableAlm = () => {
           <Form.Item
             name="login"
             label="Login"
-            rules={[{ required: true, message: 'Coloque o usuário de login por favor!' }]}
+            rules={[{ required: true, message: t('Coloque o usuário de login por favor!') }]}
           >
             <Input
               type="text"
@@ -488,8 +488,8 @@ const TableAlm = () => {
 
           <Form.Item
             name="senha"
-            label="Senha"
-            rules={[{ required: true, message: 'Coloque a senha por favor!' }]}
+            label= {t("Senha")}
+            rules={[{ required: true, message: t('Coloque a senha por favor!') }]}
           >
             <Input
               type="text"
@@ -499,8 +499,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="tipo"
-            label="Tipo"
-            rules={[{ required: true, message: 'Coloque o tipo por favor!' }]}
+            label= {t("Tipo")}
+            rules={[{ required: true, message: t('Coloque o tipo por favor!') }]}
           >
             <Input
               type="text"
@@ -511,7 +511,7 @@ const TableAlm = () => {
           <Form.Item
             name="vpn"
             label="Vpn"
-            rules={[{ required: true, message: 'Coloque o vpn por favor!' }]}
+            rules={[{ required: true, message: t('Coloque o vpn por favor!') }]}
           >
             <Input
               type="text"
@@ -521,8 +521,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="taskStatus"
-            label="Status Tarefa"
-            rules={[{ required: true, message: 'Selecione o status da tarefa por favor!' }]}
+            label= {t("Status Tarefa")}
+            rules={[{ required: true, message: t('Selecione o status da tarefa por favor!') }]}
           >
             <Select onChange={(value) => setCadastro({ ...cadastro, taskStatus: value })}>
               <Option value="to do">To Do</Option>
@@ -533,8 +533,8 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item
             name="closureStatus"
-            label="Status Encerramento"
-            rules={[{ required: true, message: 'Selecione o status de fechamento por favor!' }]}
+            label= {t("Status Encerramento")}
+            rules={[{ required: true, message: t('Selecione o status de fechamento por favor!') }]}
           >
             <Select onChange={(value) => setCadastro({ ...cadastro, closureStatus: value })}>
               <Option value="done">Done</Option>
@@ -544,7 +544,7 @@ const TableAlm = () => {
           </Form.Item>
           <Form.Item name="status" label="Status">
             <Switch onChange={(checked) => onChangeSwitch2(checked)} />
-            {status2 ? <p>Ativo</p> : <p>Inativo</p>}
+            {status2 ? <p>{t("Ativo")}</p> : <p>{t("Inativo")}</p>}
           </Form.Item>
         </Form>
       </Modal>

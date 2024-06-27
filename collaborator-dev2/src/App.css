@@ -1,117 +1,126 @@
+/* Configurações básicas para todos os elementos */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* Define a caixa de modelo de borda para todos os elementos */
   padding: 0;
   margin: 0;
-  font-family: Poppins;
-  font-size: 13px; 
-  font-weight: 500;
+  font-family: Poppins; /* Define a família de fontes para todo o documento */
+  font-size: 13px; /* Define o tamanho da fonte padrão */
+  font-weight: 500; /* Define o peso da fonte */
 }
 
-/* Estilos básicos para todos os elementos */
-
+/* Estilos para formulários */
 form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: flex; /* Define o layout flexível para o formulário */
+  flex-direction: column; /* Define a direção da coluna para os elementos do formulário */
+  justify-content: center; /* Centraliza os elementos verticalmente dentro do formulário */
 }
 
+/* Estilização para rótulos */
 label {
-  font-size: 16px!important;
+  font-size: 16px!important; /* Define o tamanho da fonte para rótulos, com !important para garantir prioridade */
 }
 
+/* Estilo para botões */
 .Button {
-  margin: 5px 0;
-  background-color: #2cbeb7;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  cursor: pointer;
+  margin: 5px 0; /* Margem superior e inferior de 5px e margem lateral automática */
+  background-color: #2cbeb7; /* Cor de fundo do botão */
+  border: none; /* Remove a borda do botão */
+  color: #fff; /* Cor do texto do botão */
+  padding: 10px 20px; /* Preenchimento interno do botão */
+  cursor: pointer; /* Mostra o cursor como ponteiro quando passa sobre o botão */
 }
 
+/* Estilo para campos de entrada */
 .Input {
-  margin: 5px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 5px 0; /* Margem superior e inferior de 5px */
+  padding: 10px; /* Preenchimento interno do campo de entrada */
+  border: 1px solid #ccc; /* Borda do campo de entrada */
+  border-radius: 4px; /* Raio da borda para cantos arredondados */
 }
 
+/* Estilo para elementos de texto sublinhado */
 .Span {
-  text-decoration: underline;
+  text-decoration: underline; /* Sublinha o texto */
 }
 
+/* Estilos para cabeçalho, rodapé e barra lateral */
 .Header, .Footer, .Sidebar {
-  background-color: #2D939C;
-  color: #fff;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 0;
+  background-color: #2D939C; /* Cor de fundo */
+  color: #fff; /* Cor do texto */
+  text-align: center; /* Alinhamento central do texto */
+  font-size: 24px; /* Tamanho da fonte */
+  font-weight: bold; /* Peso da fonte */
+  padding: 10px 0; /* Preenchimento superior e inferior de 10px e preenchimento lateral de 0 */
 }
 
+/* Estilo para conteúdo principal */
 .Content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
-  font-size: 24px;
-  font-weight: bold;
+  display: flex; /* Define o layout flexível para o conteúdo */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  flex-wrap: wrap; /* Permite que os itens sejam embrulhados quando não couberem na linha */
+  gap: 4px; /* Espaço entre os itens */
+  font-size: 24px; /* Tamanho da fonte */
+  font-weight: bold; /* Peso da fonte */
 }
 
+/* Estilos específicos para alguns elementos do Ant Design */
 .ant-typography, .ant-layout-sider-children {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 20px; /* Tamanho da fonte */
+  font-weight: bold; /* Peso da fonte */
 }
 
+/* Estilo para o container principal */
 .Container {
-  min-height: 100vh;
+  min-height: 100vh; /* Altura mínima do viewport */
 }
 
+/* Estilo para imagens */
 .Image {
-  max-width: 100%;
-  height: auto;
+  max-width: 100%; /* Largura máxima de 100% */
+  height: auto; /* Altura automática para manter a proporção */
 }
 
+/* Estilos para grade de layout */
 .Grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: flex; /* Define o layout flexível para a grade */
+  flex-wrap: wrap; /* Permite que os itens sejam embrulhados quando não couberem na linha */
 }
 
+/* Estilos para coluna de layout (grid) */
 .col-1 {
-  background-color: #f2f4f7;
-  color: #333;
-  flex: 1;
-  padding: 20px;
+  background-color: #f2f4f7; /* Cor de fundo */
+  color: #333; /* Cor do texto */
+  flex: 1; /* Define a proporção flexível para a coluna */
+  padding: 20px; /* Preenchimento interno de 20px */
 }
 
 .col-2 {
-  background-color: #fff;
-  color: #333;
-  flex: 2;
-  padding: 20px;
+  background-color: #fff; /* Cor de fundo */
+  color: #333; /* Cor do texto */
+  flex: 2; /* Define a proporção flexível para a coluna */
+  padding: 20px; /* Preenchimento interno de 20px */
 }
 
 /* Estilos específicos para telas menores (celulares) */
 @media (max-width: 768px) {
   .Button {
-    width: 100%;
+    width: 100%; /* Largura total para botões em telas menores */
   }
   
   .Input {
-    width: 100%;
+    width: 100%; /* Largura total para campos de entrada em telas menores */
   }
   
   .Content {
-    font-size: 20px;
+    font-size: 20px; /* Tamanho da fonte reduzido para o conteúdo em telas menores */
   }
   
   .Header, .Footer, .Sidebar {
-    font-size: 20px;
+    font-size: 20px; /* Tamanho da fonte reduzido para cabeçalho, rodapé e barra lateral em telas menores */
   }
   
   .Grid {
-    flex-direction: column;
+    flex-direction: column; /* Altera a direção da grade para coluna em telas menores */
   }
-  
-  
 }
